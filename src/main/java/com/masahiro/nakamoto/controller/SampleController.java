@@ -8,6 +8,6 @@ public class SampleController {
 
 	@GetMapping("/sample")
 	public String getSample() {
-		return "sample/sample";
+		return "main/homelayout";
 	}
 }
