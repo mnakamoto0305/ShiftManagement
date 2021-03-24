@@ -17,8 +17,10 @@
   <link rel="stylesheet" th:href="@{/assets/AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css}">
   <!-- Theme style -->
   <link rel="stylesheet" th:href="@{/assets/AdminLTE/dist/css/adminlte.min.css}">
-
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <!-- JQuery UI -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css" rel="stylesheet">
+  <!-- MultiDatesPicker -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-multidatespicker/1.6.6/jquery-ui.multidatespicker.min.css" rel="stylesheet">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -31,7 +33,68 @@
     <aside th:include="/layout/side_menu :: side_menu" class="main-sidebar sidebar-dark-primary elevation-4"></aside>
 
     <!-- Content Wrapper. Contains page content -->
-    <div th:include="__${contents}__"></div>
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1>休み希望登録</h1>
+            </div>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+              <!-- jquery validation -->
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">来月の休み希望日を選択してください。(8日分)</h3>
+                </div>
+              </div>
+              <!-- /.card -->
+            </div>
+            <!--/.col (left) -->
+            <main id="main" class="tmp_demo">
+
+              <div class="box_demo">
+                <div type="text" id="js-datepicker">
+                  <form th:action="@{/register/attendances}" method="post" th:object="${registerHolidayForm}" id="registerHoliday">
+	                  <input type="hidden" id="datepickerValue" th:field="*{holiday}">
+                  </form>
+                </div>
+                <textarea id="result" readonly></textarea>
+                <button type="submit" value="送信" form="registerHoliday">送信</button>
+              </div>
+
+            </main>
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+              ntegrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+              crossorigin="anonymous"></script>
+            <script
+              src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"
+              defer></script>
+            <script
+              src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-multidatespicker/1.6.6/jquery-ui.multidatespicker.min.js"
+              defer></script>
+            <script
+              th:src="@{/js/multiDatesPicker.js}">
+            </script>
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
     <!-- /.content-wrapper -->
 
     <footer th:include="/layout/footer :: footer" class="main-footer"></footer>

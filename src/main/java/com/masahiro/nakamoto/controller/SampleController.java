@@ -10,4 +10,10 @@ public class SampleController {
 	public String getSample() {
 		return "main/homelayout";
 	}
+
+	@GetMapping("/admin")
+	public String getAdmin() {
+		return "main/adminLayout";
+	}
 }
+
