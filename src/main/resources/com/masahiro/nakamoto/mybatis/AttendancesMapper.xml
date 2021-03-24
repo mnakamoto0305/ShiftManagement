@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.masahiro.nakamoto.mybatis.AttendancesMapper">
+
+<!-- マッピング定義 -->
+<resultMap type="com.masahiro.nakamoto.domain.Attendance" id="attendance">
+  <id column="date" property="date" />
+  <result column="is_attendance" property="isAttendance" />
+  <result column="id" property="id" />
+</resultMap>
+
+  <!-- 勤怠登録 -->
+  <insert id="registerAttendances">
+    INSERT INTO attendances (
+      date,
+      is_attendance,
+      id
+    )
+    VALUES (
+      #{date},
+      #{isAttendance},
+      #{id}
+    )
+  </insert>
+
+  <!-- 休み希望日の登録 -->
+  <update id="registerHoliday">
+    UPDATE attendances
+      SET
+      is_attendance = #{isAttendance}
+     WHERE id = #{id} AND date = #{date}
+  </update>
+
+</mapper>
