@@ -11,13 +11,45 @@ import lombok.Data;
 @Data
 public class User implements UserDetails {
 
+
+	/**
+	 * 社員ID
+	 */
 	private String id;
+
+	/**
+	 * パスワード
+	 */
 	private String password;
+
+	/**
+	 * パスワード更新日付
+	 */
 	private Date passUpdateDate;
+
+	/**
+	 * ログイン失敗回数
+	 */
 	private int loginMissTimes;
+
+	/**
+	 * ロック有無
+	 */
 	private boolean unlock;
+
+	/**
+	 * 利用可否
+	 */
 	private boolean enabled;
+
+	/**
+	 * ユーザー有効期限
+	 */
 	private Date userDueDate;
+
+	/**
+	 * 権限のCollection
+	 */
 	private Collection<? extends GrantedAuthority> authority;
 
 	@Override
