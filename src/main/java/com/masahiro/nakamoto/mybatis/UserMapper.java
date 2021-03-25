@@ -2,7 +2,7 @@ package com.masahiro.nakamoto.mybatis;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.masahiro.nakamoto.domain.User;
+import com.masahiro.nakamoto.domain.SiteUser;
 
 @Mapper
 public interface UserMapper {
@@ -13,5 +13,5 @@ public interface UserMapper {
 	 * @param id
 	 * @return
 	 */
-	public User identifyUser(String id);
+	public SiteUser identifyUser(String id);
 }

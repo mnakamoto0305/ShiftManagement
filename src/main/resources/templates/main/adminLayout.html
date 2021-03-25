@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
   <meta charset="utf-8">
@@ -31,7 +31,7 @@
     <aside th:include="/layout/admin_side_menu :: side_menu" class="main-sidebar sidebar-dark-primary elevation-4"></aside>
 
     <!-- Content Wrapper. Contains page content -->
-    <div th:incrude="__${contents}__"></div>
+    <div th:include="__${contents}__"></div>
     <!-- /.content-wrapper -->
 
     <footer th:include="/layout/footer :: footer" class="main-footer"></footer>
