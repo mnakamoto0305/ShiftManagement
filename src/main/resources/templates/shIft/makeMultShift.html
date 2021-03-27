@@ -1,0 +1,65 @@
+<div th:fragment="shift_make">
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>検索結果</h1>
+          </div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-sm-12">
+            <div th:if="${shiftResult}" class="container">
+              <form th:action="@{/admin/shift_update}" th:method="post" th:object="${multiAttendances}">
+                <table class="table table-hover">
+                  <tr th:object="${course}">
+                    <th scope="col"></th>
+                    <th scope="col" th:each="course, st : *{totalCourses}" th:text="|${st + 1}'コース'|"></th>
+                  </tr>
+
+                  <tr th:each="attendance, st : *{attendanceList}">
+                    <th:block>
+                     <input type="hidden" th:field="*{attendanceList[__${st.index}__].id}">
+                    </th:block>
+                    <th:block>
+                     <input type="hidden" th:field="*{attendanceList[__${st.index}__].date}">
+                    </th:block>
+                    <td th:text="*{attendanceList[__${st.index}__].date}"></td>
+                      <th:block th:with="isAttendance = (*{attendanceList[__${st.index}__].isAttendance} == true ? '◯' : '✕')">
+                         <th:block th:with="isAttendanceReverse = (!*{attendanceList[__${st.index}__].isAttendance} == true ? '◯' : '✕')">
+                           <td>
+                             <select th:field="*{attendanceList[__${st.index}__].isAttendance}">
+                                <option th:value="*{attendanceList[__${st.index}__].isAttendance}" th:text="${isAttendance}"></option>
+                                <option th:value="!*{attendanceList[__${st.index}__].isAttendance}" th:text="${isAttendanceReverse}"></option>
+                             </select>
+                           </td>
+                         </th:block>
+                      </th:block>
+                  </tr>
+                </table>
+                <div class="card-footer">
+                   <button type="submit" class="btn btn-primary">確認</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!--/.col (left) -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+</div>

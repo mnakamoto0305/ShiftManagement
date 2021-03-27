@@ -1,6 +1,5 @@
 package com.masahiro.nakamoto.controller;
 
-import java.awt.Choice;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.masahiro.nakamoto.domain.Attendance;
+import com.masahiro.nakamoto.domain.Course;
+import com.masahiro.nakamoto.domain.MultiAttendances;
 import com.masahiro.nakamoto.domain.ShiftForm;
 import com.masahiro.nakamoto.domain.ShiftResult;
 import com.masahiro.nakamoto.service.ShiftService;
@@ -46,13 +47,13 @@ public class ShiftController {
 	 * @param shiftForm
 	 * @return
 	 */
-	@PostMapping("/admin/shift_result")
-	public String postShiftResult(Model model, @ModelAttribute ShiftResult shiftResult, @ModelAttribute ShiftForm shiftForm) {
-
-		shiftResult.setAttendanceList(shiftService.findAttendances(shiftForm));
-		model.addAttribute("contents", "shift/shiftResult :: shift_result");
-		return "main/adminLayout";
-	}
+//	@PostMapping("/admin/shift_result")
+//	public String postShiftResult(Model model, @ModelAttribute ShiftResult shiftResult, @ModelAttribute ShiftForm shiftForm) {
+//
+//		shiftResult.setAttendanceList(shiftService.findAttendances(shiftForm));
+//		model.addAttribute("contents", "shift/shiftResult :: shift_result");
+//		return "main/adminLayout";
+//	}
 
 	/**
 	 * 作成するシフトを検索するフォームを表示
@@ -68,7 +69,7 @@ public class ShiftController {
 	}
 
 	/**
-	 * シフト作成画面を表示
+	 * シフト作成画面を表示(1人分)
 	 *
 	 * @param model
 	 * @param shiftResult
@@ -76,15 +77,20 @@ public class ShiftController {
 	 * @param choice
 	 * @return
 	 */
+//	@PostMapping("/admin/shift_make")
+//	public String postShiftMake(Model model, @ModelAttribute ShiftResult shiftResult, @ModelAttribute ShiftForm shiftForm) {
+//		shiftResult.setAttendanceList(shiftService.findAttendances(shiftForm));
+//		model.addAttribute("contents", "shift/makeShift :: shift_make");
+//		return "main/adminLayout";
+//	}
+
+
 	@PostMapping("/admin/shift_make")
-	public String postShiftMake(Model model, @ModelAttribute ShiftResult shiftResult, @ModelAttribute ShiftForm shiftForm, @ModelAttribute Choice choice) {
-		shiftResult.setAttendanceList(shiftService.findAttendances(shiftForm));
-//
-//		model.addAttribute("select_attendance", SELECT_ATTENDANCE);
-		model.addAttribute("contents", "shift/makeShift :: shift_make");
+	public String postShiftMake(Model model, @ModelAttribute MultiAttendances multiAttendances, @ModelAttribute ShiftForm shiftForm, @ModelAttribute Course course) {
+		multiAttendances.setMultiAttendances(shiftService.findMultiAttendances(shiftForm));
+		model.addAttribute("contents", "shift/makeMultiShift :: shift_make");
 		return "main/adminLayout";
 	}
-
 
 	/**
 	 * 入力情報をもとにシフトを更新

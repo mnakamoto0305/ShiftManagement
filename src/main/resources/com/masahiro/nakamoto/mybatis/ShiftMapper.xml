@@ -10,7 +10,23 @@
   <result column="id" property="id" />
 </resultMap>
 
-  <!-- 計算式検索 -->
+<resultMap type="com.masahiro.nakamoto.domain.Course" id="course">
+  <result column="total_courses" property="totalCourses" />
+  <result column="course" property="courseId" />
+</resultMap>
+
+  <!-- 指定した拠点のコース数を取得 -->
+  <select id="findTotalCourses" resultMap="course">
+    SELECT
+    total_courses
+    FROM
+    areas
+    WHERE
+    area_id = #{area}
+  </select>
+
+
+  <!-- シフト検索 -->
   <select id="findAttendances" resultMap="attendance">
     SELECT
     *
@@ -21,7 +37,7 @@
     ON
     attendances.id = drivers.id
     WHERE
-    area_id = #{area} AND (date BETWEEN #{first} AND #{last})
+    area_id = #{area} AND course = #{courseId} AND (date BETWEEN #{first} AND #{last})
   </select>
 
   <!-- 1人分のシフトを一括更新 -->

@@ -1,15 +1,15 @@
 package com.masahiro.nakamoto.domain;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
 import lombok.Data;
 
 @Data
 @Component
-public class ShiftResult {
+public class Course {
 
-	private List<Attendance> attendanceList;
+	private Integer totalCourses;
+
+	private Integer courseId;
 
 }

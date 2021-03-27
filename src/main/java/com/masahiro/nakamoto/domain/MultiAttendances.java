@@ -8,8 +8,8 @@ import lombok.Data;
 
 @Data
 @Component
-public class ShiftResult {
+public class MultiAttendances {
 
-	private List<Attendance> attendanceList;
+	private List<ShiftResult> multiAttendances;
 
 }
