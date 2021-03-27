@@ -1,0 +1,45 @@
+<div th:fragment="shift_result">
+
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1>検索結果</h1>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<!-- left column -->
+					<div class="col-sm-12">
+						<div th:if="${shiftResult}" class="container">
+							<table th:object="${shiftResult}" class="table table-hover">
+								<tr>
+									<th scope="col"></th>
+									<th scope="col">1コース</th>
+								</tr>
+
+								<tr th:each="attendance, st : *{attendanceList}">
+									<td th:text="*{attendanceList[__${st.index}__].date}"></td>
+									<td th:text="(*{attendanceList[__${st.index}__].isAttendance} == true ? '◯' : '✕' )"></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<!--/.col (left) -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<!-- /.content -->
+	</div>
+
+</div>

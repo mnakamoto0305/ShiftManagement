@@ -40,10 +40,10 @@ public class AttendancesService {
 		LocalDate lastDay = today.withDayOfMonth(1).plusMonths(2).minusDays(1);
 
 		//月初から月末までの勤怠をtrueで登録するwhile文
-		while(!firstDay.equals(lastDay)) {
+		while(!firstDay.equals(lastDay.plusDays(1))) {
 			//attendanceインスタンスのフィールドに値をセット
 			attendance.setId(id);
-			attendance.setAttendance(true);
+			attendance.setIsAttendance(true);
 			attendance.setDate(firstDay);
 			//勤怠を登録
 			attendancesMapper.registerAttendances(attendance);
@@ -57,7 +57,7 @@ public class AttendancesService {
 		//社員IDをセット
 		attendance.setId(id);
 		//勤怠を休みにセット
-		attendance.setAttendance(false);
+		attendance.setIsAttendance(false);
 		List<String> stringDate = Arrays.asList(registerHolidayForm.getHoliday().split(","));
 
 		//取得した日付のフォーマットに合わせる
