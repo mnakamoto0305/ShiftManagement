@@ -47,6 +47,8 @@
 		                       <option th:value="!*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance}" th:text="${isAttendanceReverse}"></option>
 		                    </select>
 		                 </td>
+		                 <!-- 出勤者数 -->
+		                 <td th:text="*{multiAttendances[__${stat.index}__].numberOfTrue}"></td>
 		               </tr>
                 </table>
                 <div class="card-footer">

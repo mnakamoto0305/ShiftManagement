@@ -46,6 +46,7 @@ public class ShiftService {
 			attendancesList = shiftMapper.findAttendances(shiftForm);
 			ShiftResult shiftResult = new ShiftResult();
 			shiftResult.setAttendanceList(attendancesList);
+			shiftResult.setNumberOfTrue(shiftMapper.findNumberOfTrue(shiftForm));
 			multiAttendances.add(shiftResult);
 			first = first.plusDays(1);
 		}
@@ -65,7 +66,7 @@ public class ShiftService {
 	}
 
 	/**
-	 * 指定したエリアのコース数とドライバー数を検索する
+	 * 指定したエリアのコース数とドライバー数を検索するc
 	 *
 	 * @param shiftForm
 	 * @return

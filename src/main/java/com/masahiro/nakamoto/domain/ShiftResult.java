@@ -12,4 +12,6 @@ public class ShiftResult {
 
 	private List<Attendance> attendanceList;
 
+	private Integer numberOfTrue;
+
 }
