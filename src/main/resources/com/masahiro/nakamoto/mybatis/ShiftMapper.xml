@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.masahiro.nakamoto.mybatis.ShiftMapper">
+
+<!-- マッピング定義 -->
+<resultMap type="com.masahiro.nakamoto.domain.Attendance" id="attendance">
+  <id column="date" property="date" />
+  <result column="is_attendance" property="isAttendance" />
+  <result column="id" property="id" />
+</resultMap>
+
+<resultMap type="com.masahiro.nakamoto.domain.Course" id="course">
+  <result column="total_courses" property="totalCourses" />
+  <result column="total_drivers" property="totalDrivers" />
+</resultMap>
+
+  <!-- 指定した拠点のコース数とドライバー数を取得 -->
+  <select id="findTotalCourses" resultMap="course">
+    SELECT
+    total_courses,
+    total_drivers
+    FROM
+    areas
+    WHERE
+    id = #{area}
+  </select>
+
+
+
+  <!-- シフト検索 -->
+  <select id="findAttendances" resultMap="attendance">
+    SELECT
+    *
+    FROM
+    attendances
+    INNER JOIN
+    drivers
+    ON
+    attendances.id = drivers.id
+    WHERE
+    area_id = #{area} AND date = #{date}
+    ORDER BY
+    course
+  </select>
+
+
+  <select id="findNumberOfTrue">
+    SELECT
+    count(*)
+    FROM
+    attendances
+    INNER JOIN
+    drivers
+    ON
+    attendances.id = drivers.id
+    WHERE
+    area_id = #{area} AND date = #{date} AND is_attendance = true
+  </select>
+
+  <!-- 1人分のシフトを一括更新 -->
+  <update id="updateAttendances">
+    UPDATE attendances
+      SET is_attendance = elt(field(id,
+      <foreach collection="attendancesList" item="list" separator=",">
+        #{list.id}
+      </foreach>
+      ),
+      <foreach collection="attendancesList" item="list" separator=",">
+        #{list.isAttendance}
+      </foreach>
+      )
+      WHERE
+        id IN (
+        <foreach collection="attendancesList" item="list" separator=",">
+          #{list.id}
+        </foreach>
+        )
+        AND
+        date IN (
+        <foreach collection="attendancesList" item="list" separator=",">
+          #{list.date}
+        </foreach>
+        )
+  </update>
+
+</mapper>

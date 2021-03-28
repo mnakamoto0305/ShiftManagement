@@ -4,7 +4,7 @@
 <mapper namespace="com.masahiro.nakamoto.mybatis.UserMapper">
 
 <!-- マッピ　ング定義 -->
-<resultMap type="com.masahiro.nakamoto.domain.User" id="user">
+<resultMap type="com.masahiro.nakamoto.domain.SiteUser" id="user">
   <result column="id" property="id" />
   <result column="password" property="password" />
   <result column="pass_update_date" property="passUpdateDate" />
@@ -12,6 +12,8 @@
   <result column="unlock" property="unlock" />
   <result column="enabled" property="enabled" />
   <result column="user_due_date" property="userDueDate" />
+  <result column="role" property="role" />
+
 </resultMap>
 
 <select id="identifyUser" resultMap="user">

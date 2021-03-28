@@ -11,9 +11,9 @@ public class SampleController {
 		return "main/homelayout";
 	}
 
-	@GetMapping("/admin")
-	public String getAdmin() {
-		return "main/adminLayout";
-	}
+//	@GetMapping("/admin")
+//	public String getAdmin() {
+//		return "main/adminLayout";
+//	}
 }
 

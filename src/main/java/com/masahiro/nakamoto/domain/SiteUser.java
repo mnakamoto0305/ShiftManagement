@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import lombok.Data;
 
 @Data
-public class User implements UserDetails {
+public class SiteUser implements UserDetails {
 
 
 	/**
@@ -46,6 +46,8 @@ public class User implements UserDetails {
 	 * ユーザー有効期限
 	 */
 	private Date userDueDate;
+
+	private String role;
 
 	/**
 	 * 権限のCollection

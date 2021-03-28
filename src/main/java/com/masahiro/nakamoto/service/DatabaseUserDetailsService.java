@@ -1,12 +1,19 @@
 package com.masahiro.nakamoto.service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.masahiro.nakamoto.domain.SiteUser;
 import com.masahiro.nakamoto.mybatis.UserMapper;
 
 @Service
@@ -22,13 +29,20 @@ public class DatabaseUserDetailsService implements UserDetailsService {
 		    throw new UsernameNotFoundException("username is empty");
 		  }
 
-		UserDetails user = userMapper.identifyUser(username);
+		SiteUser user = userMapper.identifyUser(username);
 
 		if (user == null) {
 		    throw new UsernameNotFoundException("Not found username : " + username);
 		  }
 
-		return userMapper.identifyUser(username);
+		return createUserDetails(user);
+	}
+
+	public User createUserDetails(SiteUser user) {
+		Set<GrantedAuthority> grantedAuthories = new HashSet<>();
+		grantedAuthories.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
+
+		return new User(user.getUsername(), user.getPassword(), grantedAuthories);
 	}
 
 }

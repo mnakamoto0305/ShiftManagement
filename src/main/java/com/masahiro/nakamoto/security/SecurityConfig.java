@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.masahiro.nakamoto.service.DatabaseUserDetailsService;
+import com.masahiro.nakamoto.util.Role;
 
 @EnableWebSecurity
 @Configuration
@@ -34,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/webjars/**").permitAll()
 				.antMatchers("/css/**").permitAll()
 				.antMatchers("/login").permitAll()
+				.antMatchers("/admin/**").hasRole(Role.ADMIN.name())
 				.anyRequest().authenticated();
 
 		//ログイン処理
