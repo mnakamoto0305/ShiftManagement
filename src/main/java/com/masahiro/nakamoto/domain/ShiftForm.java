@@ -8,8 +8,7 @@ import lombok.Data;
 public class ShiftForm {
 
 	private String designatedDate;
-	private LocalDate first;
-	private LocalDate last;
 	private Integer area;
+	private LocalDate date;
 
 }

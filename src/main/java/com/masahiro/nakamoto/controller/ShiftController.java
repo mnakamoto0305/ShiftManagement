@@ -25,6 +25,9 @@ public class ShiftController {
 	@Autowired
 	Attendance attendance;
 
+	@Autowired
+	Course course;
+
 
 	/**
 	 * シフトを検索するための条件を指定するフォーム
@@ -39,21 +42,6 @@ public class ShiftController {
 		return "main/adminLayout";
 	}
 
-	/**
-	 * シフトの検索結果を表示
-	 *
-	 * @param model
-	 * @param shiftResult
-	 * @param shiftForm
-	 * @return
-	 */
-//	@PostMapping("/admin/shift_result")
-//	public String postShiftResult(Model model, @ModelAttribute ShiftResult shiftResult, @ModelAttribute ShiftForm shiftForm) {
-//
-//		shiftResult.setAttendanceList(shiftService.findAttendances(shiftForm));
-//		model.addAttribute("contents", "shift/shiftResult :: shift_result");
-//		return "main/adminLayout";
-//	}
 
 	/**
 	 * 作成するシフトを検索するフォームを表示
@@ -68,41 +56,38 @@ public class ShiftController {
 		return "main/adminLayout";
 	}
 
+
 	/**
-	 * シフト作成画面を表示(1人分)
+	 * 作成するシフトを表示
 	 *
 	 * @param model
-	 * @param shiftResult
+	 * @param multiAttendances
 	 * @param shiftForm
-	 * @param choice
 	 * @return
 	 */
-//	@PostMapping("/admin/shift_make")
-//	public String postShiftMake(Model model, @ModelAttribute ShiftResult shiftResult, @ModelAttribute ShiftForm shiftForm) {
-//		shiftResult.setAttendanceList(shiftService.findAttendances(shiftForm));
-//		model.addAttribute("contents", "shift/makeShift :: shift_make");
-//		return "main/adminLayout";
-//	}
-
-
 	@PostMapping("/admin/shift_make")
-	public String postShiftMake(Model model, @ModelAttribute MultiAttendances multiAttendances, @ModelAttribute ShiftForm shiftForm, @ModelAttribute Course course) {
+	public String postShiftMake(Model model, @ModelAttribute MultiAttendances multiAttendances, @ModelAttribute ShiftForm shiftForm) {
+		course = shiftService.findCourseInfo(shiftForm);
+		int totalCourses = course.getTotalCourses();
 		multiAttendances.setMultiAttendances(shiftService.findMultiAttendances(shiftForm));
+		model.addAttribute("course", course);
+		model.addAttribute("totalCourses", totalCourses);
 		model.addAttribute("contents", "shift/makeMultiShift :: shift_make");
 		return "main/adminLayout";
 	}
 
+
 	/**
-	 * 入力情報をもとにシフトを更新
+	 * 作成したシフトを登録する
 	 *
 	 * @param model
-	 * @param shiftResult
+	 * @param multiAttendances
 	 * @return
 	 */
 	@PostMapping("/admin/shift_update")
-	public String postShiftUpdate(Model model, ShiftResult shiftResult) {
-		List<Attendance> attendanceList = shiftResult.getAttendanceList();
-		shiftService.updateAttendances(attendanceList);
+	public String postShiftUpdate(Model model, @ModelAttribute MultiAttendances multiAttendances) {
+		List<ShiftResult> shiftResult = multiAttendances.getMultiAttendances();
+		shiftService.updateAttendances(shiftResult);
 
 		model.addAttribute("contents", "admin/admin :: admin");
 		return "main/adminLayout";

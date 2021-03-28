@@ -1,5 +1,7 @@
 package com.masahiro.nakamoto.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,49 +23,56 @@ public class ShiftService {
 	@Autowired
 	Course course;
 
-	@Autowired
-	ShiftResult shiftResult;
-
 	/**
-	 * 指定した年月のシフトを検索(1人分)
+	 * 指定したエリア・年月のシフトを検索する
 	 *
 	 * @param shiftForm
 	 * @return
 	 */
-//	public List<Attendance> findAttendances(ShiftForm shiftForm) {
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-//		LocalDate date = LocalDate.parse(shiftForm.getDesignatedDate() + "/01", formatter);
-//
-//
-//		//月初と月末の指定
-//		LocalDate first = date.withDayOfMonth(1);
-//		LocalDate last = date.withDayOfMonth(1).plusMonths(1).minusDays(1);
-//		shiftForm.setFirst(first);
-//		shiftForm.setLast(last);
-//		return shiftMapper.findAttendances(shiftForm);
-//	}
-
-	/**
-	 *  1人分のシフトを更新
-	 *
-	 * @param attendanceList
-	 * @return
-	 */
-	public boolean updateAttendances(List<Attendance> attendanceList) {
-		return shiftMapper.updateAttendances(attendanceList);
-	}
-
 	public List<ShiftResult> findMultiAttendances(ShiftForm shiftForm) {
+		//フォームから受け取った日付をLocalDateに変換
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		LocalDate date = LocalDate.parse(shiftForm.getDesignatedDate() + "/01", formatter);
+		//月初と月末の指定
+		LocalDate first = date.withDayOfMonth(1);
+		LocalDate last = date.withDayOfMonth(1).plusMonths(1).minusDays(1);
+
 		List<ShiftResult> multiAttendances = new ArrayList<>();
 		List<Attendance> attendancesList;
-		course.setTotalCourses(shiftMapper.findTotalCourses(shiftForm));
-		for (int i = 1; i < course.getTotalCourses() + 1; i++) {
-			course.setCourseId(i);
-			attendancesList = shiftMapper.findAttendances(shiftForm, course);
+
+		//各コースの勤怠を月初から月末までのループで取得
+		while (!first.equals(last.plusDays(1))) {
+			shiftForm.setDate(first);
+			attendancesList = shiftMapper.findAttendances(shiftForm);
+			ShiftResult shiftResult = new ShiftResult();
 			shiftResult.setAttendanceList(attendancesList);
 			multiAttendances.add(shiftResult);
+			first = first.plusDays(1);
 		}
+
 		return multiAttendances;
 	}
+
+	/**
+	 * フォームから受け取ったシフトを登録する
+	 *
+	 * @param multiAttendances
+	 */
+	public void updateAttendances(List<ShiftResult> multiAttendances) {
+		for (ShiftResult shiftResult : multiAttendances) {
+			shiftMapper.updateAttendances(shiftResult.getAttendanceList());
+		}
+	}
+
+	/**
+	 * 指定したエリアのコース数とドライバー数を検索する
+	 *
+	 * @param shiftForm
+	 * @return
+	 */
+	public Course findCourseInfo(ShiftForm shiftForm) {
+		return shiftMapper.findCourseInfo(shiftForm);
+
+	};
 
 }

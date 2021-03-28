@@ -12,17 +12,18 @@
 
 <resultMap type="com.masahiro.nakamoto.domain.Course" id="course">
   <result column="total_courses" property="totalCourses" />
-  <result column="course" property="courseId" />
+  <result column="total_drivers" property="totalDrivers" />
 </resultMap>
 
-  <!-- 指定した拠点のコース数を取得 -->
+  <!-- 指定した拠点のコース数とドライバー数を取得 -->
   <select id="findTotalCourses" resultMap="course">
     SELECT
-    total_courses
+    total_courses,
+    total_drivers
     FROM
     areas
     WHERE
-    area_id = #{area}
+    id = #{area}
   </select>
 
 
@@ -37,15 +38,17 @@
     ON
     attendances.id = drivers.id
     WHERE
-    area_id = #{area} AND course = #{courseId} AND (date BETWEEN #{first} AND #{last})
+    area_id = #{area} AND date = #{date}
+    ORDER BY
+    course
   </select>
 
   <!-- 1人分のシフトを一括更新 -->
   <update id="updateAttendances">
     UPDATE attendances
-      SET is_attendance = elt(field(date,
+      SET is_attendance = elt(field(id,
       <foreach collection="attendancesList" item="list" separator=",">
-        #{list.date}
+        #{list.id}
       </foreach>
       ),
       <foreach collection="attendancesList" item="list" separator=",">

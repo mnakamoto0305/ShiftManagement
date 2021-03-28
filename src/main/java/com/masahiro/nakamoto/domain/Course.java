@@ -10,6 +10,8 @@ public class Course {
 
 	private Integer totalCourses;
 
+	private Integer totalDrivers;
+
 	private Integer courseId;
 
 }
