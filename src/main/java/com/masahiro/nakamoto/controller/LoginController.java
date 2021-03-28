@@ -22,7 +22,7 @@ public class LoginController {
 	 */
 	@PostMapping("/login")
 	public String postLogin() {
-		return "redirect:/sample";
+		return "redirect:/";
 	}
 
 }
