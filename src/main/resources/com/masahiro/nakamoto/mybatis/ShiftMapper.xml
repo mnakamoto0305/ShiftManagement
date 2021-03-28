@@ -16,7 +16,7 @@
 </resultMap>
 
   <!-- 指定した拠点のコース数とドライバー数を取得 -->
-  <select id="findTotalCourses" resultMap="course">
+  <select id="findCourseInfo" resultMap="course">
     SELECT
     total_courses,
     total_drivers
@@ -45,7 +45,7 @@
   </select>
 
 
-  <select id="findNumberOfTrue">
+  <select id="findNumberOfTrue" resultType="_int">
     SELECT
     count(*)
     FROM

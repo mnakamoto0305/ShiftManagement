@@ -36,6 +36,6 @@ public interface ShiftMapper {
 	 */
 	public Course findCourseInfo(ShiftForm shiftForm);
 
-	public Integer findNumberOfTrue(ShiftForm shiftForm);
+	public int findNumberOfTrue(ShiftForm shiftForm);
 
 }
