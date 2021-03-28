@@ -34,19 +34,19 @@
 	                  <td th:text="*{multiAttendances[__${stat.index}__].attendanceList[0].date}"></td>
 	                  <!-- 勤怠 -->
 	                  <td th:each="course, st : *{multiAttendances[__${stat.index}__].attendanceList}">
-		                    <th:block>
-		                      <input type="hidden" th:field="*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].id}">
-		                    </th:block>
-		                    <th:block>
-		                      <input type="hidden" th:field="*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].date}">
-		                    </th:block>
-		                    <th:block th:with="isAttendance = (*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance} == true ? '◯' : '✕')">
-		                    <th:block th:with="isAttendanceReverse = (!*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance} == true ? '◯' : '✕')">
-		                    <select th:field="*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance}">
-		                       <option th:value="*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance}" th:text="${isAttendance}"></option>
-		                       <option th:value="!*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance}" th:text="${isAttendanceReverse}"></option>
-		                    </select>
-		                 </td>
+	                    <th:block>
+	                      <input type="hidden" th:field="*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].id}">
+	                    </th:block>
+	                    <th:block>
+	                      <input type="hidden" th:field="*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].date}">
+	                    </th:block>
+	                    <th:block th:with="isAttendance = (*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance} == true ? '◯' : '✕')">
+	                    <th:block th:with="isAttendanceReverse = (!*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance} == true ? '◯' : '✕')">
+	                    <select th:field="*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance}">
+	                       <option th:value="*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance}" th:text="${isAttendance}"></option>
+	                       <option th:value="!*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance}" th:text="${isAttendanceReverse}"></option>
+	                    </select>
+		                </td>
 		               </tr>
                 </table>
                 <div class="card-footer">
