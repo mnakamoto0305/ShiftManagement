@@ -23,16 +23,46 @@ public class ShiftService {
 	@Autowired
 	Course course;
 
+
 	/**
-	 * 指定したエリア・年月のシフトを検索する
+	 * 指定したエリア・年月のシフトを検索する(シフト作成用)
+	 *
+	 * @param shiftForm
+	 * @return
+	 */
+	public List<ShiftResult> makeMultiAttendances(ShiftForm shiftForm) {
+		//月初と月末の指定
+		LocalDate first = LocalDate.now().plusMonths(1).withDayOfMonth(1);
+		LocalDate last = first.plusMonths(1).minusDays(1);
+
+		List<ShiftResult> multiAttendances = new ArrayList<>();
+		List<Attendance> attendancesList;
+
+		//各コースの勤怠を月初から月末までのループで取得
+		while (!first.equals(last.plusDays(1))) {
+			shiftForm.setDate(first);
+			attendancesList = shiftMapper.findAttendances(shiftForm);
+			ShiftResult shiftResult = new ShiftResult();
+			shiftResult.setAttendanceList(attendancesList);
+			shiftResult.setNumberOfTrue(shiftMapper.findNumberOfTrue(shiftForm));
+			multiAttendances.add(shiftResult);
+			first = first.plusDays(1);
+		}
+
+		return multiAttendances;
+	}
+
+	/**
+	 * 指定したエリア・年月のシフトを検索する(シフト確認用)
 	 *
 	 * @param shiftForm
 	 * @return
 	 */
 	public List<ShiftResult> findMultiAttendances(ShiftForm shiftForm) {
 		//フォームから受け取った日付をLocalDateに変換
+		String designatedDate = shiftForm.getYear() + "/" + shiftForm.getMonth();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		LocalDate date = LocalDate.parse(shiftForm.getDesignatedDate() + "/01", formatter);
+		LocalDate date = LocalDate.parse(designatedDate + "/01", formatter);
 		//月初と月末の指定
 		LocalDate first = date.withDayOfMonth(1);
 		LocalDate last = date.withDayOfMonth(1).plusMonths(1).minusDays(1);

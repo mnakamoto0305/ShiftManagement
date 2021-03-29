@@ -6,7 +6,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>検索結果</h1>
+            <h1 th:text="|${#temporals.year(date)}年${#temporals.month(date)}月 ${area.name}|"></h1>
           </div>
         </div>
       </div>
@@ -27,6 +27,7 @@
                   <tr th:object="${course}">
                     <th scope="col"></th>
                     <th scope="col" th:each="i : ${#numbers.sequence(1, __*{totalDrivers}__)}" th:text="${__${i}__ <= __${totalCourses}__ }? |${i}コース| : '代走'"></th>
+                    <th>出勤者数</th>
                   </tr>
                   <!-- 日付と勤怠 -->
                   <tr th:each="date, stat : *{multiAttendances}">
@@ -48,8 +49,11 @@
 		                    </select>
 		                 </td>
 		                 <!-- 出勤者数 -->
-		                 <td th:text="*{multiAttendances[__${stat.index}__].numberOfTrue}"></td>
+		                 <th:block th:with="numberOfTrue = *{multiAttendances[__${stat.index}__].numberOfTrue}">
+                       <td th:text="${numberOfTrue}" th:styleappend="${__${numberOfTrue}__ != __${totalCourses}__} ? 'color:#FF0000;'"></td>
+                     </th:block>
 		               </tr>
+		               <!-- 出勤日数 -->
                 </table>
                 <div class="card-footer">
                    <button type="submit" class="btn btn-primary">確認</button>
