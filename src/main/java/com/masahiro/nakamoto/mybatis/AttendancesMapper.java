@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.masahiro.nakamoto.domain.Attendance;
-import com.masahiro.nakamoto.domain.ShiftForm;
+import com.masahiro.nakamoto.domain.attendance.Attendance;
+import com.masahiro.nakamoto.domain.shift.ShiftForm;
 
 
 /**

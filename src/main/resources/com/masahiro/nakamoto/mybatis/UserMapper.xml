@@ -13,7 +13,6 @@
   <result column="enabled" property="enabled" />
   <result column="user_due_date" property="userDueDate" />
   <result column="role" property="role" />
-
 </resultMap>
 
 <select id="identifyUser" resultMap="user">

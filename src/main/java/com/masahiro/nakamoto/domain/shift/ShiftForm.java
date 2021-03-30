@@ -1,4 +1,4 @@
-package com.masahiro.nakamoto.domain;
+package com.masahiro.nakamoto.domain.shift;
 
 import java.time.LocalDate;
 

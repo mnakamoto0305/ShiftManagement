@@ -1,4 +1,4 @@
-package com.masahiro.nakamoto.controller;
+package com.masahiro.nakamoto.controller.login;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

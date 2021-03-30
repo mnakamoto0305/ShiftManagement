@@ -1,4 +1,4 @@
-package com.masahiro.nakamoto.controller;
+package com.masahiro.nakamoto.controller.shift;
 
 import java.security.Principal;
 import java.time.YearMonth;
@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.masahiro.nakamoto.domain.Area;
-import com.masahiro.nakamoto.domain.Attendance;
 import com.masahiro.nakamoto.domain.Course;
-import com.masahiro.nakamoto.domain.MultiAttendances;
-import com.masahiro.nakamoto.domain.ShiftForm;
-import com.masahiro.nakamoto.domain.ShiftResult;
+import com.masahiro.nakamoto.domain.attendance.Attendance;
+import com.masahiro.nakamoto.domain.attendance.MultiAttendances;
+import com.masahiro.nakamoto.domain.shift.ShiftForm;
+import com.masahiro.nakamoto.domain.shift.ShiftResult;
 import com.masahiro.nakamoto.service.AreaService;
 import com.masahiro.nakamoto.service.ShiftService;
 

@@ -5,9 +5,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.masahiro.nakamoto.domain.Attendance;
 import com.masahiro.nakamoto.domain.Course;
-import com.masahiro.nakamoto.domain.ShiftForm;
+import com.masahiro.nakamoto.domain.attendance.Attendance;
+import com.masahiro.nakamoto.domain.shift.ShiftForm;
 
 @Mapper
 public interface ShiftMapper {
