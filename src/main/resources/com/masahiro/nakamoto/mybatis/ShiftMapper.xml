@@ -15,6 +15,10 @@
   <result column="total_drivers" property="totalDrivers" />
 </resultMap>
 
+<resultMap type="com.masahiro.nakamoto.domain.Driver" id="driver">
+  <result column="last_name" property="name" />
+</resultMap>
+
   <!-- 指定した拠点のコース数とドライバー数を取得 -->
   <select id="findCourseInfo" resultMap="course">
     SELECT
@@ -24,6 +28,16 @@
     areas
     WHERE
     id = #{area}
+  </select>
+
+  <!-- 指定したコースのドライバー名を取得 -->
+  <select id="findDriverName" resultMap="driver">
+    SELECT
+    last_name
+    FROM
+    drivers
+    WHERE
+    area_id = #{area}
   </select>
 
   <!-- 全体のシフト検索 -->

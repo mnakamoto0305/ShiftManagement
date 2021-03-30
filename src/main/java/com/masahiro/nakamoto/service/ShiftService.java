@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.masahiro.nakamoto.domain.Course;
+import com.masahiro.nakamoto.domain.Driver;
 import com.masahiro.nakamoto.domain.attendance.Attendance;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
 import com.masahiro.nakamoto.domain.shift.ShiftResult;
@@ -133,6 +134,17 @@ public class ShiftService {
 	@Transactional
 	public Course findCourseInfo(ShiftForm shiftForm) {
 		return shiftMapper.findCourseInfo(shiftForm);
+	}
+
+	/**
+	 * 指定した拠点のドライバー名を取得
+	 *
+	 * @param shiftForm
+	 * @return
+	 */
+	@Transactional
+	public List<Driver> findDriverName(ShiftForm shiftForm) {
+		return shiftMapper.findDriverName(shiftForm);
 	}
 
 	/**

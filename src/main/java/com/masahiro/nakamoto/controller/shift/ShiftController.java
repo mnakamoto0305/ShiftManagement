@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.masahiro.nakamoto.domain.Area;
 import com.masahiro.nakamoto.domain.Course;
+import com.masahiro.nakamoto.domain.Driver;
 import com.masahiro.nakamoto.domain.attendance.Attendance;
 import com.masahiro.nakamoto.domain.attendance.MultiAttendances;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
@@ -96,12 +97,15 @@ public class ShiftController {
 		String month = shiftForm.getMonth();
 		//各ドライバーの出勤数をセット
 		List<Integer> totalAttendance = shiftService.findTotalAttendance(shiftForm);
+		//ドライバーの名前をセット
+		List<Driver> driverName = shiftService.findDriverName(shiftForm);
 		model.addAttribute("course", course);
 		model.addAttribute("area", area);
 		model.addAttribute("year", year);
 		model.addAttribute("month", month);
 		model.addAttribute("totalAttendance", totalAttendance);
 		model.addAttribute("totalCourses", totalCourses);
+		model.addAttribute("driverName", driverName);
 		model.addAttribute("contents", "shift/result :: result");
 		return "main/adminLayout";
 	}
@@ -144,12 +148,14 @@ public class ShiftController {
 		YearMonth date = YearMonth.now().plusMonths(1);
 		//各ドライバーの出勤数をセット
 		List<Integer> totalAttendance = shiftService.findTotal(shiftForm);
-		System.out.println(totalAttendance.get(0));
+		//担当ドライバーの名前をセット
+		List<Driver> driverName = shiftService.findDriverName(shiftForm);
 		model.addAttribute("course", course);
 		model.addAttribute("area", area);
 		model.addAttribute("date", date);
 		model.addAttribute("totalAttendance", totalAttendance);
 		model.addAttribute("totalCourses", totalCourses);
+		model.addAttribute("driverName", driverName);
 		model.addAttribute("contents", "shift/makeMultiShift :: shift_make");
 		return "main/adminLayout";
 	}

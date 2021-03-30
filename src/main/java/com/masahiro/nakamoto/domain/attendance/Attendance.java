@@ -37,5 +37,4 @@ public class Attendance {
 		this.id = id;
 	}
 
-
 }

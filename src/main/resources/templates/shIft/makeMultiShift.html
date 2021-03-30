@@ -29,6 +29,12 @@
                     <th scope="col" th:each="i : ${#numbers.sequence(1, __*{totalDrivers}__)}" th:text="${__${i}__ <= __${totalCourses}__ }? |${i}コース| : '代走'"></th>
                     <th>出勤者数</th>
                   </tr>
+                  <!-- 担当ドライバー -->
+                  <tr>
+                    <th>担当ドライバー</th>
+                    <th th:each="name : ${driverName}" th:text="${name.getName()}"></th>
+                    <th></th>
+                  </tr>
                   <!-- 日付と勤怠 -->
                   <tr th:each="date, stat : *{multiAttendances}">
                     <!-- 日付 -->
@@ -57,6 +63,7 @@
 		               <tr>
 		                <td>出勤日数</td>
 		                <td th:each="total, st : ${totalAttendance}" th:text="${totalAttendance[__${st.index}__]}"></td>
+		                <td></td>
 		               </tr>
                 </table>
                 <div class="card-footer">

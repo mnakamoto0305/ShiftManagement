@@ -6,9 +6,14 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.masahiro.nakamoto.domain.Course;
+import com.masahiro.nakamoto.domain.Driver;
 import com.masahiro.nakamoto.domain.attendance.Attendance;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
 
+/**
+ * @author nakamotomasahiro
+ *
+ */
 @Mapper
 public interface ShiftMapper {
 
@@ -67,5 +72,13 @@ public interface ShiftMapper {
 	 * @return
 	 */
 	public int findWorkingDays(ShiftForm shiftForm);
+
+	/**
+	 * 各コースのドライバー名を検索
+	 *
+	 * @param shiftForm
+	 * @return
+	 */
+	public List<Driver> findDriverName(ShiftForm shiftForm);
 
 }
