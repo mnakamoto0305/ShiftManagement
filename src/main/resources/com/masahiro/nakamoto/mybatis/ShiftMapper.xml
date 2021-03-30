@@ -16,7 +16,7 @@
 </resultMap>
 
   <!-- 指定した拠点のコース数とドライバー数を取得 -->
-  <select id="findTotalCourses" resultMap="course">
+  <select id="findCourseInfo" resultMap="course">
     SELECT
     total_courses,
     total_drivers
@@ -26,9 +26,7 @@
     id = #{area}
   </select>
 
-
-
-  <!-- シフト検索 -->
+  <!-- 全体のシフト検索 -->
   <select id="findAttendances" resultMap="attendance">
     SELECT
     *
@@ -44,8 +42,22 @@
     course
   </select>
 
+  <!-- 1人分のシフト検索 -->
+  <select id="findShift" resultMap="attendance">
+    SELECT
+    *
+    FROM
+    attendances
+    INNER JOIN
+    drivers
+    ON
+    attendances.id = drivers.id
+    WHERE
+    attendances.id = #{id} AND (date BETWEEN #{first} AND #{last})
+  </select>
 
-  <select id="findNumberOfTrue">
+  <!-- その日の出勤者数を検索 -->
+  <select id="findNumberOfTrue" resultType="_int">
     SELECT
     count(*)
     FROM
@@ -56,6 +68,34 @@
     attendances.id = drivers.id
     WHERE
     area_id = #{area} AND date = #{date} AND is_attendance = true
+  </select>
+
+  <!-- 各ドライバーの出勤日数を検索(エリア全体) -->
+  <select id="findTotal" resultType="_int">
+    SELECT
+    count(*)
+    FROM
+    attendances
+    INNER JOIN
+    drivers
+    ON
+    attendances.id = drivers.id
+    WHERE
+    area_id = #{area} AND (date BETWEEN #{first} AND #{last}) AND course = #{courseId} AND is_attendance = true
+  </select>
+
+  <!-- 各ドライバーの出勤日数を検索(1人分) -->
+  <select id="findWorkingDays" resultType="_int">
+    SELECT
+    count(*)
+    FROM
+    attendances
+    INNER JOIN
+    drivers
+    ON
+    attendances.id = drivers.id
+    WHERE
+    attendances.id = #{id} AND (date BETWEEN #{first} AND #{last}) AND is_attendance = true
   </select>
 
   <!-- 1人分のシフトを一括更新 -->

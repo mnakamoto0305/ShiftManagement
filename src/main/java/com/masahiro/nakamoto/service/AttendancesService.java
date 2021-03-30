@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.masahiro.nakamoto.domain.Attendance;
 import com.masahiro.nakamoto.domain.RegisterHolidayForm;
+import com.masahiro.nakamoto.domain.ShiftForm;
+import com.masahiro.nakamoto.domain.ShiftResult;
 import com.masahiro.nakamoto.mybatis.AttendancesMapper;
 
 
@@ -52,6 +54,13 @@ public class AttendancesService {
 		}
 	}
 
+	/**
+	 * 休み希望日を登録
+	 *
+	 * @param registerHolidayForm
+	 * @param attendance
+	 * @param id
+	 */
 	@Transactional
 	public void registerHoliday(RegisterHolidayForm registerHolidayForm, Attendance attendance, String id) {
 		//社員IDをセット
@@ -76,4 +85,45 @@ public class AttendancesService {
 		}
 	}
 
+	/**
+	 * 登録した休み希望日を検索
+	 *
+	 * @param shiftForm
+	 * @return
+	 */
+	@Transactional
+	public ShiftResult findHoliday(ShiftForm shiftForm) {
+		//月初と月末の指定
+		LocalDate first = LocalDate.now().plusMonths(1).withDayOfMonth(1);
+		LocalDate last = first.plusMonths(1).minusDays(1);
+		shiftForm.setFirst(first);
+		shiftForm.setLast(last);
+		//登録した休み希望日の検索
+		ShiftResult shiftResult = new ShiftResult();
+		shiftResult.setAttendanceList(attendancesMapper.findHoliday(shiftForm));
+
+		return shiftResult;
+	}
+
+	@Transactional
+	public void makeTrue(Attendance attendance, String id) {
+		//今日の日付取得
+		LocalDate today = LocalDate.now();
+		//月初の日付取得
+		LocalDate firstDay = today.plusMonths(1).withDayOfMonth(1);
+		//月末の日付取得
+		LocalDate lastDay = today.withDayOfMonth(1).plusMonths(2).minusDays(1);
+
+		//月初から月末までの勤怠をtrueで登録するwhile文
+		while(!firstDay.equals(lastDay.plusDays(1))) {
+			//attendanceインスタンスのフィールドに値をセット
+			attendance.setId(id);
+			attendance.setIsAttendance(true);
+			attendance.setDate(firstDay);
+			//勤怠を登録
+			attendancesMapper.registerHoliday(attendance);
+			//firstDayを1日進める
+			firstDay = firstDay.plusDays(1);
+		}
+	}
 }

@@ -12,6 +12,8 @@ public class ShiftResult {
 
 	private List<Attendance> attendanceList;
 
-	private Integer numberOfTrue;
+	private int numberOfTrue;
+
+	private int workingDays;
 
 }

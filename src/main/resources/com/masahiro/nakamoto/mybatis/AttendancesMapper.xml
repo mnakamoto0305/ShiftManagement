@@ -32,4 +32,18 @@
      WHERE id = #{id} AND date = #{date}
   </update>
 
+  <!-- 登録した休み希望日の確認 -->
+  <select id="findHoliday" resultMap="attendance">
+    SELECT
+    *
+    FROM
+    attendances
+    INNER JOIN
+    drivers
+    ON
+    attendances.id = drivers.id
+    WHERE
+    attendances.id = #{id} AND (date BETWEEN #{first} AND #{last}) AND is_attendance = false
+  </select>
+
 </mapper>
