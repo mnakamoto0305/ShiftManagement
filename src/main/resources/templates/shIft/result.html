@@ -19,8 +19,8 @@
         <div class="row">
           <!-- left column -->
           <div class="col-sm-12">
-            <div th:if="${multiAttendances}" class="container">
               <!-- シフトを作成するフォーム -->
+            <div th:if="${multiAttendances}" class="container">
               <form th:action="@{/admin/shift_update}" th:method="post" th:object="${multiAttendances}">
                 <table class="table table-hover">
                   <!-- コース番号 -->

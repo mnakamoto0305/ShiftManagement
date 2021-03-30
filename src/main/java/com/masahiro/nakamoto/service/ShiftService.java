@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.masahiro.nakamoto.domain.Attendance;
 import com.masahiro.nakamoto.domain.Course;
@@ -30,6 +31,7 @@ public class ShiftService {
 	 * @param shiftForm
 	 * @return
 	 */
+	@Transactional
 	public List<ShiftResult> makeMultiAttendances(ShiftForm shiftForm) {
 		//月初と月末の指定
 		LocalDate first = LocalDate.now().plusMonths(1).withDayOfMonth(1);
@@ -58,6 +60,7 @@ public class ShiftService {
 	 * @param shiftForm
 	 * @return
 	 */
+	@Transactional
 	public List<ShiftResult> findMultiAttendances(ShiftForm shiftForm) {
 		//フォームから受け取った日付をLocalDateに変換
 		String designatedDate = shiftForm.getYear() + "/" + shiftForm.getMonth();
@@ -90,6 +93,7 @@ public class ShiftService {
 	 * @param shiftForm
 	 * @return
 	 */
+	@Transactional
 	public ShiftResult findShift(ShiftForm shiftForm) {
 		//フォームから受け取った日付をLocalDateに変換
 		String designatedDate = shiftForm.getYear() + "/" + shiftForm.getMonth();
@@ -113,6 +117,7 @@ public class ShiftService {
 	 *
 	 * @param multiAttendances
 	 */
+	@Transactional
 	public void updateAttendances(List<ShiftResult> multiAttendances) {
 		for (ShiftResult shiftResult : multiAttendances) {
 			shiftMapper.updateAttendances(shiftResult.getAttendanceList());
@@ -125,6 +130,7 @@ public class ShiftService {
 	 * @param shiftForm
 	 * @return
 	 */
+	@Transactional
 	public Course findCourseInfo(ShiftForm shiftForm) {
 		return shiftMapper.findCourseInfo(shiftForm);
 	}
@@ -135,6 +141,7 @@ public class ShiftService {
 	 * @param shiftForm
 	 * @return
 	 */
+	@Transactional
 	public List<Integer> findTotal(ShiftForm shiftForm) {
 		//月初と月末の指定
 		LocalDate first = LocalDate.now().plusMonths(1).withDayOfMonth(1);
@@ -160,6 +167,7 @@ public class ShiftService {
 	 * @param shiftForm
 	 * @return
 	 */
+	@Transactional
 	public List<Integer> findTotalAttendance(ShiftForm shiftForm) {
 		//フォームから受け取った日付をLocalDateに変換
 		String designatedDate = shiftForm.getYear() + "/" + shiftForm.getMonth();
