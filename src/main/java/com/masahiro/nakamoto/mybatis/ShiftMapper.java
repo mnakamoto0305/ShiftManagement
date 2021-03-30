@@ -21,6 +21,14 @@ public interface ShiftMapper {
 	public boolean updateAttendances(@Param("attendancesList") List<Attendance> attendancesList);
 
 	/**
+	 * 1人分のシフトを検索
+	 *
+	 * @param shiftForm
+	 * @return
+	 */
+	public List<Attendance> findShift(ShiftForm shiftForm);
+
+	/**
 	 * 指定したエリア・年月のシフトを検索
 	 *
 	 * @param shiftForm
@@ -36,6 +44,28 @@ public interface ShiftMapper {
 	 */
 	public Course findCourseInfo(ShiftForm shiftForm);
 
+	/**
+	 * その日の出勤者数を検索
+	 *
+	 * @param shiftForm
+	 * @return
+	 */
 	public int findNumberOfTrue(ShiftForm shiftForm);
+
+	/**
+	 * 各ドライバーの出勤日数を検索(エリア全体)
+	 *
+	 * @param shiftForm
+	 * @return
+	 */
+	public int findTotal(ShiftForm shiftForm);
+
+	/**
+	 * 各ドライバーの出勤日数を検索(1人分)
+	 *
+	 * @param shiftForm
+	 * @return
+	 */
+	public int findWorkingDays(ShiftForm shiftForm);
 
 }

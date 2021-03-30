@@ -45,7 +45,11 @@
 	                     <td th:text="${numberOfTrue}" th:styleappend="${__${numberOfTrue}__ != __${totalCourses}__} ? 'color:#FF0000;'"></td>
                      </th:block>
                    </tr>
-                   <!-- 出勤日数 -->
+                    <!-- 出勤日数 -->
+                   <tr>
+                    <td>出勤日数</td>
+                    <td th:each="total, st : ${totalAttendance}" th:text="${totalAttendance[__${st.index}__]}"></td>
+                   </tr>
                 </table>
               </form>
             </div>
@@ -58,5 +62,60 @@
     </section>
 		<!-- /.content -->
 	</div>
+
+</div>
+
+
+<div th:fragment="resultForDriver">
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 th:text="|${year}年${month}月 シフト|"></h1>
+          </div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-sm-12">
+            <div th:if="${shiftResult}" class="container">
+              <!-- シフトを作成するテーブル -->
+              <table class="table table-hover" th:object=${shiftResult}>
+                <!-- 日付と勤怠と出勤者数-->
+                <tr th:each="attendance, stat : *{attendanceList}">
+                  <!-- 日付 -->
+                  <td th:text="*{attendanceList[__${stat.index}__].date}"></td>
+                  <!-- 勤怠 -->
+                  <td>
+                    <th:block th:with="isAttendanceReverse = (!*{attendanceList[__${stat.index}__].isAttendance} == true ? '◯' : '休')">
+                    <th:block th:with="isAttendance = (*{attendanceList[__${stat.index}__].isAttendance} == true ? '◯' : '休')">
+                    [[${isAttendance}]]
+                  </td>
+                 </tr>
+                  <!-- 出勤日数 -->
+                 <tr>
+                  <td>出勤日数</td>
+                  <td th:text=*{workingDays}></td>
+                 </tr>
+              </table>
+            </div>
+          </div>
+          <!--/.col (left) -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
 
 </div>

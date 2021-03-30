@@ -85,6 +85,30 @@ public class ShiftService {
 	}
 
 	/**
+	 * 指定した年月のシフトを検索(ドライバーの個人ページ用)
+	 *
+	 * @param shiftForm
+	 * @return
+	 */
+	public ShiftResult findShift(ShiftForm shiftForm) {
+		//フォームから受け取った日付をLocalDateに変換
+		String designatedDate = shiftForm.getYear() + "/" + shiftForm.getMonth();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		LocalDate date = LocalDate.parse(designatedDate + "/01", formatter);
+		//月初と月末の指定
+		LocalDate first = date.withDayOfMonth(1);
+		LocalDate last = date.withDayOfMonth(1).plusMonths(1).minusDays(1);
+		shiftForm.setFirst(first);
+		shiftForm.setLast(last);
+		ShiftResult shiftResult = new ShiftResult();
+		shiftResult.setAttendanceList(shiftMapper.findShift(shiftForm));
+		//出勤日数をセット
+		shiftResult.setWorkingDays(shiftMapper.findWorkingDays(shiftForm));
+
+		return shiftResult;
+	}
+
+	/**
 	 * フォームから受け取ったシフトを登録する
 	 *
 	 * @param multiAttendances
@@ -96,14 +120,69 @@ public class ShiftService {
 	}
 
 	/**
-	 * 指定したエリアのコース数とドライバー数を検索するc
+	 * 指定したエリアのコース数とドライバー数を検索する
 	 *
 	 * @param shiftForm
 	 * @return
 	 */
 	public Course findCourseInfo(ShiftForm shiftForm) {
 		return shiftMapper.findCourseInfo(shiftForm);
+	}
 
-	};
+	/**
+	 * シフト作成画面に各ドライバーの出勤日数を表示
+	 *
+	 * @param shiftForm
+	 * @return
+	 */
+	public List<Integer> findTotal(ShiftForm shiftForm) {
+		//月初と月末の指定
+		LocalDate first = LocalDate.now().plusMonths(1).withDayOfMonth(1);
+		LocalDate last = first.plusMonths(1).minusDays(1);
+		shiftForm.setFirst(first);
+		shiftForm.setLast(last);
+		//ドライバー数を取得
+		int numberOfDrivers = findCourseInfo(shiftForm).getTotalDrivers();
+		//出勤数のリスト
+		List<Integer> total = new ArrayList<>();
+
+		for (int i = 1; i < numberOfDrivers + 1; i++) {
+			shiftForm.setCourseId(i);
+			total.add(shiftMapper.findTotal(shiftForm));
+		}
+
+		return total;
+	}
+
+	/**
+	 * シフト確認画面に各ドライバーの出勤日数を表示(アドミン画面)
+	 *
+	 * @param shiftForm
+	 * @return
+	 */
+	public List<Integer> findTotalAttendance(ShiftForm shiftForm) {
+		//フォームから受け取った日付をLocalDateに変換
+		String designatedDate = shiftForm.getYear() + "/" + shiftForm.getMonth();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		LocalDate date = LocalDate.parse(designatedDate + "/01", formatter);
+		//月初と月末の指定
+		LocalDate first = date.withDayOfMonth(1);
+		LocalDate last = date.withDayOfMonth(1).plusMonths(1).minusDays(1);
+
+		shiftForm.setFirst(first);
+		shiftForm.setLast(last);
+
+		//ドライバー数を取得
+		int numberOfDrivers = findCourseInfo(shiftForm).getTotalDrivers();
+		//出勤数のリスト
+		List<Integer> total = new ArrayList<>();
+
+		for (int i = 1; i < numberOfDrivers + 1; i++) {
+			shiftForm.setCourseId(i);
+			total.add(shiftMapper.findTotal(shiftForm));
+		}
+
+		return total;
+	}
 
 }

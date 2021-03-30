@@ -54,6 +54,10 @@
                      </th:block>
 		               </tr>
 		               <!-- 出勤日数 -->
+		               <tr>
+		                <td>出勤日数</td>
+		                <td th:each="total, st : ${totalAttendance}" th:text="${totalAttendance[__${st.index}__]}"></td>
+		               </tr>
                 </table>
                 <div class="card-footer">
                    <button type="submit" class="btn btn-primary">確認</button>

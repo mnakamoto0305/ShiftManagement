@@ -1,9 +1,12 @@
 package com.masahiro.nakamoto.controller;
 
+import java.security.Principal;
 import java.time.YearMonth;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,9 +40,14 @@ public class ShiftController {
 	@Autowired
 	Area area;
 
+	@GetMapping("/shift_search")
+	public String getShiftForm(Model model, @ModelAttribute ShiftForm shiftForm) {
+		model.addAttribute("contents", "shift/shiftSearchIndex :: shift_search");
+		return "main/homeLayout";
+	}
 
 	/**
-	 * シフトを検索するための条件を指定するフォームを表示
+	 * シフトを検索するための条件を指定するフォームを表示(管理画面用)
 	 *
 	 * @param model
 	 * @param shiftForm
@@ -67,7 +75,7 @@ public class ShiftController {
 
 
 	/**
-	 * 確認するシフトを表示
+	 * 確認するシフトを表示(管理者画面用)
 	 *
 	 * @param model
 	 * @param multiAttendances
@@ -75,7 +83,7 @@ public class ShiftController {
 	 * @return
 	 */
 	@PostMapping("/admin/shift_result")
-	public String postShiftResult(Model model, @ModelAttribute MultiAttendances multiAttendances, @ModelAttribute ShiftForm shiftForm) {
+	public String postShiftResultAdmin(Model model, @ModelAttribute MultiAttendances multiAttendances, @ModelAttribute ShiftForm shiftForm) {
 		//コース情報をセット
 		course = shiftService.findCourseInfo(shiftForm);
 		int totalCourses = course.getTotalCourses();
@@ -86,13 +94,33 @@ public class ShiftController {
 		//年月をセット
 		String year = shiftForm.getYear();
 		String month = shiftForm.getMonth();
+		//各ドライバーの出勤数をセット
+		List<Integer> totalAttendance = shiftService.findTotalAttendance(shiftForm);
 		model.addAttribute("course", course);
 		model.addAttribute("area", area);
 		model.addAttribute("year", year);
 		model.addAttribute("month", month);
+		model.addAttribute("totalAttendance", totalAttendance);
 		model.addAttribute("totalCourses", totalCourses);
 		model.addAttribute("contents", "shift/result :: result");
 		return "main/adminLayout";
+	}
+
+	@PostMapping("/shift_result")
+	public String postShiftResult(Model model, @ModelAttribute ShiftForm shiftForm, Principal principal) {
+		//社員IDをセット
+		Authentication auth = (Authentication)principal;
+		UserDetails user = (UserDetails) auth.getPrincipal();
+		shiftForm.setId(user.getUsername());
+		ShiftResult shiftResult = shiftService.findShift(shiftForm);
+		//年月をセット
+		String year = shiftForm.getYear();
+		String month = shiftForm.getMonth();
+		model.addAttribute("year", year);
+		model.addAttribute("month", month);
+		model.addAttribute("shiftResult", shiftResult);
+		model.addAttribute("contents", "shift/result :: resultForDriver");
+		return "main/homeLayout";
 	}
 
 	/**
@@ -114,10 +142,13 @@ public class ShiftController {
 		area = areaService.findAreaName(shiftForm.getArea());
 		//表示するシフトの年月をセット
 		YearMonth date = YearMonth.now().plusMonths(1);
-		//表示する
+		//各ドライバーの出勤数をセット
+		List<Integer> totalAttendance = shiftService.findTotal(shiftForm);
+		System.out.println(totalAttendance.get(0));
 		model.addAttribute("course", course);
 		model.addAttribute("area", area);
 		model.addAttribute("date", date);
+		model.addAttribute("totalAttendance", totalAttendance);
 		model.addAttribute("totalCourses", totalCourses);
 		model.addAttribute("contents", "shift/makeMultiShift :: shift_make");
 		return "main/adminLayout";

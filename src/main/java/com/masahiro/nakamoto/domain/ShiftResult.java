@@ -14,4 +14,6 @@ public class ShiftResult {
 
 	private int numberOfTrue;
 
+	private int workingDays;
+
 }
