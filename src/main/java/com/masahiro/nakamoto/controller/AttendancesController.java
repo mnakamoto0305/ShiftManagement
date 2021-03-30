@@ -37,8 +37,14 @@ public class AttendancesController {
 	 * @return
 	 */
 	@GetMapping("/attendances")
-	public String getAttendances(@ModelAttribute RegisterHolidayForm registerHolidayForm) {
-		return "attendances/attendances";
+	public String getAttendances(Model model, @ModelAttribute RegisterHolidayForm registerHolidayForm) {
+		LocalDate date = LocalDate.now();
+		LocalDate twenty = date.withDayOfMonth(20);
+		if (date.isAfter(twenty)) {
+			return "redirect:/";
+		} else {
+			return "attendances/attendances";
+		}
 	}
 
 	/**
@@ -91,8 +97,14 @@ public class AttendancesController {
 	}
 
 	@GetMapping("/fix/holiday")
-	public String getUpdateHoliday(@ModelAttribute RegisterHolidayForm registerHolidayForm) {
-		return "attendances/updateHoliday";
+	public String getUpdateHoliday(Model model, @ModelAttribute RegisterHolidayForm registerHolidayForm) {
+		LocalDate date = LocalDate.now();
+		LocalDate twenty = date.withDayOfMonth(20);
+		if (date.isAfter(twenty)) {
+			return "redirect:/";
+		} else {
+			return "attendances/updateHoliday";
+		}
 	}
 
 	@PostMapping("/fix/holiday")

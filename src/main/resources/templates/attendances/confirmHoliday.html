@@ -29,7 +29,9 @@
                   <td th:text="*{attendanceList[__${stat.index}__].date}"></td>
                 </tr>
               </table>
-              <a th:href="@{'/fix/holiday'}" class="btn btn-primary">休み希望日を変更する</a>
+              <div class="card-footer">
+                <a th:href="@{'/fix/holiday'}" class="btn btn-primary">休み希望日を変更する</a>
+              </div>
             </div>
           </div>
           <!--/.col (left) -->
