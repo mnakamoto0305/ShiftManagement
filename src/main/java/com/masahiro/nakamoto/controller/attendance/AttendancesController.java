@@ -1,4 +1,4 @@
-package com.masahiro.nakamoto.controller;
+package com.masahiro.nakamoto.controller.attendance;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.masahiro.nakamoto.domain.Attendance;
-import com.masahiro.nakamoto.domain.RegisterHolidayForm;
-import com.masahiro.nakamoto.domain.ShiftForm;
-import com.masahiro.nakamoto.domain.ShiftResult;
+import com.masahiro.nakamoto.domain.attendance.Attendance;
+import com.masahiro.nakamoto.domain.attendance.RegisterHolidayForm;
+import com.masahiro.nakamoto.domain.shift.ShiftForm;
+import com.masahiro.nakamoto.domain.shift.ShiftResult;
 import com.masahiro.nakamoto.mybatis.AttendancesMapper;
 import com.masahiro.nakamoto.service.AttendancesService;
 
@@ -37,8 +37,14 @@ public class AttendancesController {
 	 * @return
 	 */
 	@GetMapping("/attendances")
-	public String getAttendances(@ModelAttribute RegisterHolidayForm registerHolidayForm) {
-		return "attendances/attendances";
+	public String getAttendances(Model model, @ModelAttribute RegisterHolidayForm registerHolidayForm) {
+		LocalDate date = LocalDate.now();
+		LocalDate twenty = date.withDayOfMonth(20);
+		if (date.isAfter(twenty)) {
+			return "redirect:/";
+		} else {
+			return "attendances/attendances";
+		}
 	}
 
 	/**
@@ -91,8 +97,14 @@ public class AttendancesController {
 	}
 
 	@GetMapping("/fix/holiday")
-	public String getUpdateHoliday(@ModelAttribute RegisterHolidayForm registerHolidayForm) {
-		return "attendances/updateHoliday";
+	public String getUpdateHoliday(Model model, @ModelAttribute RegisterHolidayForm registerHolidayForm) {
+		LocalDate date = LocalDate.now();
+		LocalDate twenty = date.withDayOfMonth(20);
+		if (date.isAfter(twenty)) {
+			return "redirect:/";
+		} else {
+			return "attendances/updateHoliday";
+		}
 	}
 
 	@PostMapping("/fix/holiday")

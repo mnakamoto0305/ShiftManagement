@@ -4,7 +4,7 @@
 <mapper namespace="com.masahiro.nakamoto.mybatis.AttendancesMapper">
 
 <!-- マッピング定義 -->
-<resultMap type="com.masahiro.nakamoto.domain.Attendance" id="attendance">
+<resultMap type="com.masahiro.nakamoto.domain.attendance.Attendance" id="attendance">
   <id column="date" property="date" />
   <result column="is_attendance" property="isAttendance" />
   <result column="id" property="id" />

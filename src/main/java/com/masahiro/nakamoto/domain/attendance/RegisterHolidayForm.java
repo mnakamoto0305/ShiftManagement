@@ -1,4 +1,4 @@
-package com.masahiro.nakamoto.domain;
+package com.masahiro.nakamoto.domain.attendance;
 
 import java.time.LocalDate;
 import java.util.List;

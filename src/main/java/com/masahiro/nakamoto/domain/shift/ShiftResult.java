@@ -1,8 +1,10 @@
-package com.masahiro.nakamoto.domain;
+package com.masahiro.nakamoto.domain.shift;
 
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+
+import com.masahiro.nakamoto.domain.attendance.Attendance;
 
 import lombok.Data;
 
