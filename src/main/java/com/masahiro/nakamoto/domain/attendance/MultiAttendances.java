@@ -14,4 +14,8 @@ public class MultiAttendances {
 
 	private List<ShiftResult> multiAttendances;
 
+	public MultiAttendances(List<ShiftResult> multiAttendances) {
+		this.multiAttendances = multiAttendances;
+	}
+
 }

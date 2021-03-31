@@ -17,6 +17,7 @@
 
 <resultMap type="com.masahiro.nakamoto.domain.Driver" id="driver">
   <result column="last_name" property="name" />
+  <result column="course" property="courseId" />
 </resultMap>
 
   <!-- 指定した拠点のコース数とドライバー数を取得 -->
@@ -56,8 +57,58 @@
     course
   </select>
 
-  <!-- 1人分のシフト検索 -->
-  <select id="findShift" resultMap="attendance">
+  <!-- 通常コースのシフト検索 -->
+  <select id="findCourseAttendances" resultMap="attendance">
+    <![CDATA[
+	    SELECT
+	    *
+	    FROM
+	    attendances
+	    INNER JOIN
+	    drivers
+	    ON
+	    attendances.id = drivers.id
+	    WHERE
+	    area_id = #{shiftForm.area} AND date = #{shiftForm.date} AND (course <= #{course.totalCourses})
+	    ORDER BY
+	    course
+	  ]]>
+  </select>
+
+  <!-- 代走ドライバーのシフト検索 -->
+  <select id="findSubstituteAttendances" resultMap="attendance">
+    <![CDATA[
+      SELECT
+      *
+      FROM
+      attendances
+      INNER JOIN
+      drivers
+      ON
+      attendances.id = drivers.id
+      WHERE
+      area_id = #{shiftForm.area} AND date = #{shiftForm.date} AND (course > #{course.totalCourses})
+      ORDER BY
+      course
+    ]]>
+  </select>
+
+ <!-- 代走ドライバーの出勤情報を取得  -->
+  <select id="findSubstituteShift" resultType="integer">
+    SELECT
+    is_attendance
+    FROM
+    attendances
+    INNER JOIN
+    drivers
+    ON
+    attendances.id = drivers.id
+    WHERE
+    date = #{shiftForm.date} AND (course > #{course.totalCourses}) AND area_id = #{shiftForm.area}
+  </select>
+
+  <!-- 1人分のシフト検索(月単位) -->
+  <select id="findMonthShift" resultMap="attendance">
     SELECT
     *
     FROM
@@ -110,6 +161,22 @@
     attendances.id = drivers.id
     WHERE
     attendances.id = #{id} AND (date BETWEEN #{first} AND #{last}) AND is_attendance = true
+  </select>
+
+  <!-- 通常コースが休みのドライバーを検索 -->
+  <select id="findHolidayDriver" resultType="integer">
+	  <![CDATA[
+	    SELECT
+	    course
+	    FROM
+	    attendances
+	    INNER JOIN
+	    drivers
+	    ON
+	    attendances.id = drivers.id
+	    WHERE
+	    area_id = #{shiftForm.area} AND date = #{shiftForm.date} AND is_attendance = false AND (course <= #{course.totalCourses})
+	  ]]>
   </select>
 
   <!-- 1人分のシフトを一括更新 -->

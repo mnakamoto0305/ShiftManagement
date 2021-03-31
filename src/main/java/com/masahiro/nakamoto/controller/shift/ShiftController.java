@@ -22,6 +22,7 @@ import com.masahiro.nakamoto.domain.shift.ShiftForm;
 import com.masahiro.nakamoto.domain.shift.ShiftResult;
 import com.masahiro.nakamoto.service.AreaService;
 import com.masahiro.nakamoto.service.ShiftService;
+import com.masahiro.nakamoto.service.SubstituteService;
 
 @Controller
 public class ShiftController {
@@ -31,6 +32,9 @@ public class ShiftController {
 
 	@Autowired
 	AreaService areaService;
+
+	@Autowired
+	SubstituteService substituteService;
 
 	@Autowired
 	Attendance attendance;
@@ -84,12 +88,12 @@ public class ShiftController {
 	 * @return
 	 */
 	@PostMapping("/admin/shift_result")
-	public String postShiftResultAdmin(Model model, @ModelAttribute MultiAttendances multiAttendances, @ModelAttribute ShiftForm shiftForm) {
+	public String postShiftResultAdmin(Model model, @ModelAttribute ShiftForm shiftForm) {
 		//コース情報をセット
 		course = shiftService.findCourseInfo(shiftForm);
 		int totalCourses = course.getTotalCourses();
 		//勤怠情報をセット
-		multiAttendances.setMultiAttendances(shiftService.findMultiAttendances(shiftForm));
+		MultiAttendances courseAttendances = new MultiAttendances(shiftService.findCourseAttendances(shiftForm, course));
 		//拠点名をセット
 		area = areaService.findAreaName(shiftForm.getArea());
 		//年月をセット
@@ -99,13 +103,18 @@ public class ShiftController {
 		List<Integer> totalAttendance = shiftService.findTotalAttendance(shiftForm);
 		//ドライバーの名前をセット
 		List<Driver> driverName = shiftService.findDriverName(shiftForm);
+
+		List<List<Integer>> substituteList = substituteService.findSubstituteShift(shiftForm, course);
+
 		model.addAttribute("course", course);
+		model.addAttribute("courseAttendances", courseAttendances);
 		model.addAttribute("area", area);
 		model.addAttribute("year", year);
 		model.addAttribute("month", month);
 		model.addAttribute("totalAttendance", totalAttendance);
 		model.addAttribute("totalCourses", totalCourses);
 		model.addAttribute("driverName", driverName);
+		model.addAttribute("substituteList", substituteList);
 		model.addAttribute("contents", "shift/result :: result");
 		return "main/adminLayout";
 	}

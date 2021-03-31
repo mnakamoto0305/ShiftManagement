@@ -1,15 +1,16 @@
 package com.masahiro.nakamoto.domain;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 import lombok.Data;
 
 @Data
 @Component
-public class Driver {
+public class Substitute {
 
-	private String name;
 
-	private Integer courseId;
+	private List<Integer> driverList;
 
 }

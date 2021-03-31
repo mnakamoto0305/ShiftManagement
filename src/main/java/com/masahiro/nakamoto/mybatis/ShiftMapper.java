@@ -25,13 +25,22 @@ public interface ShiftMapper {
 	 */
 	public boolean updateAttendances(@Param("attendancesList") List<Attendance> attendancesList);
 
+
 	/**
-	 * 1人分のシフトを検索
+	 * 代走ドライバーのシフトを検索
 	 *
 	 * @param shiftForm
 	 * @return
 	 */
-	public List<Attendance> findShift(ShiftForm shiftForm);
+	public List<Integer> findSubstituteShift(@Param("shiftForm") ShiftForm shiftForm, @Param("course") Course course);
+
+	/**
+	 * 1人分のシフトを検索(月単位)
+	 *
+	 * @param shiftForm
+	 * @return
+	 */
+	public List<Attendance> findMonthShift(ShiftForm shiftForm);
 
 	/**
 	 * 指定したエリア・年月のシフトを検索
@@ -40,6 +49,24 @@ public interface ShiftMapper {
 	 * @return
 	 */
 	public List<Attendance> findAttendances(ShiftForm shiftForm);
+
+	/**
+	 * 通常コースのシフトを検索
+	 *
+	 * @param shiftForm
+	 * @param course
+	 * @return
+	 */
+	public List<Attendance> findCourseAttendances(@Param("shiftForm") ShiftForm shiftForm, @Param("course") Course course);
+
+	/**
+	 * 代走ドライバーのシフトを検索
+	 *
+	 * @param shiftForm
+	 * @param course
+	 * @return
+	 */
+	public List<Attendance> findSubstituteAttendances(@Param("shiftForm") ShiftForm shiftForm, @Param("course") Course course);
 
 	/**
 	 * 指定したエリアのコース数とドライバー数を検索
@@ -80,5 +107,13 @@ public interface ShiftMapper {
 	 * @return
 	 */
 	public List<Driver> findDriverName(ShiftForm shiftForm);
+
+	/**
+	 * 通常コースで休みのドライバーを検索
+	 *
+	 * @param shiftForm
+	 * @return
+	 */
+	public List<Integer> findHolidayDriver(@Param("shiftForm") ShiftForm shiftForm, @Param("course") Course course);
 
 }
