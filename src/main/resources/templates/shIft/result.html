@@ -22,7 +22,7 @@
           <div class="col-sm-12">
               <!-- シフトを作成するフォーム -->
             <div th:if="${courseAttendances}" class="container">
-              <form th:action="@{/admin/shift_update}" th:method="post" th:object="${courseAttendances}">
+              <div th:object="${courseAttendances}">
                 <table class="table table-hover">
                   <!-- コース番号 -->
                   <tr th:object="${course}">
@@ -65,7 +65,29 @@
                     <td></td>
                    </tr>
                 </table>
-              </form>
+              </div>
+              <div th:if="${shiftMonth} == ${thisMonth}">
+                <form th:action="@{/admin/shift_modify}" th:method="post" th:object="${shiftForm}">
+                  <input type="hidden" th:field="*{year}">
+                  <input type="hidden" th:field="*{month}">
+                  <input type="hidden" th:field="*{area}">
+                  <!-- <input type="hidden" th:field="*{}">  -->
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">修正する</button>
+                  </div>
+                </form>
+              </div>
+              <div th:if="${shiftMonth} gt ${thisMonth}">
+                <form th:action="@{/admin/shift_make}" th:method="post" th:object="${shiftForm}">
+                  <input type="hidden" th:field="*{year}">
+                  <input type="hidden" th:field="*{month}">
+                  <input type="hidden" th:field="*{area}">
+                  <!-- <input type="hidden" th:field="*{}">  -->
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">修正する</button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
           <!--/.col (left) -->
