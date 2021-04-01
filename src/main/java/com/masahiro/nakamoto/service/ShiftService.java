@@ -101,7 +101,6 @@ public class ShiftService {
 				LocalDate ld = attendance.getDate();
 				attendance.setConvertedDate(dateService.couvertDate(ld));
 			}
-
 			ShiftResult shiftResult = new ShiftResult();
 			shiftResult.setAttendanceList(attendancesList);
 			shiftResult.setNumberOfTrue(shiftMapper.findNumberOfTrue(shiftForm));
@@ -139,7 +138,7 @@ public class ShiftService {
 			for (Attendance attendance : attendancesList) {
 				LocalDate ld = attendance.getDate();
 				attendance.setConvertedDate(dateService.couvertDate(ld));
-			}
+ 			}
 			ShiftResult shiftResult = new ShiftResult();
 			shiftResult.setAttendanceList(attendancesList);
 			shiftResult.setNumberOfTrue(shiftMapper.findNumberOfTrue(shiftForm));

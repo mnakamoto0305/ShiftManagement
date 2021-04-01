@@ -1,6 +1,7 @@
 package com.masahiro.nakamoto.controller.shift;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
 
@@ -94,6 +95,7 @@ public class ShiftController {
 		int totalCourses = course.getTotalCourses();
 		//勤怠情報をセット
 		MultiAttendances courseAttendances = new MultiAttendances(shiftService.findCourseAttendances(shiftForm, course));
+		List<List<Integer>> substituteList = substituteService.findSubstituteShift(shiftForm, course);
 		//拠点名をセット
 		area = areaService.findAreaName(shiftForm.getArea());
 		//年月をセット
@@ -103,8 +105,11 @@ public class ShiftController {
 		List<Integer> totalAttendance = shiftService.findTotalAttendance(shiftForm);
 		//ドライバーの名前をセット
 		List<Driver> driverName = shiftService.findDriverName(shiftForm);
-
-		List<List<Integer>> substituteList = substituteService.findSubstituteShift(shiftForm, course);
+		//表示するシフトの月と今日の月をセット
+		int shiftMonth = shiftForm.getDate().getMonthValue();
+		model.addAttribute("shiftMonth", shiftMonth);
+		int thisMonth = LocalDate.now().getMonthValue();
+		model.addAttribute("thisMonth", thisMonth);
 
 		model.addAttribute("course", course);
 		model.addAttribute("courseAttendances", courseAttendances);
@@ -169,6 +174,38 @@ public class ShiftController {
 		return "main/adminLayout";
 	}
 
+	/**
+	 * 今月のシフトを修正
+	 *
+	 * @param model
+	 * @param multiAttendances
+	 * @param shiftForm
+	 * @return
+	 */
+	@PostMapping("/admin/shift_modify")
+	public String postShiftModify(Model model, @ModelAttribute MultiAttendances multiAttendances, @ModelAttribute ShiftForm shiftForm) {
+		//コース情報をセット
+		course = shiftService.findCourseInfo(shiftForm);
+		int totalCourses = course.getTotalCourses();
+		//勤怠情報をセット
+		multiAttendances.setMultiAttendances(shiftService.findMultiAttendances(shiftForm));
+		//拠点名をセット
+		area = areaService.findAreaName(shiftForm.getArea());
+		//表示するシフトの年月をセット
+		YearMonth date = YearMonth.now();
+		//各ドライバーの出勤数をセット
+		List<Integer> totalAttendance = shiftService.findTotalAttendance(shiftForm);
+		//担当ドライバーの名前をセット
+		List<Driver> driverName = shiftService.findDriverName(shiftForm);
+		model.addAttribute("course", course);
+		model.addAttribute("area", area);
+		model.addAttribute("date", date);
+		model.addAttribute("totalAttendance", totalAttendance);
+		model.addAttribute("totalCourses", totalCourses);
+		model.addAttribute("driverName", driverName);
+		model.addAttribute("contents", "shift/makeMultiShift :: shift_make");
+		return "main/adminLayout";
+	}
 
 	/**
 	 * 作成したシフトを登録する
