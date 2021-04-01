@@ -19,4 +19,14 @@
     id = #{areaId}
   </select>
 
+  <!-- 指定したドライバーが所属する拠点IDを検索 -->
+  <select id="findAreaId" resultType="integer">
+    SELECT
+    area_id
+    FROM
+    drivers
+    WHERE
+    id = #{id}
+  </select>
+
 </mapper>

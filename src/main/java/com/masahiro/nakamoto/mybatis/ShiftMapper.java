@@ -1,5 +1,6 @@
 package com.masahiro.nakamoto.mybatis;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -9,6 +10,7 @@ import com.masahiro.nakamoto.domain.Course;
 import com.masahiro.nakamoto.domain.Driver;
 import com.masahiro.nakamoto.domain.attendance.Attendance;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
+import com.masahiro.nakamoto.domain.shift.Today;
 
 /**
  * @author nakamotomasahiro
@@ -25,7 +27,6 @@ public interface ShiftMapper {
 	 */
 	public boolean updateAttendances(@Param("attendancesList") List<Attendance> attendancesList);
 
-
 	/**
 	 * 代走ドライバーのシフトを検索
 	 *
@@ -33,6 +34,15 @@ public interface ShiftMapper {
 	 * @return
 	 */
 	public List<Integer> findSubstituteShift(@Param("shiftForm") ShiftForm shiftForm, @Param("course") Course course);
+
+	/**
+	 * 今日のシフトを検索
+	 *
+	 * @param date
+	 * @param id
+	 * @return
+	 */
+	public Today findTodayShift(@Param("date") LocalDate date, @Param("id") String id);
 
 	/**
 	 * 1人分のシフトを検索(月単位)

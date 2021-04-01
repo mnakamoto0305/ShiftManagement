@@ -2,9 +2,12 @@ package com.masahiro.nakamoto.domain.shift;
 
 import java.time.LocalDate;
 
+import org.springframework.stereotype.Component;
+
 import lombok.Data;
 
 @Data
+@Component
 public class ShiftForm {
 
 

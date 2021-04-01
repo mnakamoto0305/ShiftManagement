@@ -14,6 +14,8 @@ import com.masahiro.nakamoto.domain.Driver;
 import com.masahiro.nakamoto.domain.attendance.Attendance;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
 import com.masahiro.nakamoto.domain.shift.ShiftResult;
+import com.masahiro.nakamoto.domain.shift.Today;
+import com.masahiro.nakamoto.mybatis.AreaMapper;
 import com.masahiro.nakamoto.mybatis.ShiftMapper;
 
 @Service
@@ -23,8 +25,16 @@ public class ShiftService {
 	ShiftMapper shiftMapper;
 
 	@Autowired
+	AreaMapper areaMapper;
+
+	@Autowired
 	Course course;
 
+	public Today findTodayShift(String id) {
+		Today today = shiftMapper.findTodayShift(LocalDate.now(), id);
+		today.setAreaName(areaMapper.findAreaName(today.getAreaId()).getName());
+		return today;
+	}
 
 	/**
 	 * 指定したエリア・年月のシフトを検索する(シフト作成用)

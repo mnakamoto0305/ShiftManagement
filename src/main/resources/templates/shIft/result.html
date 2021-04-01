@@ -34,7 +34,7 @@
                   <!-- 担当ドライバー -->
                   <tr>
                     <th>担当ドライバー</th>
-                    <th th:each="name : ${driverName}" th:text="${name.getName()}"></th>
+                    <th th:each="name : ${driverName}" th:text="${name.getLastName()}"></th>
                     <th></th>
                   </tr>
                   <!-- 日付と勤怠と出勤者数-->
