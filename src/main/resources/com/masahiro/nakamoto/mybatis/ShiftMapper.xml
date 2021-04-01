@@ -16,8 +16,14 @@
 </resultMap>
 
 <resultMap type="com.masahiro.nakamoto.domain.Driver" id="driver">
-  <result column="last_name" property="name" />
+  <result column="last_name" property="lastName" />
   <result column="course" property="courseId" />
+</resultMap>
+
+<resultMap type="com.masahiro.nakamoto.domain.shift.Today" id="today">
+  <result column="is_Attendance" property="isAttendance" />
+  <result column="course" property="courseId" />
+  <result column="area_id" property="areaId" />
 </resultMap>
 
   <!-- 指定した拠点のコース数とドライバー数を取得 -->
@@ -39,6 +45,22 @@
     drivers
     WHERE
     area_id = #{area}
+  </select>
+
+    <!-- 今日のシフトを検索 -->
+  <select id="findTodayShift" resultMap="today">
+    SELECT
+    is_attendance,
+    course,
+    area_id
+    FROM
+    attendances
+    INNER JOIN
+    drivers
+    ON
+    attendances.id = drivers.id
+    WHERE
+    attendances.id = #{id} AND date = #{date}
   </select>
 
   <!-- 全体のシフト検索 -->

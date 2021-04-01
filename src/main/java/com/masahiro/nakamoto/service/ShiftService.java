@@ -14,6 +14,8 @@ import com.masahiro.nakamoto.domain.Driver;
 import com.masahiro.nakamoto.domain.attendance.Attendance;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
 import com.masahiro.nakamoto.domain.shift.ShiftResult;
+import com.masahiro.nakamoto.domain.shift.Today;
+import com.masahiro.nakamoto.mybatis.AreaMapper;
 import com.masahiro.nakamoto.mybatis.ShiftMapper;
 
 @Service
@@ -23,8 +25,19 @@ public class ShiftService {
 	ShiftMapper shiftMapper;
 
 	@Autowired
+	AreaMapper areaMapper;
+
+	@Autowired
+	DateService dateService;
+
+	@Autowired
 	Course course;
 
+	public Today findTodayShift(String id) {
+		Today today = shiftMapper.findTodayShift(LocalDate.now(), id);
+		today.setAreaName(areaMapper.findAreaName(today.getAreaId()).getName());
+		return today;
+	}
 
 	/**
 	 * 指定したエリア・年月のシフトを検索する(シフト作成用)
@@ -45,6 +58,11 @@ public class ShiftService {
 		while (!first.equals(last.plusDays(1))) {
 			shiftForm.setDate(first);
 			attendancesList = shiftMapper.findAttendances(shiftForm);
+			//日付を曜日付きに変換
+			for (Attendance attendance : attendancesList) {
+				LocalDate ld = attendance.getDate();
+				attendance.setConvertedDate(dateService.couvertDate(ld));
+			}
 			ShiftResult shiftResult = new ShiftResult();
 			shiftResult.setAttendanceList(attendancesList);
 			shiftResult.setNumberOfTrue(shiftMapper.findNumberOfTrue(shiftForm));
@@ -78,6 +96,12 @@ public class ShiftService {
 		while (!first.equals(last.plusDays(1))) {
 			shiftForm.setDate(first);
 			attendancesList = shiftMapper.findAttendances(shiftForm);
+			//日付を曜日付きに変換
+			for (Attendance attendance : attendancesList) {
+				LocalDate ld = attendance.getDate();
+				attendance.setConvertedDate(dateService.couvertDate(ld));
+			}
+
 			ShiftResult shiftResult = new ShiftResult();
 			shiftResult.setAttendanceList(attendancesList);
 			shiftResult.setNumberOfTrue(shiftMapper.findNumberOfTrue(shiftForm));
@@ -111,6 +135,11 @@ public class ShiftService {
 		while (!first.equals(last.plusDays(1))) {
 			shiftForm.setDate(first);
 			attendancesList = shiftMapper.findCourseAttendances(shiftForm, course);
+			//日付を曜日付きに変換
+			for (Attendance attendance : attendancesList) {
+				LocalDate ld = attendance.getDate();
+				attendance.setConvertedDate(dateService.couvertDate(ld));
+			}
 			ShiftResult shiftResult = new ShiftResult();
 			shiftResult.setAttendanceList(attendancesList);
 			shiftResult.setNumberOfTrue(shiftMapper.findNumberOfTrue(shiftForm));

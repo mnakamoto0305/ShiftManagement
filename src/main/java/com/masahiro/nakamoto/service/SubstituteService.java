@@ -14,6 +14,9 @@ import com.masahiro.nakamoto.domain.Substitute;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
 import com.masahiro.nakamoto.mybatis.ShiftMapper;
 
+/**
+ * 代走ドライバーが走るコースを特定するサービス
+ */
 @Service
 public class SubstituteService {
 

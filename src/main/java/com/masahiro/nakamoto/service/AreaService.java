@@ -15,8 +15,13 @@ public class AreaService {
 	AreaMapper areaMapper;
 
 	@Transactional
-	public Area findAreaName(int areaId) {
+	public Area findAreaName(Integer areaId) {
 		return areaMapper.findAreaName(areaId);
+	}
+
+	@Transactional
+	public Integer findAreaId(String id) {
+		return areaMapper.findAreaId(id);
 	}
 
 }

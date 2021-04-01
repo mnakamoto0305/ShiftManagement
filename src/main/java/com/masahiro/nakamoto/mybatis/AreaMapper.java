@@ -7,6 +7,14 @@ import com.masahiro.nakamoto.domain.Area;
 @Mapper
 public interface AreaMapper {
 
-	public Area findAreaName(int areaId);
+	/**
+	 * 指定した拠点コードの拠点名を検索
+	 *
+	 * @param areaId
+	 * @return
+	 */
+	public Area findAreaName(Integer areaId);
+
+	public Integer findAreaId(String id);
 
 }
