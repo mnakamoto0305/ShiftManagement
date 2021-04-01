@@ -38,7 +38,7 @@
                   <!-- 日付と勤怠 -->
                   <tr th:each="date, stat : *{multiAttendances}">
                     <!-- 日付 -->
-	                  <td th:text="*{multiAttendances[__${stat.index}__].attendanceList[0].date}"></td>
+	                  <td th:text="*{multiAttendances[__${stat.index}__].attendanceList[0].convertedDate}"></td>
 	                  <!-- 勤怠 -->
 	                  <td th:each="course, st : *{multiAttendances[__${stat.index}__].attendanceList}">
 		                    <th:block>

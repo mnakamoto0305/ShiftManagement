@@ -9,6 +9,8 @@ public class Attendance {
 
 	private LocalDate date;
 
+	private String convertedDate;
+
 	private Boolean isAttendance;
 
 	private String id;
@@ -35,6 +37,14 @@ public class Attendance {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getConvertedDate() {
+		return convertedDate;
+	}
+
+	public void setConvertedDate(String convertedDate) {
+		this.convertedDate = convertedDate;
 	}
 
 }

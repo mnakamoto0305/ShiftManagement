@@ -40,7 +40,7 @@
                   <!-- 日付と勤怠と出勤者数-->
                   <tr th:each="date, stat : *{multiAttendances}">
                     <!-- 日付 -->
-                    <td th:text="*{multiAttendances[__${stat.index}__].attendanceList[0].date}"></td>
+                    <td th:text="*{multiAttendances[__${stat.index}__].attendanceList[0].convertedDate}"></td>
                     <!-- 通常ドライバーの勤怠 -->
                     <td th:each="course, st : *{multiAttendances[__${stat.index}__].attendanceList}">
                       <th:block th:with="isAttendanceReverse = (!*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance} == true ? '◯' : '✕')">
