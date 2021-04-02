@@ -65,6 +65,7 @@
 
               <div class="box_demo">
                 <div type="text" id="js-datepicker">
+                  <p th:text="${message}" class="text-danger"></p>
                   <form th:action="@{/register/attendances}" method="post" th:object="${registerHolidayForm}" id="registerHoliday">
 	                  <div th:classappend="${#fields.hasErrors('holiday')}?'has-error'">
 		                  <input type="hidden" id="datepickerValue" th:field="*{holiday}">
