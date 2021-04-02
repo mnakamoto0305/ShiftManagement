@@ -55,11 +55,13 @@ public class ShiftService {
 		List<ShiftResult> multiAttendances = new ArrayList<>();
 		List<Attendance> attendancesList;
 
+		int totalDrivers = findCourseInfo(shiftForm).getTotalDrivers();
+
 		//各コースの勤怠を月初から月末までのループで取得
 		while (!first.equals(last.plusDays(1))) {
 			shiftForm.setDate(first);
 			attendancesList = shiftMapper.findAttendances(shiftForm);
-			if (attendancesList.size() == 0) {
+			if (attendancesList.size() != totalDrivers) {
 				throw new Exception();
 			}
 			//日付を曜日付きに変換
