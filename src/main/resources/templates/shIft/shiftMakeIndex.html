@@ -21,6 +21,7 @@
 	          <form th:action="@{/admin/shift_make}" method="post"
 	            id="findShift">
 	            <div class="form-group">
+	              <p th:text="${message}" class="text-danger"></p>
 	              <label>作成したい拠点を選択してください。</label>
 	              <select name="area" th:field="*{area}">
 	                <option value="1">江東</option>
