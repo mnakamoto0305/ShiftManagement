@@ -1,12 +1,13 @@
 package com.masahiro.nakamoto.service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.masahiro.nakamoto.domain.Course;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
@@ -21,15 +22,21 @@ public class HomeService {
 	@Autowired
 	ShiftMapper shiftMapper;
 
-	@Transactional
+	/**
+	 * 代走ドライバーが走るコースをマッピングする(1日分)
+	 *
+	 * @param shiftForm
+	 * @param course
+	 * @return
+	 */
 	public Map<Integer, Integer> findSubstituteShift(ShiftForm shiftForm, Course course) {
 
+		//通常コースで休みのドライバーを取得
 		List<Integer> holidayDriver = shiftMapper.findHolidayDriver(shiftForm, course);
+		//代走ドライバの勤怠を取得
 		List<Integer> attendances = shiftMapper.findSubstituteShift(shiftForm, course);
 
-		System.out.println(holidayDriver);
-		System.out.println(attendances);
-
+		//代走ドライバーの出勤日に走るコースをマッピング
 		Map<Integer, Integer> substituteMap = new HashMap<>();
 		int count = 0;
 		int courseId = course.getTotalCourses() + 1;
@@ -44,6 +51,42 @@ public class HomeService {
 		}
 
 		return substituteMap;
+	}
+
+	/**
+	 * 代走ドライバーが走るコースをマッピングする(1月分)
+	 *
+	 * @param shiftForm
+	 * @param course
+	 * @param id
+	 * @return
+	 */
+	public List<Map<Integer, Integer>> findSubstituteShiftMonth(ShiftForm shiftForm, Course course) {
+		//月初と月末の指定
+		LocalDate first = LocalDate.now().withDayOfMonth(1);
+		LocalDate last = first.plusMonths(1).minusDays(1);
+
+		List<Map<Integer, Integer>> mapList = new ArrayList<>();
+
+		while (!first.equals(last.plusDays(1))) {
+			shiftForm.setDate(first);
+			Map<Integer, Integer> substituteMap = findSubstituteShift(shiftForm, course);
+			mapList.add(substituteMap);
+			first = first.plusDays(1);
+		}
+
+		return mapList;
+
+	}
+
+	public List<Integer> findCourse(List<Map<Integer, Integer>> mapList, int courseId) {
+		List<Integer> list = new ArrayList<>();
+
+		for (Map<Integer, Integer> map : mapList) {
+			list.add(map.get(courseId));
+		}
+
+		return list;
 	}
 
 }

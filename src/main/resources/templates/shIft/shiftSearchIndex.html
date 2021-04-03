@@ -20,10 +20,10 @@
 					<form th:action="@{/admin/shift_result}" method="post"
 						id="findShift" th:object="${shiftForm}">
 						<div class="form-group">
-						  <p class="text-danger" th:text="${message}"></p>
+						  <p class="text-danger" th:text="${message1}"></p>
+						  <p class="text-danger" th:text="${message2}"></p>
 							<label>確認したい拠点を選択してください。</label>
-							<select name="area"
-								th:field="*{area}">
+							<select name="area" th:field="*{area}" class="form-control">
 								<option value="1">江東</option>
 								<option value="2">江戸川</option>
 								<option value="3">墨田</option>
@@ -34,9 +34,9 @@
 						<div class="form-group">
 							<label>確認したい年/月を入力してください</label>
 							<!-- <input type="text" class="form-control" th:field="*{designatedDate}"> -->
-							<select name="year" id="id_year" th:field="*{year}">
+							<select name="year" id="id_year" th:field="*{year}" class="form-control">
 				      </select>
-							<select name="month" id="id_month" th:field="*{month}">
+							<select name="month" id="id_month" th:field="*{month}" class="form-control">
 							   <option value="01">1月</option>
 							   <option value="02">2月</option>
 							   <option value="03">3月</option>
@@ -144,9 +144,9 @@
             <div class="form-group">
               <label>確認したい年/月を入力してください</label>
               <!-- <input type="text" class="form-control" th:field="*{designatedDate}"> -->
-              <select name="year" id="id_year" th:field="*{year}">
+              <select name="year" id="id_year" th:field="*{year}" class="form-control">
               </select>
-              <select name="month" id="id_month" th:field="*{month}">
+              <select name="month" id="id_month" th:field="*{month}" class="form-control">
                  <option value="01">1月</option>
                  <option value="02">2月</option>
                  <option value="03">3月</option>

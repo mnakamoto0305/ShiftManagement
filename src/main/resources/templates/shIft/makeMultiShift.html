@@ -62,7 +62,7 @@
 		               <!-- 出勤日数 -->
 		               <tr>
 		                <td>出勤日数</td>
-		                <td th:each="total, st : ${totalAttendance}" th:text="${totalAttendance[__${st.index}__]}"></td>
+			                <td th:each="total, st : ${totalAttendance}" th:text="${totalAttendance[__${st.index}__]}" th:styleappend="${__${monthNum}__ - __${total}__ < 8} ? 'color:#FF0000;'"></td>
 		                <td></td>
 		               </tr>
                 </table>

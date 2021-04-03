@@ -56,6 +56,13 @@ public class HomeController {
 	@Autowired
 	Driver driver;
 
+	/**
+	 * ログイン後のホーム画面を表示
+	 *
+	 * @param model
+	 * @param principal
+	 * @return
+	 */
 	@GetMapping ("/")
 	public String getHome(Model model, Principal principal) {
 		//社員IDの取得

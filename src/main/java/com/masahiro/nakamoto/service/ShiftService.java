@@ -67,7 +67,7 @@ public class ShiftService {
 			//日付を曜日付きに変換
 			for (Attendance attendance : attendancesList) {
 				LocalDate ld = attendance.getDate();
-				attendance.setConvertedDate(dateService.couvertDate(ld));
+				attendance.setConvertedDate(dateService.convertDate(ld));
 			}
 			ShiftResult shiftResult = new ShiftResult();
 			shiftResult.setAttendanceList(attendancesList);
@@ -106,7 +106,7 @@ public class ShiftService {
 			//日付を曜日付きに変換
 			for (Attendance attendance : attendancesList) {
 				LocalDate ld = attendance.getDate();
-				attendance.setConvertedDate(dateService.couvertDate(ld));
+				attendance.setConvertedDate(dateService.convertDate(ld));
 			}
 			ShiftResult shiftResult = new ShiftResult();
 			shiftResult.setAttendanceList(attendancesList);
@@ -144,7 +144,7 @@ public class ShiftService {
 			//日付を曜日付きに変換
 			for (Attendance attendance : attendancesList) {
 				LocalDate ld = attendance.getDate();
-				attendance.setConvertedDate(dateService.couvertDate(ld));
+				attendance.setConvertedDate(dateService.convertDate(ld));
  			}
 			ShiftResult shiftResult = new ShiftResult();
 			shiftResult.setAttendanceList(attendancesList);

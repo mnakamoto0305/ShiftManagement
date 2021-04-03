@@ -17,19 +17,33 @@ public class DateService {
 	public String getToday() {
 		LocalDate ld = LocalDate.now();
 
-        DateTimeFormatter formmater = DateTimeFormatter.ofPattern("yyyy年MM月dd日(E)", Locale.JAPANESE);
+		DateTimeFormatter formmater = DateTimeFormatter.ofPattern("yyyy年MM月dd日(E)", Locale.JAPANESE);
 
-        String today = ld.format(formmater);
+		String today = ld.format(formmater);
 
-        return today;
+		return today;
 	}
 
-	public String couvertDate(LocalDate date) {
+	/**
+	 * yy/MM/dd形式の日付に曜日情報を追加
+	 *
+	 * @param date
+	 * @return
+	 */
+	public String convertDate(LocalDate date) {
 		DateTimeFormatter formmater = DateTimeFormatter.ofPattern("MM月dd日(E)", Locale.JAPANESE);
 
 		String convertedDate = date.format(formmater);
 
 		return convertedDate;
+	}
+
+	public int getMonthNum() {
+		LocalDate thisMonth = LocalDate.now().plusMonths(1);
+
+		int monthNum = thisMonth.lengthOfMonth();
+
+		return monthNum;
 	}
 
 }
