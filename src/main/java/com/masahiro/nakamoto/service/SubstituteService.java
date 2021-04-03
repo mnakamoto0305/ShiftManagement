@@ -98,7 +98,6 @@ public class SubstituteService {
 		int a = 0;
 		for (List<Integer> booleanList : booleanLists) {
 			int b = 0;
-			//System.out.println(booleanList);
 			List<Integer> substitute = new ArrayList<>();
 			int count = 0;
 			for (int i = totalCourses + 1; i < totalDrivers + 1; i++) {
