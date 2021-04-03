@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.masahiro.nakamoto.mybatis.CourseMapper">
+
+<!-- マッピング定義 -->
+<resultMap type="com.masahiro.nakamoto.domain.Course" id="area">
+  <result column="area_name" property="name" />
+</resultMap>
+
+
+  <!-- 指定したドライバーの担当コースを検索 -->
+  <select id="findCourseId" resultType="_int">
+    SELECT
+    course
+    FROM
+    drivers
+    WHERE
+    id = #{id}
+  </select>
+
+</mapper>

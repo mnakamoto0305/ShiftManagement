@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.masahiro.nakamoto.mybatis.ShiftMapper">
+
+<!-- マッピング定義 -->
+<resultMap type="com.masahiro.nakamoto.domain.attendance.Attendance" id="attendance">
+  <id column="date" property="date" />
+  <result column="is_attendance" property="isAttendance" />
+  <result column="id" property="id" />
+</resultMap>
+
+<resultMap type="com.masahiro.nakamoto.domain.Course" id="course">
+  <result column="total_courses" property="totalCourses" />
+  <result column="total_drivers" property="totalDrivers" />
+</resultMap>
+
+<resultMap type="com.masahiro.nakamoto.domain.Driver" id="driver">
+  <result column="last_name" property="lastName" />
+  <result column="course" property="courseId" />
+</resultMap>
+
+<resultMap type="com.masahiro.nakamoto.domain.shift.Today" id="today">
+  <result column="is_Attendance" property="isAttendance" />
+  <result column="course" property="courseId" />
+  <result column="area_id" property="areaId" />
+</resultMap>
+
+  <!-- 指定した拠点のコース数とドライバー数を取得 -->
+  <select id="findCourseInfo" resultMap="course">
+    SELECT
+    total_courses,
+    total_drivers
+    FROM
+    areas
+    WHERE
+    id = #{area}
+  </select>
+
+  <!-- 指定したコースのドライバー名を取得 -->
+  <select id="findDriverName" resultMap="driver">
+    SELECT
+    last_name
+    FROM
+    drivers
+    WHERE
+    area_id = #{area}
+  </select>
+
+    <!-- 今日のシフトを検索 -->
+  <select id="findTodayShift" resultMap="today">
+    SELECT
+    is_attendance,
+    course,
+    area_id
+    FROM
+    attendances
+    INNER JOIN
+    drivers
+    ON
+    attendances.id = drivers.id
+    WHERE
+    attendances.id = #{id} AND date = #{date}
+  </select>
+
+  <!-- 全体のシフト検索 -->
+  <select id="findAttendances" resultMap="attendance">
+    SELECT
+    *
+    FROM
+    attendances
+    INNER JOIN
+    drivers
+    ON
+    attendances.id = drivers.id
+    WHERE
+    area_id = #{area} AND date = #{date}
+    ORDER BY
+    course
+  </select>
+
+  <!-- 通常コースのシフト検索 -->
+  <select id="findCourseAttendances" resultMap="attendance">
+    <![CDATA[
+	    SELECT
+	    *
+	    FROM
+	    attendances
+	    INNER JOIN
+	    drivers
+	    ON
+	    attendances.id = drivers.id
+	    WHERE
+	    area_id = #{shiftForm.area} AND date = #{shiftForm.date} AND (course <= #{course.totalCourses})
+	    ORDER BY
+	    course
+	  ]]>
+  </select>
+
+  <!-- 代走ドライバーのシフト検索 -->
+  <select id="findSubstituteAttendances" resultMap="attendance">
+    <![CDATA[
+      SELECT
+      *
+      FROM
+      attendances
+      INNER JOIN
+      drivers
+      ON
+      attendances.id = drivers.id
+      WHERE
+      area_id = #{shiftForm.area} AND date = #{shiftForm.date} AND (course > #{course.totalCourses})
+      ORDER BY
+      course
+    ]]>
+  </select>
+
+ <!-- 代走ドライバーの出勤情報を取得  -->
+  <select id="findSubstituteShift" resultType="integer">
+    SELECT
+    is_attendance
+    FROM
+    attendances
+    INNER JOIN
+    drivers
+    ON
+    attendances.id = drivers.id
+    WHERE
+    date = #{shiftForm.date} AND (course > #{course.totalCourses}) AND area_id = #{shiftForm.area}
+  </select>
+
+  <!-- 1人分のシフト検索(月単位) -->
+  <select id="findMonthShift" resultMap="attendance">
+    SELECT
+    *
+    FROM
+    attendances
+    INNER JOIN
+    drivers
+    ON
+    attendances.id = drivers.id
+    WHERE
+    attendances.id = #{id} AND (date BETWEEN #{first} AND #{last})
+  </select>
+
+  <!-- その日の出勤者数を検索 -->
+  <select id="findNumberOfTrue" resultType="_int">
+    SELECT
+    count(*)
+    FROM
+    attendances
+    INNER JOIN
+    drivers
+    ON
+    attendances.id = drivers.id
+    WHERE
+    area_id = #{area} AND date = #{date} AND is_attendance = true
+  </select>
+
+  <!-- 各ドライバーの出勤日数を検索(エリア全体) -->
+  <select id="findTotal" resultType="_int">
+    SELECT
+    count(*)
+    FROM
+    attendances
+    INNER JOIN
+    drivers
+    ON
+    attendances.id = drivers.id
+    WHERE
+    area_id = #{area} AND (date BETWEEN #{first} AND #{last}) AND course = #{courseId} AND is_attendance = true
+  </select>
+
+  <!-- 各ドライバーの出勤日数を検索(1人分) -->
+  <select id="findWorkingDays" resultType="_int">
+    SELECT
+    count(*)
+    FROM
+    attendances
+    INNER JOIN
+    drivers
+    ON
+    attendances.id = drivers.id
+    WHERE
+    attendances.id = #{id} AND (date BETWEEN #{first} AND #{last}) AND is_attendance = true
+  </select>
+
+  <!-- 通常コースが休みのドライバーを検索 -->
+  <select id="findHolidayDriver" resultType="integer">
+	  <![CDATA[
+	    SELECT
+	    course
+	    FROM
+	    attendances
+	    INNER JOIN
+	    drivers
+	    ON
+	    attendances.id = drivers.id
+	    WHERE
+	    area_id = #{shiftForm.area} AND date = #{shiftForm.date} AND is_attendance = false AND (course <= #{course.totalCourses})
+	  ]]>
+  </select>
+
+  <!-- 1人分のシフトを一括更新 -->
+  <update id="updateAttendances">
+    UPDATE attendances
+      SET is_attendance = elt(field(id,
+      <foreach collection="attendancesList" item="list" separator=",">
+        #{list.id}
+      </foreach>
+      ),
+      <foreach collection="attendancesList" item="list" separator=",">
+        #{list.isAttendance}
+      </foreach>
+      )
+      WHERE
+        id IN (
+        <foreach collection="attendancesList" item="list" separator=",">
+          #{list.id}
+        </foreach>
+        )
+        AND
+        date IN (
+        <foreach collection="attendancesList" item="list" separator=",">
+          #{list.date}
+        </foreach>
+        )
+  </update>
+
+</mapper>

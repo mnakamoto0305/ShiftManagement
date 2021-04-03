@@ -31,6 +31,10 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+	implementation 'javax.validation:validation-api:2.0.1.Final'
+  runtimeOnly 'org.hibernate.validator:hibernate-validator:6.0.17.Final'
+  implementation 'org.webjars:jquery:3.5.0'
+  implementation 'org.webjars:bootstrap:4.4.1-1'
 }
 
 test {

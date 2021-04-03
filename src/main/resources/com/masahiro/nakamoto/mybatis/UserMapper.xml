@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.masahiro.nakamoto.mybatis.UserMapper">
+
+<!-- マッピ　ング定義 -->
+<resultMap type="com.masahiro.nakamoto.domain.SiteUser" id="user">
+  <result column="id" property="id" />
+  <result column="password" property="password" />
+  <result column="pass_update_date" property="passUpdateDate" />
+  <result column="login_miss_times" property="loginMissTimes" />
+  <result column="unlock" property="unlock" />
+  <result column="enabled" property="enabled" />
+  <result column="user_due_date" property="userDueDate" />
+  <result column="role" property="role" />
+</resultMap>
+
+<select id="identifyUser" resultMap="user">
+  SELECT
+    *
+  FROM
+    users
+  WHERE
+    id = #{id}
+</select>
+
+</mapper>

@@ -1,0 +1,50 @@
+<!-- Main Sidebar Container -->
+<aside th:fragment="side_menu" class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="/" class="brand-link">
+    <span class="brand-text font-weight-light">シフト管理アプリ</span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item">
+          <a th:href="@{/attendances}" class="nav-link">
+            <p>休み希望提出</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a th:href="@{/confirm/holiday}" class="nav-link">
+            <p>休み希望確認</p>
+          </a>
+        </li>
+       <li class="nav-item">
+          <a th:href="@{/shift_search}" class="nav-link">
+            <p>シフト確認</p>
+          </a>
+        </li>
+       <li class="nav-item">
+          <a th:href="@{/}" class="nav-link">
+            <p>請求書作成</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a th:href="@{'/logout'}" class="nav-link">
+            <p>ログアウト</p>
+          </a>
+        </li>
+        <th:block sec:authorize="hasRole('ADMIN')">
+	        <li class="nav-item">
+	          <a th:href="@{/admin}" class="nav-link">
+	            <p>管理者専用</p>
+	          </a>
+	        </li>
+        </th:block>
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>

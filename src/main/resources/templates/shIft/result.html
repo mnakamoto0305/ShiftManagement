@@ -1,0 +1,157 @@
+
+<div th:fragment="result">
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 th:text="|${year}年${month}月 ${area.name}|"></h1>
+          </div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-sm-12">
+              <!-- シフトを作成するフォーム -->
+            <div th:if="${courseAttendances}" class="container">
+              <div th:object="${courseAttendances}">
+                <table class="table table-hover">
+                  <!-- コース番号 -->
+                  <tr th:object="${course}">
+                    <th:block th:with="totalCourses = *{totalCourses}"></th:block>
+                    <th scope="col"></th>
+                    <th scope="col" th:each="i : ${#numbers.sequence(1, __*{totalDrivers}__)}" th:text="${__${i}__ <= __${totalCourses}__ }? |${i}コース| : '代走'"></th>
+                    <th>出勤者数</th>
+                  </tr>
+                  <!-- 担当ドライバー -->
+                  <tr>
+                    <th>担当ドライバー</th>
+                    <th th:each="name : ${driverName}" th:text="${name.getLastName()}"></th>
+                    <th></th>
+                  </tr>
+                  <!-- 日付と勤怠と出勤者数-->
+                  <tr th:each="date, stat : *{multiAttendances}">
+                    <!-- 日付 -->
+                    <td th:text="*{multiAttendances[__${stat.index}__].attendanceList[0].convertedDate}"></td>
+                    <!-- 通常ドライバーの勤怠 -->
+                    <td th:each="course, st : *{multiAttendances[__${stat.index}__].attendanceList}">
+                      <th:block th:with="isAttendanceReverse = (!*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance} == true ? '◯' : '✕')">
+                      <th:block th:with="isAttendance = (*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance} == true ? '◯' : '✕')">
+                      [[${isAttendance}]]
+                    </td>
+                    <!-- 代走ドライバーの勤怠 -->
+                    <td th:each="course, st : ${substituteList.get(__${stat.index}__)}">
+                      <th:block th:with="isAttendance = (${substituteList.get(__${stat.index}__).get(__${st.index}__)} == 0 ? '✕' : |${substituteList.get(__${stat.index}__).get(__${st.index}__)}コース|)">
+	                      [[${isAttendance}]]
+                      </th:block>
+                    </td>
+                    <!-- 出勤者数 -->
+                    <th:block th:with="numberOfTrue = *{multiAttendances[__${stat.index}__].numberOfTrue}">
+                      <td th:text="${numberOfTrue}" th:styleappend="${__${numberOfTrue}__ != __${totalCourses}__} ? 'color:#FF0000;'"></td>
+                    </th:block>
+                   </tr>
+                    <!-- 出勤日数 -->
+                   <tr>
+                    <td>出勤日数</td>
+                    <td th:each="total, st : ${totalAttendance}" th:text="${totalAttendance[__${st.index}__]}"></td>
+                    <td></td>
+                   </tr>
+                </table>
+              </div>
+              <div th:if="${shiftMonth} == ${thisMonth}">
+                <form th:action="@{/admin/shift_modify}" th:method="post" th:object="${shiftForm}">
+                  <input type="hidden" th:field="*{year}">
+                  <input type="hidden" th:field="*{month}">
+                  <input type="hidden" th:field="*{area}">
+                  <!-- <input type="hidden" th:field="*{}">  -->
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">修正する</button>
+                  </div>
+                </form>
+              </div>
+              <div th:if="${shiftMonth} gt ${thisMonth}">
+                <form th:action="@{/admin/shift_make}" th:method="post" th:object="${shiftForm}">
+                  <input type="hidden" th:field="*{year}">
+                  <input type="hidden" th:field="*{month}">
+                  <input type="hidden" th:field="*{area}">
+                  <!-- <input type="hidden" th:field="*{}">  -->
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">修正する</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!--/.col (left) -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+</div>
+
+
+<div th:fragment="resultForDriver">
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 th:text="|${year}年${month}月 シフト|"></h1>
+          </div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-sm-12">
+            <div th:if="${shiftResult}" class="container">
+              <!-- シフトを作成するテーブル -->
+              <table class="table table-hover" th:object=${shiftResult}>
+                <!-- 日付と勤怠と出勤者数-->
+                <tr th:each="attendance, stat : *{attendanceList}">
+                  <!-- 日付 -->
+                  <td th:text="*{attendanceList[__${stat.index}__].date}"></td>
+                  <!-- 勤怠 -->
+                  <td>
+                    <th:block th:with="isAttendanceReverse = (!*{attendanceList[__${stat.index}__].isAttendance} == true ? '◯' : '休')">
+                    <th:block th:with="isAttendance = (*{attendanceList[__${stat.index}__].isAttendance} == true ? '◯' : '休')">
+                    [[${isAttendance}]]
+                  </td>
+                 </tr>
+                  <!-- 出勤日数 -->
+                 <tr>
+                  <td>出勤日数</td>
+                  <td th:text=*{workingDays}></td>
+                 </tr>
+              </table>
+            </div>
+          </div>
+          <!--/.col (left) -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+</div>

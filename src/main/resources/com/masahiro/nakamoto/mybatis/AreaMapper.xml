@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.masahiro.nakamoto.mybatis.AreaMapper">
+
+<!-- マッピング定義 -->
+<resultMap type="com.masahiro.nakamoto.domain.Area" id="area">
+  <result column="area_name" property="name" />
+</resultMap>
+
+
+  <!-- 指定したIDの拠点名を検索 -->
+  <select id="findAreaName" resultMap="area">
+    SELECT
+    area_name
+    FROM
+    areas
+    WHERE
+    id = #{areaId}
+  </select>
+
+  <!-- 指定したドライバーが所属する拠点IDを検索 -->
+  <select id="findAreaId" resultType="integer">
+    SELECT
+    area_id
+    FROM
+    drivers
+    WHERE
+    id = #{id}
+  </select>
+
+</mapper>
