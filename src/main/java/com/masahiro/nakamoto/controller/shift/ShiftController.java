@@ -23,6 +23,7 @@ import com.masahiro.nakamoto.domain.attendance.MultiAttendances;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
 import com.masahiro.nakamoto.domain.shift.ShiftResult;
 import com.masahiro.nakamoto.service.AreaService;
+import com.masahiro.nakamoto.service.DateService;
 import com.masahiro.nakamoto.service.ShiftService;
 import com.masahiro.nakamoto.service.SubstituteService;
 
@@ -37,6 +38,9 @@ public class ShiftController {
 
 	@Autowired
 	SubstituteService substituteService;
+
+	@Autowired
+	DateService dateService;
 
 	@Autowired
 	Attendance attendance;
@@ -131,6 +135,14 @@ public class ShiftController {
 		return "main/adminLayout";
 	}
 
+	/**
+	 * ログインしているドライバーのシフトを表示
+	 *
+	 * @param model
+	 * @param shiftForm
+	 * @param principal
+	 * @return
+	 */
 	@PostMapping("/shift_result")
 	public String postShiftResult(Model model, @ModelAttribute ShiftForm shiftForm, Principal principal) {
 		//社員IDをセット
@@ -175,6 +187,9 @@ public class ShiftController {
 			//各ドライバーの出勤数をセット
 			List<Integer> totalAttendance = shiftService.findTotal(shiftForm);
 			model.addAttribute("totalAttendance", totalAttendance);
+			//その月の日数をセット
+			int monthNum = dateService.getMonthNum();
+			model.addAttribute("monthNum", monthNum);
 			//担当ドライバーの名前をセット
 			List<Driver> driverName = shiftService.findDriverName(shiftForm);
 			model.addAttribute("driverName", driverName);
