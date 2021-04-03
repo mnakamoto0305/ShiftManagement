@@ -126,7 +126,8 @@ public class ShiftController {
 			int thisMonth = LocalDate.now().getMonthValue();
 			model.addAttribute("thisMonth", thisMonth);
 		} catch (IndexOutOfBoundsException e) {
-			model.addAttribute("message", "指定した条件に合致するシフトは見つかりませんでした。");
+			model.addAttribute("message1", "指定した条件に合致するシフトは見つかりませんでした。");
+			model.addAttribute("message2", "来月のシフトが表示されない場合は、作成したシフトに不備がある可能性があります。");
 			model.addAttribute("contents", "shift/shiftSearchIndex :: shift_index");
 			return "main/adminLayout";
 		}
@@ -190,6 +191,8 @@ public class ShiftController {
 			//その月の日数をセット
 			int monthNum = dateService.getMonthNum();
 			model.addAttribute("monthNum", monthNum);
+			System.out.println(monthNum);
+			System.out.println(totalAttendance.get(0));
 			//担当ドライバーの名前をセット
 			List<Driver> driverName = shiftService.findDriverName(shiftForm);
 			model.addAttribute("driverName", driverName);

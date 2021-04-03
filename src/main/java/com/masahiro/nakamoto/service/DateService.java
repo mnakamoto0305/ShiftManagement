@@ -39,7 +39,7 @@ public class DateService {
 	}
 
 	public int getMonthNum() {
-		LocalDate thisMonth = LocalDate.now();
+		LocalDate thisMonth = LocalDate.now().plusMonths(1);
 
 		int monthNum = thisMonth.lengthOfMonth();
 
