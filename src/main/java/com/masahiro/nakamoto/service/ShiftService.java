@@ -44,9 +44,10 @@ public class ShiftService {
 	 *
 	 * @param shiftForm
 	 * @return
+	 * @throws Exception
 	 */
 	@Transactional
-	public List<ShiftResult> makeMultiAttendances(ShiftForm shiftForm) {
+	public List<ShiftResult> makeMultiAttendances(ShiftForm shiftForm) throws Exception {
 		//月初と月末の指定
 		LocalDate first = LocalDate.now().plusMonths(1).withDayOfMonth(1);
 		LocalDate last = first.plusMonths(1).minusDays(1);
@@ -54,10 +55,15 @@ public class ShiftService {
 		List<ShiftResult> multiAttendances = new ArrayList<>();
 		List<Attendance> attendancesList;
 
+		int totalDrivers = findCourseInfo(shiftForm).getTotalDrivers();
+
 		//各コースの勤怠を月初から月末までのループで取得
 		while (!first.equals(last.plusDays(1))) {
 			shiftForm.setDate(first);
 			attendancesList = shiftMapper.findAttendances(shiftForm);
+			if (attendancesList.size() != totalDrivers) {
+				throw new Exception();
+			}
 			//日付を曜日付きに変換
 			for (Attendance attendance : attendancesList) {
 				LocalDate ld = attendance.getDate();
@@ -69,6 +75,7 @@ public class ShiftService {
 			multiAttendances.add(shiftResult);
 			first = first.plusDays(1);
 		}
+
 
 		return multiAttendances;
 	}

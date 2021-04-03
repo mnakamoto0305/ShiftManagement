@@ -20,6 +20,7 @@
 					<form th:action="@{/admin/shift_result}" method="post"
 						id="findShift" th:object="${shiftForm}">
 						<div class="form-group">
+						  <p class="text-danger" th:text="${message}"></p>
 							<label>確認したい拠点を選択してください。</label>
 							<select name="area"
 								th:field="*{area}">
