@@ -86,6 +86,23 @@
 								  optionLoop(2020, this_year, 'id_year', this_year);
 								})();
 							</script>
+							<script>
+								oToday = new Date();
+								month = oToday.getMonth() + 1;
+								console.log(month);
+								oSelectMonth = document.getElementById('id_month');
+								index = -1;
+								for(var i=0; i<oSelectMonth.options.length; i++){
+								value = oSelectMonth.options[i].value;
+								console.log(value);
+								if(value == month){
+								index = i;
+								break;
+								}
+								}
+								console.log(index);
+								oSelectMonth.options[index].selected = true;
+							</script>
 						</div>
 						<div class="card-footer">
 							<button type="submit" class="btn btn-primary" form="findShift">確認</button>
@@ -178,6 +195,23 @@
                    */
                   optionLoop(2020, this_year, 'id_year', this_year);
                 })();
+              </script>
+              <script>
+                oToday = new Date();
+                month = oToday.getMonth() + 1;
+                console.log(month);
+                oSelectMonth = document.getElementById('id_month');
+                index = -1;
+                for(var i=0; i<oSelectMonth.options.length; i++){
+                value = oSelectMonth.options[i].value;
+                console.log(value);
+                if(value == month){
+                index = i;
+                break;
+                }
+                }
+                console.log(index);
+                oSelectMonth.options[index].selected = true;
               </script>
             </div>
             <div class="card-footer">
