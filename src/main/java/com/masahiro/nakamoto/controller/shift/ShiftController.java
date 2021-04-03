@@ -250,9 +250,8 @@ public class ShiftController {
 	public String postShiftUpdate(Model model, @ModelAttribute MultiAttendances multiAttendances) {
 		List<ShiftResult> shiftResult = multiAttendances.getMultiAttendances();
 		shiftService.updateAttendances(shiftResult);
-
-		model.addAttribute("contents", "admin/admin :: admin");
-		return "main/adminLayout";
+		//確認ボタンを押すと拠点検索フォームにリダイレクト
+		return "redirect:/admin/shift_make";
 	}
 
 }
