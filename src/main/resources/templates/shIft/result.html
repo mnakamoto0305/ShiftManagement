@@ -123,6 +123,7 @@
         <div class="row">
           <!-- left column -->
           <div class="col-sm-12">
+            <p th:text="${message}" class="text-danger"></p>
             <div th:if="${shiftResult}" class="container">
               <!-- シフトを作成するテーブル -->
               <table class="table table-hover" th:object=${shiftResult}>

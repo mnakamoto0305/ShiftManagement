@@ -21,12 +21,16 @@ import com.masahiro.nakamoto.domain.shift.ShiftForm;
 import com.masahiro.nakamoto.domain.shift.ShiftResult;
 import com.masahiro.nakamoto.mybatis.AttendancesMapper;
 import com.masahiro.nakamoto.service.AttendancesService;
+import com.masahiro.nakamoto.service.PositionService;
 
 @Controller
 public class AttendancesController {
 
 	@Autowired
 	AttendancesService attendancesService;
+
+	@Autowired
+	PositionService positionService;
 
 	@Autowired
 	AttendancesMapper attendancesMapper;
@@ -64,26 +68,33 @@ public class AttendancesController {
 		//社員IDの取得
 		Authentication auth = (Authentication)principal;
 		UserDetails user = (UserDetails) auth.getPrincipal();
-		shiftForm.setId(user.getUsername());
+		String id = user.getUsername();
+		shiftForm.setId(id);
 
-		ShiftResult shiftResult = attendancesService.findHoliday(shiftForm);
-		List<Attendance> attendanceList = shiftResult.getAttendanceList();
+		//役職を取得
+		int position = positionService.findPosition(id);
+		if (position == 1) {
+			model.addAttribute("message", "管理者は登録できません。");
+			return "attendances/attendances";
+		} else {
+			ShiftResult shiftResult = attendancesService.findHoliday(shiftForm);
+			List<Attendance> attendanceList = shiftResult.getAttendanceList();
 
-		if (attendanceList.size() == 0) {
-			if(!bindingResult.hasErrors()) {
-				//その月の勤怠をすべてtrueで登録する
-				attendancesService.registerAttendances(new Attendance(), user.getUsername());
-				//休み希望日の勤怠をfalseに更新する
-				attendancesService.registerHoliday(registerHolidayForm, new Attendance(), user.getUsername());
-				return "attendances/attendances";
+			if (attendanceList.size() == 0) {
+				if(!bindingResult.hasErrors()) {
+					//その月の勤怠をすべてtrueで登録する
+					attendancesService.registerAttendances(new Attendance(), user.getUsername());
+					//休み希望日の勤怠をfalseに更新する
+					attendancesService.registerHoliday(registerHolidayForm, new Attendance(), user.getUsername());
+					return "attendances/attendances";
+				} else {
+					return "attendances/attendances";
+				}
 			} else {
+				model.addAttribute("message", "来月の休み希望日は既に登録されています。");
 				return "attendances/attendances";
 			}
-		} else {
-			model.addAttribute("message", "来月の休み希望日は既に登録されています。");
-			return "attendances/attendances";
 		}
-
 	}
 
 	/**

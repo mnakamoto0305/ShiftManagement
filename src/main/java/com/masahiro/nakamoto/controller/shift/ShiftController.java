@@ -27,6 +27,7 @@ import com.masahiro.nakamoto.service.AreaService;
 import com.masahiro.nakamoto.service.CourseService;
 import com.masahiro.nakamoto.service.DateService;
 import com.masahiro.nakamoto.service.HomeService;
+import com.masahiro.nakamoto.service.PositionService;
 import com.masahiro.nakamoto.service.ShiftService;
 import com.masahiro.nakamoto.service.SubstituteService;
 
@@ -50,6 +51,9 @@ public class ShiftController {
 
 	@Autowired
 	HomeService homeService;
+
+	@Autowired
+	PositionService positionService;
 
 	@Autowired
 	Attendance attendance;
@@ -160,30 +164,38 @@ public class ShiftController {
 		UserDetails user = (UserDetails) auth.getPrincipal();
 		String id = user.getUsername();
 		shiftForm.setId(id);
-		//エリア情報を取得
-		int areaId = areaService.findAreaId(id);
-		shiftForm.setArea(areaId);
-		//コース情報を取得
-		course = shiftService.findCourseInfo(shiftForm);
-		int courseId = courseService.findCourseId(id);
-		int totalCourses = course.getTotalCourses();
+		//役職を取得
+		int position = positionService.findPosition(id);
 		//年月をセット
 		String year = shiftForm.getYear();
 		model.addAttribute("year", year);
 		String month = shiftForm.getMonth();
 		model.addAttribute("month", month);
-		//勤怠情報をセット
-		ShiftResult shiftResult = shiftService.findShift(shiftForm);
-		model.addAttribute("shiftResult", shiftResult);
 
-		//代走ドライバーの場合は走るコース番号をセット
-		if (courseId > totalCourses) {
-			List<Map<Integer, Integer>> listMap = homeService.findSubstituteShiftMonth(shiftForm, course);
-			List<Integer> list = homeService.findCourse(listMap, courseId);
-			model.addAttribute("list", list);
-			model.addAttribute("contents", "shift/result :: resultForSubstituteDriver");
-		} else {
+		if (position == 1) {
+			model.addAttribute("message", "確認できるシフトはありません。");
 			model.addAttribute("contents", "shift/result :: resultForNormalDriver");
+		} else {
+			//エリア情報を取得
+			int areaId = areaService.findAreaId(id);
+			shiftForm.setArea(areaId);
+			//コース情報を取得
+			course = shiftService.findCourseInfo(shiftForm);
+			int courseId = courseService.findCourseId(id);
+			int totalCourses = course.getTotalCourses();
+			//勤怠情報をセット
+			ShiftResult shiftResult = shiftService.findShift(shiftForm);
+			model.addAttribute("shiftResult", shiftResult);
+
+			//代走ドライバーの場合は走るコース番号をセット
+			if (courseId > totalCourses) {
+				List<Map<Integer, Integer>> listMap = homeService.findSubstituteShiftMonth(shiftForm, course);
+				List<Integer> list = homeService.findCourse(listMap, courseId);
+				model.addAttribute("list", list);
+				model.addAttribute("contents", "shift/result :: resultForSubstituteDriver");
+			} else {
+				model.addAttribute("contents", "shift/result :: resultForNormalDriver");
+			}
 		}
 
 		return "main/homeLayout";
