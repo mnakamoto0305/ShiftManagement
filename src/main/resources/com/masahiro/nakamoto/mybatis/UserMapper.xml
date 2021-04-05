@@ -3,25 +3,80 @@
 
 <mapper namespace="com.masahiro.nakamoto.mybatis.UserMapper">
 
-<!-- マッピ　ング定義 -->
-<resultMap type="com.masahiro.nakamoto.domain.SiteUser" id="user">
-  <result column="id" property="id" />
-  <result column="password" property="password" />
-  <result column="pass_update_date" property="passUpdateDate" />
-  <result column="login_miss_times" property="loginMissTimes" />
-  <result column="unlock" property="unlock" />
-  <result column="enabled" property="enabled" />
-  <result column="user_due_date" property="userDueDate" />
-  <result column="role" property="role" />
-</resultMap>
+	<!-- マッピ　ング定義 -->
+	<resultMap type="com.masahiro.nakamoto.domain.SiteUser" id="user">
+	  <result column="id" property="id" />
+	  <result column="password" property="password" />
+	  <result column="pass_update_date" property="passUpdateDate" />
+	  <result column="login_miss_times" property="loginMissTimes" />
+	  <result column="unlock" property="unlock" />
+	  <result column="enabled" property="enabled" />
+	  <result column="user_due_date" property="userDueDate" />
+	  <result column="role" property="role" />
+	</resultMap>
 
-<select id="identifyUser" resultMap="user">
-  SELECT
-    *
-  FROM
-    users
-  WHERE
-    id = #{id}
-</select>
+	<resultMap type="com.masahiro.nakamoto.domain.Employee" id="employee">
+	  <id column="id" property="id" />
+	  <result column="last_name" property="lastName" />
+	  <result column="first_name" property="firstName" />
+	  <result column="position_id" property="positionId" />
+	  <result column="sex" property="sex" />
+	  <result column="date_of_birth" property="dateOfBirth" />
+	  <result column="phone_number" property="phoneNumber" />
+	  <result column="postal_code" property="postalCode" />
+	  <result column="address" property="address" />
+	  <result column="join_date" property="joinDate" />
+	  <result column="password" property="password" />
+	  <result column="pass_update_date" property="passUpdateDate" />
+	  <result column="role" property="role" />
+	</resultMap>
+
+	<select id="identifyUser" resultMap="user">
+	  SELECT
+	    id,
+	    password,
+	    role,
+	    pass_update_date
+	  FROM
+	    users
+	  WHERE
+	    id = #{id}
+	</select>
+
+  <!-- 社員情報の追加 -->
+  <insert id="createEmployee">
+    INSERT INTO users (
+      id,
+      password,
+      role,
+      position_id,
+      pass_update_date
+    )
+    VALUES (
+      #{id},
+      #{password},
+      #{role},
+      #{positionId},
+      NOW()
+    )
+  </insert>
+
+  <!-- 社員情報を更新 -->
+  <update id="updateEmployee">
+    UPDATE
+      users
+    SET
+      id = #{id},
+      password = #{password},
+      role = #{role},
+      pass_update_date = NOW()
+    WHERE
+      id = #{previousId}
+  </update>
+
+  <!-- 社員情報を削除 -->
+  <delete id="deleteEmployee">
+    DELETE FROM employees WHERE id = #{id}
+  </delete>
 
 </mapper>

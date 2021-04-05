@@ -1,0 +1,142 @@
+<div th:fragment="update">
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>社員更新</h1>
+          </div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-sm-12">
+            <div class="card" th:object="${employee}">
+              <div class="card-header">
+                <h3 class="card-title">下記の項目を修正して「更新」ボタンを押してください。</h3>
+              </div>
+              <!-- /.card-header -->
+              <form th:action="@{/update/{id}(id=${employee.id})}" method="POST" th:object="${employee}">
+                  <div class="card-body">
+
+                    <div class="form-group">
+                      <label for="lastName">名字</label>
+                      <input type="text" name="lastName" th:field=${employee.lastName} id="lastName" class="form-control">
+                      <div th:if="${#fields.hasErrors('lastName')}" th:errors="${employee.lastName}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="firstName">名前</label>
+                      <input type="text" name="firstName" th:field=${employee.firstName} id="firstName" class="form-control">
+                      <div th:if="${#fields.hasErrors('firstName')}" th:errors="${employee.firstName}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="id">メールアドレス</label>
+                      <input type="email" name="id" th:field=${employee.id} id="id" class="form-control">
+                      <div th:if="${#fields.hasErrors('id')}" th:errors="${employee.id}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="id">メールアドレス(再入力)</label>
+                      <input type="email" name="idConfirm" th:field=${employee.idConfirm} id="idConfirm" class="form-control">
+                      <div th:if="${#fields.hasErrors('idConfirm')}" th:errors="${employee.idConfirm}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="password">初期パスワード</label>
+                      <input type="password" name="password" th:field=${employee.password} id="password" class="form-control">
+                      <div th:if="${#fields.hasErrors('password')}" th:errors="${employee.password}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="passwordConfirm">初期パスワード(確認用)</label>
+                      <input type="password" name="passwordConfirm" th:field=${employee.passwordConfirm} id="passwordConfirm" class="form-control">
+                      <div th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="${employee.passwordConfirm}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="sex">性別</label>
+                      <select name="sex" id="sex" class="form-control">
+                        <option value="">選択してください</option>
+                        <option value="1" th:selected="${employee.sex == '1'}">男性</option>
+                        <option value="2" th:selected="${employee.sex == '2'}">女性</option>
+                        <option value="9" th:selected="${employee.sex == '9'}">その他</option>
+                        <option value="0" th:selected="${employee.sex == '0'}">不明</option>
+                      </select>
+                      <div th:if="${#fields.hasErrors('sex')}" th:errors="${employee.sex}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="phoneNumber">電話番号</label>
+                      <input type="text" name="phoneNumber" th:field="${employee.phoneNumber}" id="phoneNumber"
+                        class="form-control">
+                      <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="${employee.phoneNumber}"
+                        class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="birthday">生年月日</label>
+                      <input type="text" name="dateOfBirth" th:field=${employee.dateOfBirth} id="dateOfBirth" class="form-control">
+                      <div th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="${employee.dateOfBirth}" class="has-error text-danger">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="postalCode">郵便番号</label>
+                      <input type="text" name="postalCode" th:field="${employee.postalCode}" id="postalCode" class="form-control" size="10" maxlength="8" onKeyUp="AjaxZip3.zip2addr(this,'','address','address');">
+                      <div th:if="${#fields.hasErrors('postalCode')}" th:errors="${employee.postalCode}"
+                        class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="address">住所</label>
+                      <input type="text" name="address" th:field="${employee.address}" id="address"
+                        class="form-control" size="60">
+                      <div th:if="${#fields.hasErrors('address')}" th:errors="${employee.address}" class="has-error text-danger">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="joinDate">入社日</label>
+                      <input type="text" name="joinDate" th:field=${employee.joinDate} id="joinDate" class="form-control">
+                      <div th:if="${#fields.hasErrors('joinDate')}" th:errors="${employee.joinDate}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="role">権限</label>
+                      <select name="role" id="roole" class="form-control">
+                        <option value="">選択してください</option>
+                        <option value="ADMIN" th:selected="${employee.role == 'ADMIN'}">ADMIN</option>
+                        <option value="USER" th:selected="${employee.role == 'USER'}">USER</option>
+                      </select>
+                      <div th:if="${#fields.hasErrors('role')}" th:errors="${employee.sex}" class="has-error text-danger"></div>
+                    </div>
+
+                  </div>
+                  <!-- /.card-body -->
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">更新</button>
+                  </div>
+                </form>
+              <!-- /.card-body -->
+            </div>
+          </div>
+          <!--/.col (left) -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+</div>

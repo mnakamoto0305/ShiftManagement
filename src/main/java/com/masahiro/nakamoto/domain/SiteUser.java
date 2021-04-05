@@ -28,25 +28,8 @@ public class SiteUser implements UserDetails {
 	private Date passUpdateDate;
 
 	/**
-	 * ログイン失敗回数
+	 * 権限
 	 */
-	private int loginMissTimes;
-
-	/**
-	 * ロック有無
-	 */
-	private boolean unlock;
-
-	/**
-	 * 利用可否
-	 */
-	private boolean enabled;
-
-	/**
-	 * ユーザー有効期限
-	 */
-	private Date userDueDate;
-
 	private String role;
 
 	/**
@@ -74,34 +57,25 @@ public class SiteUser implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO 自動生成されたメソッド・スタブ
-		if(this.userDueDate.after(new Date())) {
-			return true;
-		} else {
-			return false;
-		}
+		return false;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
 		// TODO 自動生成されたメソッド・スタブ
-		return this.unlock;
+		return false;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
 		// TODO 自動生成されたメソッド・スタブ
-		if(this.passUpdateDate.after(new Date())) {
-			return true;
-		} else {
-			return false;
-		}
+		return false;
 	}
 
 	@Override
 	public boolean isEnabled() {
 		// TODO 自動生成されたメソッド・スタブ
-		return this.enabled;
+		return false;
 	}
 
 }

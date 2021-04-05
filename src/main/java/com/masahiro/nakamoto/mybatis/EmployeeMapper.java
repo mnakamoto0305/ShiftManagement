@@ -1,27 +1,28 @@
 package com.masahiro.nakamoto.mybatis;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.masahiro.nakamoto.domain.Employee;
-import com.masahiro.nakamoto.domain.SiteUser;
 
 @Mapper
-public interface UserMapper {
+public interface EmployeeMapper {
 
 	/**
-	 * 入力されたIDからUser情報を取得
-	 *
-	 * @param id
-	 * @return
+	 * 社員情報の全件検索
 	 */
-	public SiteUser identifyUser(String id);
+	public List<Employee> findAll();
 
 	/**
-	 * 社員情報を登録
-	 *
-	 * @param employee
+	 * 社員情報の追加
 	 */
 	public void createEmployee(Employee employee);
+
+	/**
+	 * 社員IDから社員情報を検索
+	 */
+	public Employee findEmployee(String id);
 
 	/**
 	 * 社員情報を更新
@@ -33,7 +34,7 @@ public interface UserMapper {
 	/**
 	 * 社員情報を削除
 	 *
-	 * @param emoloyee
+	 * @param employee
 	 */
 	public void deleteEmployee(String id);
 
