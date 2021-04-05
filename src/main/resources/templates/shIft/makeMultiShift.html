@@ -49,7 +49,7 @@
 		                    </th:block>
 		                    <th:block th:with="isAttendance = (*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance} == true ? '◯' : '✕')">
 		                    <th:block th:with="isAttendanceReverse = (!*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance} == true ? '◯' : '✕')">
-		                    <select th:field="*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance}">
+		                    <select th:field="*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance}" class="form-control form-control-sm">
 		                       <option th:value="*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance}" th:text="${isAttendance}"></option>
 		                       <option th:value="!*{multiAttendances[__${stat.index}__].attendanceList[__${st.index}__].isAttendance}" th:text="${isAttendanceReverse}"></option>
 		                    </select>
