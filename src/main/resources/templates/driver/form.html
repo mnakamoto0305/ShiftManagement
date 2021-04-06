@@ -1,0 +1,71 @@
+<div th:fragment="form">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>ドライバー検索</h1>
+          </div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-8 col-md-offset-2">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">拠点検索</h3>
+              </div>
+              <form th:action="@{/search/driver/result/area}" method="post" th:object="${driverForm}">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="areaId">検索したい拠点を選択してください。</label>
+                    <select name="areaId" id="areaId" class="form-control">
+                      <option value="1">江東</option>
+                      <option value="2">江戸川</option>
+                      <option value="3">墨田</option>
+                      <option value="4">中央</option>
+                      <option value="5">港</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary float-right">検索</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">ワード検索</h3>
+              </div>
+              <form th:action="@{/search/driver/result}" method="post" th:object="${driverForm}">
+                <div class="card-body">
+                  <div class="form-group">
+                    <label>検索したいドライバーの氏名かメールアドレスを入力してください。</br>(何も入力がない場合は全社員のデータを表示します)</label>
+                    <input type="text" name="searchWord" th:value="*{searchWord}" class="form-control" placeholder="例)佐藤">
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary float-right">検索</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <!--/.col (left) -->
+
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+</div>

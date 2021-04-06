@@ -25,6 +25,12 @@ public interface EmployeeMapper {
 	 */
 	public Employee findEmployee(String id);
 
+	/**
+	 * フォーム検索
+	 *
+	 * @param employeeForm
+	 * @return
+	 */
 	public List<Employee> findFromForm(EmployeeForm employeeForm);
 
 	/**

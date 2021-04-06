@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.masahiro.nakamoto.domain.Driver;
+import com.masahiro.nakamoto.domain.DriverForm;
 import com.masahiro.nakamoto.mybatis.CourseMapper;
 import com.masahiro.nakamoto.mybatis.DriverMapper;
 import com.masahiro.nakamoto.mybatis.UserMapper;
@@ -33,11 +34,19 @@ public class DriverService {
 		return driverMapper.findDriverInfo(id);
 	}
 
+	public List<Driver> findAreaDriver(int areaId) {
+		return driverMapper.findAreaDriver(areaId);
+	}
+
 	/**
 	 * ドライバー情報を全件取得
 	 */
 	public List<Driver> findAll() {
 		return driverMapper.findAll();
+	}
+
+	public List<Driver> findFromForm(DriverForm driverForm) {
+		return driverMapper.findFromForm(driverForm);
 	}
 
 	/**

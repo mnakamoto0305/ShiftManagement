@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.masahiro.nakamoto.Valid.GroupOrder;
 import com.masahiro.nakamoto.domain.Driver;
+import com.masahiro.nakamoto.domain.DriverForm;
 import com.masahiro.nakamoto.service.DriverService;
 
 @Controller
@@ -37,11 +38,59 @@ public class DriverController {
 	 * @param model
 	 * @return
 	 */
+//	@GetMapping("/search/driver")
+//	public String getSearchDriver(Model model) {
+//		List<Driver> driverList = driverService.findAll();
+//		model.addAttribute("driverList", driverList);
+//		model.addAttribute("contents", "driver/find :: findDriver");
+//		return "main/adminLayout";
+//	}
+
+	/**
+	 * ドライバーの検索フォーム表示
+	 *
+	 * @param model
+	 * @param employeeForm
+	 * @return
+	 */
 	@GetMapping("/search/driver")
-	public String getSearchDriver(Model model) {
-		List<Driver> driverList = driverService.findAll();
+	public String getDriverForm(Model model, @ModelAttribute DriverForm driverForm) {
+		model.addAttribute("contents", "driver/form :: form");
+		return "main/adminLayout";
+	}
+
+	/**
+	 * フォームからの検索結果を表示
+	 *
+	 * @param model
+	 * @param employeeForm
+	 * @return
+	 */
+	@PostMapping("/search/driver/result")
+	public String postSearchResult(Model model, @ModelAttribute DriverForm driverForm) {
+		if (driverForm.getSearchWord() == null) {
+			List<Driver> driverList = driverService.findAll();
+			model.addAttribute("driverList", driverList);
+		} else {
+			List<Driver> driverList = driverService.findFromForm(driverForm);
+			model.addAttribute("driverList", driverList);
+		}
+		model.addAttribute("contents", "driver/result :: result");
+		return "main/adminLayout";
+	}
+
+	/**
+	 * 拠点検索の結果を表示
+	 *
+	 * @param model
+	 * @param driverForm
+	 * @return
+	 */
+	@PostMapping("/search/driver/result/area")
+	public String postSearchArea(Model model, @ModelAttribute DriverForm driverForm) {
+		List<Driver> driverList = driverService.findAreaDriver(driverForm.getAreaId());
 		model.addAttribute("driverList", driverList);
-		model.addAttribute("contents", "driver/find :: findDriver");
+		model.addAttribute("contents", "driver/result :: result");
 		return "main/adminLayout";
 	}
 

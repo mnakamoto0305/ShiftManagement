@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.masahiro.nakamoto.domain.Driver;
+import com.masahiro.nakamoto.domain.DriverForm;
 
 @Mapper
 public interface DriverMapper {
@@ -18,11 +19,27 @@ public interface DriverMapper {
 	public Driver findDriverInfo(String id);
 
 	/**
+	 * 指定した拠点のドライバー情報を取得する
+	 *
+	 * @param areaId
+	 * @return
+	 */
+	public List<Driver> findAreaDriver(int areaId);
+
+	/**
 	 * ドライバー情報を全件取得
 	 *
 	 * @return
 	 */
 	public List<Driver> findAll();
+
+	/**
+	 * フォーム検索
+	 *
+	 * @param employeeForm
+	 * @return
+	 */
+	public List<Driver> findFromForm(DriverForm driverForm);
 
 	/**
 	 * 指定した拠点・コースのドライバー情報を取得する

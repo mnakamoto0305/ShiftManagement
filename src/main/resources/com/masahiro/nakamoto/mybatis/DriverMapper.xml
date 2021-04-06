@@ -39,6 +39,20 @@
     drivers.id = #{id}
   </select>
 
+  <!-- 指定した拠点のドライバー情報を取得する -->
+  <select id="findAreaDriver" resultMap="driver">
+    SELECT
+    *
+    FROM
+    drivers
+    INNER JOIN
+    users
+    ON
+    drivers.id = users.id
+    WHERE
+    area_id = #{areaId}
+  </select>
+
   <!-- ドライバー情報を全件検索 -->
   <select id="findAll" resultMap="driver">
     SELECT
@@ -49,6 +63,22 @@
     users
     ON
     drivers.id = users.id
+  </select>
+
+  <!-- フォームからドライバー情報を検索 -->
+  <select id="findFromForm" resultMap="driver">
+    SELECT
+    *
+    FROM
+    drivers
+    INNER JOIN
+    users
+    ON
+    drivers.id = users.id
+    WHERE
+    CONCAT(last_name, ' ', first_name) LIKE '%${searchWord}%'
+    OR
+    drivers.id LIKE '%${searchWord}%'
   </select>
 
   <!-- 指定した拠点・コースのドライバー情報を取得 -->
