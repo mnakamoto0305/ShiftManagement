@@ -13,4 +13,12 @@ public interface CourseMapper {
 	 */
 	public int findCourseId(String id);
 
+	/**
+	 * 指定した拠点のコース数を取得する
+	 *
+	 * @param areaId
+	 * @return
+	 */
+	public int findTotalCourses(int areaId);
+
 }

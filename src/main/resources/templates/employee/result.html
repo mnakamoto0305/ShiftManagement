@@ -1,0 +1,69 @@
+<div th:fragment="result">
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>社員検索</h1>
+          </div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">検索結果一覧</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body" th:if="${employeeList}">
+                <table class="table table-bordered text-center">
+                  <thead>
+                    <tr>
+                      <th style="width: 10%"></th>
+                      <th style="width: 10%">名字</th>
+                      <th style="width: 10%">名前</th>
+                      <th style="width: 10%">性別</th>
+                      <th style="width: 30%">メールアドレス</th>
+                      <th style="width: 20%">編集</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:each="employee, stat : ${employeeList}">
+                      <td th:text="${stat.index} + 1"></td>
+                      <td th:text="${employee.lastName}"></td>
+                      <td th:text="${employee.firstName}"></td>
+                      <td th:if="${employee.sex == '1'}">男性</td>
+                      <td th:if="${employee.sex == '2'}">女性</td>
+                      <td th:if="${employee.sex == '9'}">その他</td>
+                      <td th:if="${employee.sex == '0'}">不明</td>
+                      <td th:text="${employee.id}"></td>
+                      <td>
+                        <a th:href="@{/detail/employee/{id}(id=${employee.id})}" class="btn btn-primary">詳細</a>
+                        <a th:href="@{/update/employee/{id}(id=${employee.id})}" class="btn btn-warning">更新</a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+          </div>
+          <!--/.col (left) -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+</div>

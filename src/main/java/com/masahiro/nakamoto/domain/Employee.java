@@ -2,17 +2,15 @@ package com.masahiro.nakamoto.domain;
 
 import java.util.Date;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.stereotype.Component;
 
-import com.masahiro.nakamoto.ConfirmedDriverId;
-import com.masahiro.nakamoto.ConfirmedDriverPassword;
+import com.masahiro.nakamoto.ConfirmedId;
+import com.masahiro.nakamoto.ConfirmedPassword;
 import com.masahiro.nakamoto.Valid.ValidGroup1;
 import com.masahiro.nakamoto.Valid.ValidGroup2;
 import com.masahiro.nakamoto.Valid.ValidGroup3;
@@ -21,9 +19,9 @@ import lombok.Data;
 
 @Data
 @Component
-@ConfirmedDriverPassword(groups = ValidGroup2.class)
-@ConfirmedDriverId(groups = ValidGroup2.class)
-public class Driver {
+@ConfirmedPassword(groups = ValidGroup2.class)
+@ConfirmedId(groups = ValidGroup2.class)
+public class Employee {
 
 	/**
 	 * 社員ID
@@ -123,31 +121,5 @@ public class Driver {
 	 */
 	@NotBlank(groups = ValidGroup1.class)
 	private String role;
-
-	/**
-	 * 拠点ID
-	 */
-	@NotNull(groups = ValidGroup1.class)
-	private Integer areaId;
-
-	/**
-	 * コース番号
-	 */
-	@NotNull(groups = ValidGroup1.class)
-	private Integer courseId;
-
-	/**
-	 * 単価
-	 */
-	@NotNull(groups = ValidGroup1.class)
-	@Min(value=0, groups = ValidGroup2.class)
-	private Integer dailyWages;
-
-	/**
-	 * 経費
-	 */
-	@NotNull(groups = ValidGroup1.class)
-	@Min(value=0, groups = ValidGroup2.class)
-	private Integer monthlyExpenses;
 
 }
