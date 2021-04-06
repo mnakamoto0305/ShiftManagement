@@ -1,0 +1,116 @@
+<div th:fragment="delete">
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>ドライバー削除</h1>
+          </div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-sm-12">
+            <div class="card" th:object="${driver}">
+              <div class="card-header">
+                <h3 class="card-title">下記の社員情報を削除してもよろしいですか？</h3>
+              </div>
+              <!-- /.card-header -->
+              <form th:action="@{/delete/driver/{id} (id=${driver.id})}" method="post">
+                <div class="card-body">
+                  <table class="table table-bordered text-center">
+                    <tr>
+                      <th>名前</th>
+                      <td>[[|*{lastName} *{firstName}|]]</td>
+                    </tr>
+                    <tr>
+                      <th>生年月日</th>
+                      <td th:text="*{dateOfBirth}"></td>
+                    </tr>
+                    <tr>
+                      <th>性別</th>
+                      <td th:if="${driver.sex == '1'}">男性</td>
+                      <td th:if="${driver.sex == '2'}">女性</td>
+                      <td th:if="${driver.sex == '9'}">その他</td>
+                      <td th:if="${driver.sex == '0'}">不明</td>
+                    </tr>
+                    <tr>
+                      <th>メールアドレス</th>
+                      <td th:text="*{id}"></td>
+                    </tr>
+                    <tr>
+                      <th>電話番号</th>
+                      <td th:text="*{phoneNumber}"></td>
+                    </tr>
+                    <tr>
+                      <th>郵便番号</th>
+                      <td th:text="*{postalCode}"></td>
+                    </tr>
+                    <tr>
+                      <th>住所</th>
+                      <td th:text="*{address}"></td>
+                    </tr>
+                    <tr>
+                      <th>入社日</th>
+                      <td th:text="*{joinDate}"></td>
+                    </tr>
+                    <tr>
+                    <th>拠点</th>
+                    <td th:if="${driver.areaId == 1}">江東</td>
+                    <td th:if="${driver.areaId == 2}">江戸川</td>
+                    <td th:if="${driver.areaId == 3}">墨田</td>
+                    <td th:if="${driver.areaId == 4}">中央</td>
+                    <td th:if="${driver.areaId == 5}">港</td>
+                  </tr>
+                  <tr>
+                    <th>担当コース</th>
+                    <td th:if="${driver.courseId == 1}">1コース</td>
+                    <td th:if="${driver.courseId == 2}">2コース</td>
+                    <td th:if="${driver.courseId == 3}">3コース</td>
+                    <td th:if="${driver.courseId == 4}">4コース</td>
+                    <td th:if="${driver.courseId == 5}">5コース</td>
+                    <td th:if="${driver.courseId == 6}">6コース</td>
+                    <td th:if="${driver.courseId == 7}">7コース</td>
+                    <td th:if="${driver.courseId == 8}">8コース</td>
+                    <td th:if="${driver.courseId == 9}">9コース</td>
+                    <td th:if="${driver.courseId == 10}">10コース</td>
+                  </tr>
+                  <tr>
+                    <th>単価</th>
+                    <td th:text="*{dailyWages}"></td>
+                  </tr>
+                  <tr>
+                    <th>経費</th>
+                    <td th:text="*{monthlyExpenses}"></td>
+                  </tr>
+                    <tr>
+                      <th>権限</th>
+                      <td th:text="*{role}"></td>
+                    </tr>
+                  </table>
+                  <div class="card-footer">
+                     <button class="btn btn-danger float-right">削除</button>
+                  </div>
+                </div>
+              </form>
+              <!-- /.card-body -->
+            </div>
+          </div>
+          <!--/.col (left) -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+</div>

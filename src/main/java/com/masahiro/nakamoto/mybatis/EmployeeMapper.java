@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.masahiro.nakamoto.domain.Employee;
+import com.masahiro.nakamoto.domain.EmployeeForm;
 
 @Mapper
 public interface EmployeeMapper {
@@ -23,6 +24,8 @@ public interface EmployeeMapper {
 	 * 社員IDから社員情報を検索
 	 */
 	public Employee findEmployee(String id);
+
+	public List<Employee> findFromForm(EmployeeForm employeeForm);
 
 	/**
 	 * 社員情報を更新

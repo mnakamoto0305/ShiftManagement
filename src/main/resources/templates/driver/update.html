@@ -1,0 +1,185 @@
+<div th:fragment="update">
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>ドライバー更新</h1>
+          </div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-sm-12">
+            <div class="card" th:object="${driver}">
+              <div class="card-header">
+                <h3 class="card-title">下記の項目を修正して「更新」ボタンを押してください。</h3>
+              </div>
+              <!-- /.card-header -->
+              <form th:action="@{/update/driver/{id}(id=${driver.id})}" method="POST">
+                  <div class="card-body">
+
+                    <div class="form-group">
+                      <label for="lastName">名字</label>
+                      <input type="text" name="lastName" th:field=${driver.lastName} id="lastName" class="form-control">
+                      <div th:if="${#fields.hasErrors('lastName')}" th:errors="${driver.lastName}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="firstName">名前</label>
+                      <input type="text" name="firstName" th:field=${driver.firstName} id="firstName" class="form-control">
+                      <div th:if="${#fields.hasErrors('firstName')}" th:errors="${driver.firstName}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="id">メールアドレス</label>
+                      <input type="email" name="id" th:field=${driver.id} id="id" class="form-control">
+                      <div th:if="${#fields.hasErrors('id')}" th:errors="${driver.id}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="id">メールアドレス(再入力)</label>
+                      <input type="email" name="idConfirm" th:field=${driver.idConfirm} id="idConfirm" class="form-control">
+                      <div th:if="${#fields.hasErrors('idConfirm')}" th:errors="${driver.idConfirm}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="password">初期パスワード</label>
+                      <input type="password" name="password" th:field=${driver.password} id="password" class="form-control">
+                      <div th:if="${#fields.hasErrors('password')}" th:errors="${driver.password}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="passwordConfirm">初期パスワード(確認用)</label>
+                      <input type="password" name="passwordConfirm" th:field=${driver.passwordConfirm} id="passwordConfirm" class="form-control">
+                      <div th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="${driver.passwordConfirm}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="sex">性別</label>
+                      <select name="sex" id="sex" class="form-control">
+                        <option value="">選択してください</option>
+                        <option value="1" th:selected="${driver.sex == '1'}">男性</option>
+                        <option value="2" th:selected="${driver.sex == '2'}">女性</option>
+                        <option value="9" th:selected="${driver.sex == '9'}">その他</option>
+                        <option value="0" th:selected="${driver.sex == '0'}">不明</option>
+                      </select>
+                      <div th:if="${#fields.hasErrors('sex')}" th:errors="${driver.sex}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="phoneNumber">電話番号</label>
+                      <input type="text" name="phoneNumber" th:field="${driver.phoneNumber}" id="phoneNumber"
+                        class="form-control">
+                      <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="${driver.phoneNumber}"
+                        class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="birthday">生年月日</label>
+                      <input type="text" name="dateOfBirth" th:field=${driver.dateOfBirth} id="dateOfBirth" class="form-control">
+                      <div th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="${driver.dateOfBirth}" class="has-error text-danger">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="postalCode">郵便番号</label>
+                      <input type="text" name="postalCode" th:field="${driver.postalCode}" id="postalCode" class="form-control" size="10" maxlength="8" onKeyUp="AjaxZip3.zip2addr(this,'','address','address');">
+                      <div th:if="${#fields.hasErrors('postalCode')}" th:errors="${driver.postalCode}"
+                        class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="address">住所</label>
+                      <input type="text" name="address" th:field="${driver.address}" id="address"
+                        class="form-control" size="60">
+                      <div th:if="${#fields.hasErrors('address')}" th:errors="${driver.address}" class="has-error text-danger">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="joinDate">入社日</label>
+                      <input type="text" name="joinDate" th:field=${driver.joinDate} id="joinDate" class="form-control">
+                      <div th:if="${#fields.hasErrors('joinDate')}" th:errors="${driver.joinDate}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="areaId">拠点</label>
+                      <select name="areaId" id="areaId" class="form-control">
+                        <option value="">選択してください</option>
+                        <option value="1" th:selected="${driver.areaId == 1}">江東</option>
+                        <option value="2" th:selected="${driver.areaId == 2}">江戸川</option>
+                        <option value="3" th:selected="${driver.areaId == 3}">墨田</option>
+                        <option value="4" th:selected="${driver.areaId == 4}">中央</option>
+                        <option value="5" th:selected="${driver.areaId == 5}">港</option>
+                      </select>
+                      <div th:if="${#fields.hasErrors('areaId')}" th:errors="${driver.areaId}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="courseId">担当コース</label>
+                      <select name="courseId" id="courseId" class="form-control">
+                        <option value="" selected>選択してください</option>
+                        <option value="1" th:selected="${driver.courseId == 1}">1コース</option>
+                        <option value="2" th:selected="${driver.courseId == 2}">2コース</option>
+                        <option value="3" th:selected="${driver.courseId == 3}">3コース</option>
+                        <option value="4" th:selected="${driver.courseId == 4}">4コース</option>
+                        <option value="5" th:selected="${driver.courseId == 5}">5コース</option>
+                        <option value="6" th:selected="${driver.courseId == 6}">6コース</option>
+                        <option value="7" th:selected="${driver.courseId == 7}">7コース</option>
+                        <option value="8" th:selected="${driver.courseId == 8}">8コース</option>
+                        <option value="9" th:selected="${driver.courseId == 9}">9コース</option>
+                        <option value="10" th:selected="${driver.courseId == 10}">10コース</option>
+                      </select>
+                      <div th:if="${#fields.hasErrors('courseId')}" th:errors="${driver.courseId}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="dailyWages">単価</label>
+                      <input type="text" name="dailyWages" th:field=${driver.dailyWages} id="dailyWages" class="form-control">
+                      <div th:if="${#fields.hasErrors('dailyWages')}" th:errors="${driver.dailyWages}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="monthlyExpenses">経費</label>
+                      <input type="text" name="monthlyExpenses" th:field=${driver.monthlyExpenses} id="firstName" class="form-control">
+                      <div th:if="${#fields.hasErrors('monthlyExpenses')}" th:errors="${driver.monthlyExpenses}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="role">権限</label>
+                      <select name="role" id="roole" class="form-control">
+                        <option value="">選択してください</option>
+                        <option value="ADMIN" th:selected="${driver.role == 'ADMIN'}">ADMIN</option>
+                        <option value="USER" th:selected="${driver.role == 'USER'}">USER</option>
+                      </select>
+                      <div th:if="${#fields.hasErrors('role')}" th:errors="${driver.sex}" class="has-error text-danger"></div>
+                    </div>
+
+                  </div>
+                  <!-- /.card-body -->
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">更新</button>
+                  </div>
+                </form>
+              <!-- /.card-body -->
+            </div>
+          </div>
+          <!--/.col (left) -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+</div>

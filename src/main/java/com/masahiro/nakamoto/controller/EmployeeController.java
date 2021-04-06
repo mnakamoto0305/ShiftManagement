@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.masahiro.nakamoto.Valid.GroupOrder;
 import com.masahiro.nakamoto.domain.Employee;
+import com.masahiro.nakamoto.domain.EmployeeForm;
 import com.masahiro.nakamoto.service.EmployeeService;
 
 @Controller
@@ -31,12 +32,36 @@ public class EmployeeController {
 	@Autowired
 	HttpSession session;
 
+	/**
+	 * 社員検索フォーム
+	 *
+	 * @param model
+	 * @param employeeForm
+	 * @return
+	 */
 	@GetMapping("/search/employee")
-	public String getAllEmployee(Model model) {
-		List<Employee> employeeList = employeeService.findAll();
-		System.out.println(employeeList);
-		model.addAttribute("employeeList", employeeList);
-		model.addAttribute("contents", "employee/find :: findEmployee");
+	public String getEmployeeForm(Model model, @ModelAttribute EmployeeForm employeeForm) {
+		model.addAttribute("contents", "employee/form :: form");
+		return "main/adminLayout";
+	}
+
+	/**
+	 * 検索結果を表示
+	 *
+	 * @param model
+	 * @param employeeForm
+	 * @return
+	 */
+	@PostMapping("/search/employee/result")
+	public String postSearchResult(Model model, @ModelAttribute EmployeeForm employeeForm) {
+		if (employeeForm.getSearchWord() == null) {
+			List<Employee> employeeList = employeeService.findAll();
+			model.addAttribute("employeeList", employeeList);
+		} else {
+			List<Employee> employeeList = employeeService.findFromForm(employeeForm);
+			model.addAttribute("employeeList", employeeList);
+		}
+		model.addAttribute("contents", "employee/result :: result");
 		return "main/adminLayout";
 	}
 
@@ -49,7 +74,7 @@ public class EmployeeController {
 	 */
 	@GetMapping("/create/employee")
 	public String getCreateEmployee(Model model, @ModelAttribute Employee employee) {
-		model.addAttribute("contents", "employee/createForm :: createForm");
+		model.addAttribute("contents", "employee/create :: createForm");
 		return "main/adminLayout";
 	}
 
@@ -69,9 +94,11 @@ public class EmployeeController {
 			password = passwordEncoder.encode(password);
 			employee.setPassword(password);
 			employeeService.createEmployee(employee);
+			return "redirect:/create/employee";
+		} else {
+			model.addAttribute("contents", "employee/create :: createForm");
+			return "main/adminLayout";
 		}
-		model.addAttribute("contents", "employee/createForm :: createForm");
-		return "main/adminLayout";
 	}
 
 	/**
@@ -81,7 +108,7 @@ public class EmployeeController {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/detail/{id}")
+	@GetMapping("/detail/employee/{id}")
 	public String getDetailEmployee(Model model, @PathVariable String id) {
 		Employee employee = employeeService.findEmployee(id);
 		model.addAttribute("employee", employee);
@@ -96,7 +123,7 @@ public class EmployeeController {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/update/{id}")
+	@GetMapping("/update/employee/{id}")
 	public String getUpdateEmployee(Model model, @PathVariable String id) {
 		Employee employee = employeeService.findEmployee(id);
 		session.setAttribute("previousId", employee.getId());
@@ -113,15 +140,26 @@ public class EmployeeController {
 	 * @param employee
 	 * @return
 	 */
-	@PostMapping("/update/{id}")
+	@PostMapping("/update/employee/{id}")
 	public String postUpdateEmployee(Model model, @PathVariable String id, @ModelAttribute Employee employee) {
 		employee.setPreviousId((String) session.getAttribute("previousId"));
+		// パスワードをハッシュ化
+		String password = employee.getPassword();
+		password = passwordEncoder.encode(password);
+		employee.setPassword(password);
 		employeeService.updateEmployee(employee);
 		session.removeAttribute("previousId");
 		return "redirect:/search/employee";
 	}
 
-	@GetMapping("/delete/{id}")
+	/**
+	 * 削除の確認画面を表示
+	 *
+	 * @param model
+	 * @param id
+	 * @return
+	 */
+	@GetMapping("/delete/employee/{id}")
 	public String getDeleteConfirm(Model model, @PathVariable String id) {
 		Employee employee = employeeService.findEmployee(id);
 		model.addAttribute("employee", employee);
@@ -129,8 +167,15 @@ public class EmployeeController {
 		return "main/adminLayout";
 	}
 
-	@PostMapping("/delete/{id}")
-	public String postDeleteConfirm(Model model, @PathVariable String id) {
+	/**
+	 * 社員情報を削除
+	 *
+	 * @param model
+	 * @param id
+	 * @return
+	 */
+	@PostMapping("/delete/employee/{id}")
+	public String postDeleteEmployee(Model model, @PathVariable String id) {
 		employeeService.deleteEmployee(id);
 		return "redirect:/search/employee";
 	}

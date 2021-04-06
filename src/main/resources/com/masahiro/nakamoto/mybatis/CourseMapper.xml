@@ -19,4 +19,14 @@
     id = #{id}
   </select>
 
+  <!-- 指定した拠点のコース数を取得 -->
+  <select id="findTotalCourses" resultType="_int">
+    SELECT
+    total_courses
+    FROM
+    areas
+    WHERE
+    id = #{areaId}
+  </select>
+
 </mapper>

@@ -6,7 +6,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>社員詳細</h1>
+            <h1>ドライバー詳細</h1>
           </div>
         </div>
       </div>
@@ -19,7 +19,7 @@
         <div class="row">
           <!-- left column -->
           <div class="col-sm-12">
-            <div class="card" th:object="${employee}">
+            <div class="card" th:object="${driver}">
               <div class="card-header">
                 <h3 class="card-title">[[|*{lastName} *{firstName}|]]</h3>
               </div>
@@ -36,10 +36,10 @@
                   </tr>
                   <tr>
                     <th>性別</th>
-                    <td th:if="${employee.sex == '1'}">男性</td>
-                    <td th:if="${employee.sex == '2'}">女性</td>
-                    <td th:if="${employee.sex == '9'}">その他</td>
-                    <td th:if="${employee.sex == '0'}">不明</td>
+                    <td th:if="${driver.sex == '1'}">男性</td>
+                    <td th:if="${driver.sex == '2'}">女性</td>
+                    <td th:if="${driver.sex == '9'}">その他</td>
+                    <td th:if="${driver.sex == '0'}">不明</td>
                   </tr>
                   <tr>
                     <th>メールアドレス</th>
@@ -62,13 +62,42 @@
                     <td th:text="*{joinDate}"></td>
                   </tr>
                   <tr>
+                    <th>拠点</th>
+                    <td th:if="${driver.areaId == 1}">江東</td>
+                    <td th:if="${driver.areaId == 2}">江戸川</td>
+                    <td th:if="${driver.areaId == 3}">墨田</td>
+                    <td th:if="${driver.areaId == 4}">中央</td>
+                    <td th:if="${driver.areaId == 5}">港</td>
+                  </tr>
+                  <tr>
+                    <th>担当コース</th>
+                    <td th:if="${driver.courseId == 1}">1コース</td>
+                    <td th:if="${driver.courseId == 2}">2コース</td>
+                    <td th:if="${driver.courseId == 3}">3コース</td>
+                    <td th:if="${driver.courseId == 4}">4コース</td>
+                    <td th:if="${driver.courseId == 5}">5コース</td>
+                    <td th:if="${driver.courseId == 6}">6コース</td>
+                    <td th:if="${driver.courseId == 7}">7コース</td>
+                    <td th:if="${driver.courseId == 8}">8コース</td>
+                    <td th:if="${driver.courseId == 9}">9コース</td>
+                    <td th:if="${driver.courseId == 10}">10コース</td>
+                  </tr>
+                  <tr>
+                    <th>単価</th>
+                    <td th:text="*{dailyWages}"></td>
+                  </tr>
+                  <tr>
+                    <th>経費</th>
+                    <td th:text="*{monthlyExpenses}"></td>
+                  </tr>
+                  <tr>
                     <th>権限</th>
                     <td th:text="*{role}"></td>
                   </tr>
                 </table>
                 <div class="card-footer">
-                   <a th:href="@{/update/employee/{id}(id=${employee.id})}" class="btn btn-warning float-left">更新</a>
-                   <a th:href="@{/delete/employee/{id}(id=${employee.id})}" class="btn btn-danger float-right">削除</a>
+                   <a th:href="@{/update/driver/{id}(id=${driver.id})}" class="btn btn-warning float-left">更新</a>
+                   <a th:href="@{/delete/driver/{id}(id=${driver.id})}" class="btn btn-danger float-right">削除</a>
                 </div>
               </div>
               <!-- /.card-body -->

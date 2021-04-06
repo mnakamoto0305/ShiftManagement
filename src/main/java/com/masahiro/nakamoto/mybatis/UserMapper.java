@@ -2,6 +2,7 @@ package com.masahiro.nakamoto.mybatis;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.masahiro.nakamoto.domain.Driver;
 import com.masahiro.nakamoto.domain.Employee;
 import com.masahiro.nakamoto.domain.SiteUser;
 
@@ -36,5 +37,26 @@ public interface UserMapper {
 	 * @param emoloyee
 	 */
 	public void deleteEmployee(String id);
+
+	/**
+	 * ドライバー情報を登録
+	 *
+	 * @param driver
+	 */
+	public void createDriver(Driver driver);
+
+	/**
+	 * ドライバー情報を更新
+	 *
+	 * @param driver
+	 */
+	public void updateDriver(Driver driver);
+
+	/**
+	 * ドライバー情報を削除
+	 *
+	 * @param id
+	 */
+	public void deleteDriver(String id);
 
 }

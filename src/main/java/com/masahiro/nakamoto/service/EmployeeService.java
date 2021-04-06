@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.masahiro.nakamoto.domain.Employee;
+import com.masahiro.nakamoto.domain.EmployeeForm;
 import com.masahiro.nakamoto.mybatis.EmployeeMapper;
 import com.masahiro.nakamoto.mybatis.UserMapper;
 
@@ -36,6 +37,11 @@ public class EmployeeService {
 	@Transactional
 	public Employee findEmployee(String id) {
 		return employeeMapper.findEmployee(id);
+	}
+
+	@Transactional
+	public List<Employee> findFromForm(EmployeeForm employeeForm) {
+		return employeeMapper.findFromForm(employeeForm);
 	}
 
 	/**

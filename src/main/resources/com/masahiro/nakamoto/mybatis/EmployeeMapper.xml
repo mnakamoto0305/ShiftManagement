@@ -46,6 +46,22 @@
     employees.id = #{id}
   </select>
 
+  <!-- フォームから社員情報を検索 -->
+  <select id="findFromForm" resultMap="employee">
+    SELECT
+    *
+    FROM
+    employees
+    INNER JOIN
+    users
+    ON
+    employees.id = users.id
+    WHERE
+    CONCAT(last_name, ' ', first_name) LIKE '%${searchWord}%'
+    OR
+    employees.id LIKE '%${searchWord}%'
+  </select>
+
   <!-- 社員情報の追加 -->
   <insert id="createEmployee">
     INSERT INTO employees (

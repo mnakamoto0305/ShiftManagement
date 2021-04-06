@@ -1,4 +1,4 @@
-<div th:fragment="findEmployee">
+<div th:fragment="findDriver">
 
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -6,7 +6,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>社員検索</h1>
+            <h1>ドライバー検索</h1>
           </div>
         </div>
       </div>
@@ -37,18 +37,18 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr th:each="employee, stat : ${employeeList}">
+                    <tr th:each="driver, stat : ${driverList}">
                       <td th:text="${stat.index} + 1"></td>
-                      <td th:text="${employee.lastName}"></td>
-                      <td th:text="${employee.firstName}"></td>
-                      <td th:if="${employee.sex == '1'}">男性</td>
-                      <td th:if="${employee.sex == '2'}">女性</td>
-                      <td th:if="${employee.sex == '9'}">その他</td>
-                      <td th:if="${employee.sex == '0'}">不明</td>
-                      <td th:text="${employee.id}"></td>
+                      <td th:text="${driver.lastName}"></td>
+                      <td th:text="${driver.firstName}"></td>
+                      <td th:if="${driver.sex == '1'}">男性</td>
+                      <td th:if="${driver.sex == '2'}">女性</td>
+                      <td th:if="${driver.sex == '9'}">その他</td>
+                      <td th:if="${driver.sex == '0'}">不明</td>
+                      <td th:text="${driver.id}"></td>
                       <td>
-                        <a th:href="@{/detail/{id}(id=${employee.id})}" class="btn btn-primary">詳細</a>
-                        <a th:href="@{/update/{id}(id=${employee.id})}" class="btn btn-warning">更新</a>
+                        <a th:href="@{/detail/driver/{id}(id=${driver.id})}" class="btn btn-primary">詳細</a>
+                        <a th:href="@{/update/driver/{id}(id=${driver.id})}" class="btn btn-warning">更新</a>
                       </td>
                     </tr>
                   </tbody>

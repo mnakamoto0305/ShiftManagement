@@ -1,0 +1,182 @@
+package com.masahiro.nakamoto.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.masahiro.nakamoto.Valid.GroupOrder;
+import com.masahiro.nakamoto.domain.Driver;
+import com.masahiro.nakamoto.service.DriverService;
+
+@Controller
+public class DriverController {
+
+	@Autowired
+	DriverService driverService;
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
+
+	@Autowired
+	HttpSession session;
+
+	/**
+	 * ドライバー情報の全件取得
+	 *
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/search/driver")
+	public String getSearchDriver(Model model) {
+		List<Driver> driverList = driverService.findAll();
+		model.addAttribute("driverList", driverList);
+		model.addAttribute("contents", "driver/find :: findDriver");
+		return "main/adminLayout";
+	}
+
+	/**
+	 * ドライバー登録フォームの表示
+	 *
+	 * @param model
+	 * @param employee
+	 * @return
+	 */
+	@GetMapping("/create/driver")
+	public String getCreateDriver(Model model, @ModelAttribute Driver driver) {
+		model.addAttribute("contents", "driver/create :: createForm");
+		return "main/adminLayout";
+	}
+
+	/**
+	 * ドライバー情報の登録
+	 *
+	 * @param model
+	 * @param driver
+	 * @param bindingResult
+	 * @return
+	 */
+	@PostMapping("/create/driver")
+	public String postCreateDriver(Model model, @ModelAttribute @Validated(GroupOrder.class) Driver driver, BindingResult bindingResult) {
+		if (!bindingResult.hasErrors()) {
+			System.out.println(driver.getAreaId());
+			System.out.println(driver.getCourseId());
+			try {
+				//指定したコース番号が不正なものでないかを確認
+				driverService.isCorrectCourse(driver);
+			} catch (Exception e) {
+				model.addAttribute("illegalCourse", "この拠点には指定したコース番号が存在しません。");
+				model.addAttribute("contents", "driver/create :: createForm");
+				return "main/adminLayout";
+			}
+			try {
+				//指定した拠点・コースにドライバーが登録されていないかを確認
+				driverService.isRegistered(driver);
+			} catch (Exception e) {
+				model.addAttribute("registered", "指定したコースは既に他のドライバーが登録されています。");
+				model.addAttribute("contents", "driver/create :: createForm");
+				return "main/adminLayout";
+			}
+			// パスワードをハッシュ化
+			String password = driver.getPassword();
+			password = passwordEncoder.encode(password);
+			driver.setPassword(password);
+			driverService.createDriver(driver);
+			return "redirect:/create/driver";
+		} else {
+			model.addAttribute("contents", "driver/create :: createForm");
+			return "main/adminLayout";
+		}
+	}
+
+	/**
+	 * ドライバーの詳細情報を表示
+	 *
+	 * @param model
+	 * @param id
+	 * @return
+	 */
+	@GetMapping("/detail/driver/{id}")
+	public String getDetailDriver(Model model, @PathVariable String id) {
+		Driver driver = driverService.findDriverInfo(id);
+		System.out.println(driver);
+		model.addAttribute("driver", driver);
+		model.addAttribute("contents", "driver/detail :: detail");
+		return "main/adminLayout";
+	}
+
+	/**
+	 * ドライバ情報の更新画面を表示
+	 *
+	 * @param model
+	 * @param id
+	 * @return
+	 */
+	@GetMapping("/update/driver/{id}")
+	public String getUpdateDriver(Model model, @PathVariable String id) {
+		Driver driver = driverService.findDriverInfo(id);
+		session.setAttribute("previousId", driver.getId());
+		model.addAttribute("driver", driver);
+		model.addAttribute("contents", "driver/update :: update");
+		return "main/adminLayout";
+	}
+
+	/**
+	 * ドライバー情報を更新
+	 *
+	 * @param model
+	 * @param id
+	 * @param driver
+	 * @return
+	 */
+	@PostMapping("/update/driver/{id}")
+	public String postUpdateDriver(Model model, @PathVariable String id, @ModelAttribute Driver driver) {
+		driver.setPreviousId((String) session.getAttribute("previousId"));
+		// パスワードをハッシュ化
+		String password = driver.getPassword();
+		password = passwordEncoder.encode(password);
+		driver.setPassword(password);
+		driverService.updateDriver(driver);
+		session.removeAttribute("previousId");
+		return "redirect:/search/driver";
+	}
+
+	/**
+	 * 削除前の確認画面を表示
+	 *
+	 * @param model
+	 * @param id
+	 * @return
+	 */
+	@GetMapping("/delete/driver/{id}")
+	public String getDeleteConfirm(Model model, @PathVariable String id) {
+		Driver driver = driverService.findDriverInfo(id);
+		model.addAttribute("driver", driver);
+		model.addAttribute("contents", "driver/delete :: delete");
+		return "main/adminLayout";
+	}
+
+	/**
+	 * ドライバー情報を削除
+	 *
+	 * @param model
+	 * @param id
+	 * @return
+	 */
+	@PostMapping("/delete/driver/{id}")
+	public String postDeleteDriver(Model model, @PathVariable String id) {
+		driverService.deleteDriver(id);
+		return "redirect:/search/driver";
+	}
+
+}

@@ -31,6 +31,26 @@
 	  <result column="role" property="role" />
 	</resultMap>
 
+  <resultMap type="com.masahiro.nakamoto.domain.Driver" id="driver">
+	  <id column="id" property="id" />
+	  <result column="last_name" property="lastName" />
+	  <result column="first_name" property="firstName" />
+	  <result column="position_id" property="positionId" />
+	  <result column="sex" property="sex" />
+	  <result column="date_of_birth" property="dateOfBirth" />
+	  <result column="phone_number" property="phoneNumber" />
+	  <result column="postal_code" property="postalCode" />
+	  <result column="address" property="address" />
+	  <result column="join_date" property="joinDate" />
+	  <result column="password" property="password" />
+	  <result column="pass_update_date" property="passUpdateDate" />
+	  <result column="role" property="role" />
+	  <result column="area_id" property="areaId" />
+	  <result column="course_id" property="courseId" />
+	  <result column="daily_wages" property="dailyWages" />
+	  <result column="monthly_expenses" property="monthlyExpenses" />
+	</resultMap>
+
 	<select id="identifyUser" resultMap="user">
 	  SELECT
 	    id,
@@ -76,7 +96,43 @@
 
   <!-- 社員情報を削除 -->
   <delete id="deleteEmployee">
-    DELETE FROM employees WHERE id = #{id}
+    DELETE FROM users WHERE id = #{id}
+  </delete>
+
+  <!-- ドライバー情報の追加 -->
+  <insert id="createDriver">
+    INSERT INTO users (
+      id,
+      password,
+      role,
+      position_id,
+      pass_update_date
+    )
+    VALUES (
+      #{id},
+      #{password},
+      #{role},
+      #{positionId},
+      NOW()
+    )
+  </insert>
+
+  <!-- ドライバー情報を更新 -->
+  <update id="updateDriver">
+    UPDATE
+      users
+    SET
+      id = #{id},
+      password = #{password},
+      role = #{role},
+      pass_update_date = NOW()
+    WHERE
+      id = #{previousId}
+  </update>
+
+  <!-- ドライバー情報を削除 -->
+  <delete id="deleteDriver">
+    DELETE FROM users WHERE id = #{id}
   </delete>
 
 </mapper>
