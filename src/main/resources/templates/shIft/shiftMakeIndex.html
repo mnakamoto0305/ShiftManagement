@@ -5,7 +5,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1></h1>
+						<h1>シフト作成</h1>
 					</div>
 				</div>
 			</div>
@@ -21,7 +21,7 @@
 						<!-- general form elements -->
 						<div class="card card-primary">
 							<div class="card-header">
-								<h3 class="card-title">シフト作成</h3>
+								<h3 class="card-title">今回作成するシフトの拠点名を選択してください。</h3>
 							</div>
 							<div th:object="${shiftForm}">
 								<form th:action="@{/admin/shift_make}" method="post"
@@ -29,7 +29,6 @@
 									<div class="card-body">
 										<div class="form-group">
 											<p th:text="${message}" class="text-danger"></p>
-											<label>今回作成するシフトの拠点名を選択してください。</label>
 											<select name="area" th:field="*{area}" class="form-control">
 												<option value="1">江東</option>
 												<option value="2">江戸川</option>

@@ -26,6 +26,9 @@ public class AttendancesService {
 	@Autowired
 	AttendancesMapper attendancesMapper;
 
+	@Autowired
+	DateService dateService;
+
 	/**
 	 * 休み希望登録前にその月をすべて出勤扱いで登録
 	 *
@@ -91,7 +94,6 @@ public class AttendancesService {
 	 * @param shiftForm
 	 * @return
 	 */
-	@Transactional
 	public ShiftResult findHoliday(ShiftForm shiftForm) {
 		//月初と月末の指定
 		LocalDate first = LocalDate.now().plusMonths(1).withDayOfMonth(1);
@@ -101,6 +103,11 @@ public class AttendancesService {
 		//登録した休み希望日の検索
 		ShiftResult shiftResult = new ShiftResult();
 		shiftResult.setAttendanceList(attendancesMapper.findHoliday(shiftForm));
+		//日付を曜日付きに変換
+		for (Attendance attendance : shiftResult.getAttendanceList()) {
+			LocalDate ld = attendance.getDate();
+			attendance.setConvertedDate(dateService.convertDate(ld));
+		}
 
 		return shiftResult;
 	}

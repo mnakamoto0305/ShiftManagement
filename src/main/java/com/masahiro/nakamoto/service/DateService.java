@@ -38,8 +38,16 @@ public class DateService {
 		return convertedDate;
 	}
 
-	public int getMonthNum() {
+	public int getNextMonthNum() {
 		LocalDate thisMonth = LocalDate.now().plusMonths(1);
+
+		int monthNum = thisMonth.lengthOfMonth();
+
+		return monthNum;
+	}
+
+	public int getThisMonthNum() {
+		LocalDate thisMonth = LocalDate.now();
 
 		int monthNum = thisMonth.lengthOfMonth();
 

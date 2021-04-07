@@ -51,32 +51,35 @@
         <div class="container-fluid">
           <div class="row">
             <!-- left column -->
-            <div class="col-md-12">
+            <div class="col-md-6">
               <!-- jquery validation -->
               <div class="card card-primary">
                 <div class="card-header">
                   <h3 class="card-title">来月の休み希望日を選択してください。(8日分)</h3>
                 </div>
+                <div class="card-body">
+                  <div class="d-flex align-items-center justify-content-center">
+				            <main id="main" class="tmp_demo">
+				              <div class="box_demo">
+				                <div type="text" id="js-datepicker">
+				                  <form th:action="@{/fix/holiday}" method="post" th:object="${registerHolidayForm}" id="registerHoliday">
+				                    <div th:classappend="${#fields.hasErrors('holiday')}?'has-error'">
+				                      <input type="hidden" id="datepickerValue" th:field="*{holiday}">
+				                      <span class="text-danger" th:if="${#fields.hasErrors('holiday')}" th:errors="*{holiday}"></span>
+				                    </div>
+				                  </form>
+				                </div>
+				              </div>
+				            </main>
+				          </div>
+                </div>
+                <div class="card-footer">
+			            <button type="submit" value="送信" form="registerHoliday" class="btn btn-primary float-right mt-3">送信</button>
+                </div>
               </div>
               <!-- /.card -->
             </div>
             <!--/.col (left) -->
-            <main id="main" class="tmp_demo">
-
-              <div class="box_demo">
-                <div type="text" id="js-datepicker">
-                  <form th:action="@{/fix/holiday}" method="post" th:object="${registerHolidayForm}" id="registerHoliday">
-                    <div th:classappend="${#fields.hasErrors('holiday')}?'has-error'">
-                      <input type="hidden" id="datepickerValue" th:field="*{holiday}">
-                      <span class="text-danger" th:if="${#fields.hasErrors('holiday')}" th:errors="*{holiday}"></span>
-                    </div>
-                  </form>
-                </div>
-                <textarea id="result" readonly></textarea>
-                <button type="submit" value="送信" form="registerHoliday">送信</button>
-              </div>
-
-            </main>
             <script src="https://code.jquery.com/jquery-3.4.1.min.js"
               ntegrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
               crossorigin="anonymous"></script>

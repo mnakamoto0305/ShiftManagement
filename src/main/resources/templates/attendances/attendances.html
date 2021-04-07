@@ -21,22 +21,6 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css" rel="stylesheet">
   <!-- MultiDatesPicker -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-multidatespicker/1.6.6/jquery-ui.multidatespicker.min.css" rel="stylesheet">
-  <style>
-/*   .ui-datepicker {
-	  width: 60em;
-	  padding: .25em .25em 0;
-	  display: none;
-	  }
-
-	.ui-datepicker td span,
-  .ui-datepicker td a {
-   display: block;
-   padding:  25px;
-   text-align: center;
-   text-decoration: none;
-   font-size: 20px;
-} */
-  </style>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -64,15 +48,35 @@
 
       <!-- Main content -->
       <section class="content">
-        <div class="container">
+        <div class="container-fluid">
           <div class="row">
             <!-- left column -->
-            <div class="col-md-12">
+            <div class="col-md-6">
               <!-- jquery validation -->
               <div class="card card-primary">
                 <div class="card-header">
                   <h3 class="card-title">来月の休み希望日を選択してください。(8日分)</h3>
                   <p th:text="${message}" class="text-danger"></p>
+                </div>
+                <div class="card-body">
+				          <div class="d-flex align-items-center justify-content-center">
+				            <main id="main" class="tmp_demo">
+				              <div class="box_demo">
+				                <div type="text" id="js-datepicker">
+				                  <p th:text="${message}" class="text-danger"></p>
+				                  <form th:action="@{/register/attendances}" method="post" th:object="${registerHolidayForm}" id="registerHoliday">
+					                  <div th:classappend="${#fields.hasErrors('holiday')}?'has-error'">
+						                  <input type="hidden" id="datepickerValue" th:field="*{holiday}">
+						                  <span class="text-danger" th:if="${#fields.hasErrors('holiday')}" th:errors="*{holiday}"></span>
+					                  </div>
+				                  </form>
+                        </div>
+                      </div>
+                    </main>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <button type="submit" value="送信" form="registerHoliday" class="btn btn-primary float-right mt-3">送信</button>
                 </div>
               </div>
               <!-- /.card -->
@@ -81,22 +85,6 @@
             <!--/.col (left) -->
           <div class="row">
             <div class="col-md-12">
-		          <div class="d-flex align-items-center justify-content-center">
-		            <main id="main" class="tmp_demo">
-		              <div class="box_demo">
-		                <div type="text" id="js-datepicker">
-		                  <p th:text="${message}" class="text-danger"></p>
-		                  <form th:action="@{/register/attendances}" method="post" th:object="${registerHolidayForm}" id="registerHoliday">
-			                  <div th:classappend="${#fields.hasErrors('holiday')}?'has-error'">
-				                  <input type="hidden" id="datepickerValue" th:field="*{holiday}">
-				                  <span class="text-danger" th:if="${#fields.hasErrors('holiday')}" th:errors="*{holiday}"></span>
-			                  </div>
-		                  </form>
-		                </div>
-		                <button type="submit" value="送信" form="registerHoliday" class="btn btn-primary float-right mt-3">送信</button>
-		              </div>
-		            </main>
-		          </div>
             </div>
           </div>
             <script src="https://code.jquery.com/jquery-3.4.1.min.js"

@@ -5,7 +5,7 @@
 			<div class="container-fluid">
 				<div class="row mb-2">
 					<div class="col-sm-6">
-						<h1></h1>
+						<h1>シフト確認</h1>
 					</div>
 				</div>
 			</div>
@@ -17,11 +17,11 @@
 			<div class="container-fluid">
 				<div class="row">
 					<!-- left column -->
-					<div class="col-md-8 col-md-offset-2">
+					<div class="col-md-6">
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">シフト確認</h3>
+                <h3 class="card-title">シフト検索フォーム</h3>
               </div>
 							<form th:action="@{/admin/shift_result}" method="post" id="findShift" th:object="${shiftForm}">
 								<div class="card-body">
@@ -139,7 +139,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1></h1>
+            <h1>シフト確認</h1>
           </div>
         </div>
       </div>
@@ -151,16 +151,15 @@
       <div class="container-fluid">
         <div class="row">
           <!-- left column -->
-          <div class="col-md-8 col-md-offset-2">
+          <div class="col-md-6">
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">シフト確認</h3>
+                <h3 class="card-title">確認したいシフトの年/月を入力してください。</h3>
               </div>
 			          <form th:action="@{/shift_result}" method="post" id="findShift" th:object="${shiftForm}">
 			             <div class="card-body">
 			               <div class="form-group">
-			                 <label>確認したい年/月を入力してください</label>
 			                 <div class="row card-body">
 			                   <select name="year" id="id_year" th:field="*{year}" class="form-control col-5"></select>
 			                   <div class="col-1"></div>

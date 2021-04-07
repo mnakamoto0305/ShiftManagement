@@ -229,10 +229,8 @@ public class ShiftController {
 			List<Integer> totalAttendance = shiftService.findTotal(shiftForm);
 			model.addAttribute("totalAttendance", totalAttendance);
 			//その月の日数をセット
-			int monthNum = dateService.getMonthNum();
+			int monthNum = dateService.getNextMonthNum();
 			model.addAttribute("monthNum", monthNum);
-			System.out.println(monthNum);
-			System.out.println(totalAttendance.get(0));
 			//担当ドライバーの名前をセット
 			List<Driver> driverName = shiftService.findDriverName(shiftForm);
 			model.addAttribute("driverName", driverName);
@@ -247,7 +245,7 @@ public class ShiftController {
 	}
 
 	/**
-	 * 今月のシフトを修正
+	 * 修正する今月のシフトを表示
 	 *
 	 * @param model
 	 * @param multiAttendances
@@ -269,6 +267,9 @@ public class ShiftController {
 		//表示するシフトの年月をセット
 		YearMonth date = YearMonth.now();
 		model.addAttribute("date", date);
+		//その月の日数をセット
+		int monthNum = dateService.getThisMonthNum();
+		model.addAttribute("monthNum", monthNum);
 		//各ドライバーの出勤数をセット
 		List<Integer> totalAttendance = shiftService.findTotalAttendance(shiftForm);
 		model.addAttribute("totalAttendance", totalAttendance);
@@ -276,8 +277,24 @@ public class ShiftController {
 		List<Driver> driverName = shiftService.findDriverName(shiftForm);
 		model.addAttribute("driverName", driverName);
 
-		model.addAttribute("contents", "shift/makeMultiShift :: shift_make");
+		model.addAttribute("contents", "shift/makeMultiShift :: shift_modify");
 		return "main/adminLayout";
+	}
+
+
+	/**
+	 * 今月のシフトを修正
+	 *
+	 * @param model
+	 * @param multiAttendances
+	 * @return
+	 */
+	@PostMapping("/admin/shift/modify")
+	public String postModify(Model model, @ModelAttribute MultiAttendances multiAttendances) {
+		List<ShiftResult> shiftResult = multiAttendances.getMultiAttendances();
+		shiftService.updateAttendances(shiftResult);
+		//確認ボタンを押すと拠点検索フォームにリダイレクト
+		return "redirect:/admin/shift_search";
 	}
 
 	/**
