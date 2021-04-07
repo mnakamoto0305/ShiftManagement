@@ -53,6 +53,20 @@
     area_id = #{areaId}
   </select>
 
+  <!-- 指定した拠点ID・コースIDのドライバー情報を取得する -->
+  <select id="findCourseDriver" resultMap="driver">
+    SELECT
+    *
+    FROM
+    drivers
+    INNER JOIN
+    users
+    ON
+    drivers.id = users.id
+    WHERE
+    area_id = #{areaId} AND course = #{courseId}
+  </select>
+
   <!-- ドライバー情報を全件検索 -->
   <select id="findAll" resultMap="driver">
     SELECT

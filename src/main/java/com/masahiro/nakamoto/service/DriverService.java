@@ -12,6 +12,10 @@ import com.masahiro.nakamoto.mybatis.CourseMapper;
 import com.masahiro.nakamoto.mybatis.DriverMapper;
 import com.masahiro.nakamoto.mybatis.UserMapper;
 
+/**
+ * @author nakamotomasahiro
+ *
+ */
 @Service
 public class DriverService {
 
@@ -34,8 +38,25 @@ public class DriverService {
 		return driverMapper.findDriverInfo(id);
 	}
 
+	/**
+	 * 指定した拠点のドライバー情報を取得
+	 *
+	 * @param areaId
+	 * @return
+	 */
 	public List<Driver> findAreaDriver(int areaId) {
 		return driverMapper.findAreaDriver(areaId);
+	}
+
+	/**
+	 * 指定した拠点ID・コースIDのドライバー情報を取得
+	 *
+	 * @param areaId
+	 * @param courseId
+	 * @return
+	 */
+	public Driver findCourseDriver(int areaId, int courseId) {
+		return driverMapper.findCourseDriver(areaId, courseId);
 	}
 
 	/**

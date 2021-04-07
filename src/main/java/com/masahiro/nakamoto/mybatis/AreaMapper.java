@@ -15,6 +15,28 @@ public interface AreaMapper {
 	 */
 	public Area findAreaName(Integer areaId);
 
+	/**
+	 * 指定した社員の担当拠点を取得
+	 *
+	 * @param id
+	 * @return
+	 */
 	public Integer findAreaId(String id);
+
+	/**
+	 * 指定した拠点の総ドライバー数を取得
+	 *
+	 * @param areaId
+	 * @return
+	 */
+	public int findTotalDrivers(int areaId);
+
+	/**
+	 * 指定した拠点の総コース数を取得
+	 *
+	 * @param areaId
+	 * @return
+	 */
+	public int findTotalCourses(int areaId);
 
 }

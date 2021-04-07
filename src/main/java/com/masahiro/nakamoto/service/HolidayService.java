@@ -14,20 +14,26 @@ import com.masahiro.nakamoto.domain.attendance.Attendance;
 import com.masahiro.nakamoto.domain.attendance.RegisterHolidayForm;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
 import com.masahiro.nakamoto.domain.shift.ShiftResult;
-import com.masahiro.nakamoto.mybatis.AttendancesMapper;
+import com.masahiro.nakamoto.mybatis.HolidayMapper;
 
 
 /**
  * 休み希望日を登録するサービス
  */
 @Service
-public class AttendancesService {
+public class HolidayService {
 
 	@Autowired
-	AttendancesMapper attendancesMapper;
+	HolidayMapper holidayMapper;
 
 	@Autowired
 	DateService dateService;
+
+	@Autowired
+	AreaService areaService;
+
+	@Autowired
+	DriverService driverService;
 
 	/**
 	 * 休み希望登録前にその月をすべて出勤扱いで登録
@@ -51,7 +57,7 @@ public class AttendancesService {
 			attendance.setIsAttendance(true);
 			attendance.setDate(firstDay);
 			//勤怠を登録
-			attendancesMapper.registerAttendances(attendance);
+			holidayMapper.registerAttendances(attendance);
 			//firstDayを1日進める
 			firstDay = firstDay.plusDays(1);
 		}
@@ -84,7 +90,7 @@ public class AttendancesService {
 		//holidayListから日付を取り出してattendanceにセット→休み希望日を登録
 		for (LocalDate holiday : holidayList) {
 			attendance.setDate(holiday);
-			attendancesMapper.registerHoliday(attendance);
+			holidayMapper.registerHoliday(attendance);
 		}
 	}
 
@@ -102,7 +108,7 @@ public class AttendancesService {
 		shiftForm.setLast(last);
 		//登録した休み希望日の検索
 		ShiftResult shiftResult = new ShiftResult();
-		shiftResult.setAttendanceList(attendancesMapper.findHoliday(shiftForm));
+		shiftResult.setAttendanceList(holidayMapper.findHoliday(shiftForm));
 		//日付を曜日付きに変換
 		for (Attendance attendance : shiftResult.getAttendanceList()) {
 			LocalDate ld = attendance.getDate();
@@ -112,6 +118,12 @@ public class AttendancesService {
 		return shiftResult;
 	}
 
+	/**
+	 * 月初から月末までの勤怠をTrueで登録
+	 *
+	 * @param attendance
+	 * @param id
+	 */
 	@Transactional
 	public void makeTrue(Attendance attendance, String id) {
 		//今日の日付取得
@@ -128,9 +140,48 @@ public class AttendancesService {
 			attendance.setIsAttendance(true);
 			attendance.setDate(firstDay);
 			//勤怠を登録
-			attendancesMapper.registerHoliday(attendance);
+			holidayMapper.registerHoliday(attendance);
 			//firstDayを1日進める
 			firstDay = firstDay.plusDays(1);
 		}
 	}
+
+	/**
+	 * 各拠点で休み希望を提出したドライバーの数を取得
+	 *
+	 * @return
+	 */
+	public List<Integer> findSubmittedNumber() {
+		//来月の1日のLocalDateを取得
+		LocalDate date = LocalDate.now().plusMonths(1).withDayOfMonth(1);
+		//リストの初期化
+		List<Integer> submittedNumber = new ArrayList<>();
+		//各拠点の休み希望提出者数を取得
+		for (int i = 1; i < 6; i++) {
+			submittedNumber.add(holidayMapper.findSubmittedNumber(i, date));
+		}
+		return submittedNumber;
+	}
+
+	/**
+	 * 指定した拠点のドライバーが休み希望を提出しているかを確認
+	 *
+	 * @param areaId
+	 * @return
+	 */
+	public List<Integer> isSubmitted(int areaId) {
+		//来月の1日のLocalDateを取得
+		LocalDate date = LocalDate.now().plusMonths(1).withDayOfMonth(1);
+		//ドライバー数を取得
+		int totalDrivers = areaService.findTotalDrivers(areaId);
+		//Listを初期化
+		List<Integer> list = new ArrayList<>();
+		//各ドライバーが休み希望を提出したかどうかを確認
+		for (int i = 1; i < totalDrivers + 1; i++) {
+			int isSubmitted = holidayMapper.isSubmitted(areaId, i, date);
+			list.add(isSubmitted);
+		}
+		return list;
+	}
+
 }

@@ -233,7 +233,6 @@ public class ShiftService {
 	 * @param shiftForm
 	 * @return
 	 */
-	@Transactional
 	public Course findCourseInfo(ShiftForm shiftForm) {
 		return shiftMapper.findCourseInfo(shiftForm);
 	}

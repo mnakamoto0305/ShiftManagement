@@ -3,6 +3,7 @@ package com.masahiro.nakamoto.mybatis;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.masahiro.nakamoto.domain.Driver;
 import com.masahiro.nakamoto.domain.DriverForm;
@@ -25,6 +26,15 @@ public interface DriverMapper {
 	 * @return
 	 */
 	public List<Driver> findAreaDriver(int areaId);
+
+	/**
+	 * 指定した拠点ID・コースIDのドライバー情報を取得
+	 *
+	 * @param areaId
+	 * @param courseId
+	 * @return
+	 */
+	public Driver findCourseDriver(@Param("areaId") int areaId, @Param("courseId") int courseId);
 
 	/**
 	 * ドライバー情報を全件取得

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.masahiro.nakamoto.mybatis.HolidayMapper">
+
+<!-- マッピング定義 -->
+<resultMap type="com.masahiro.nakamoto.domain.attendance.Attendance" id="attendance">
+  <id column="date" property="date" />
+  <result column="is_attendance" property="isAttendance" />
+  <result column="id" property="id" />
+</resultMap>
+
+  <!-- 勤怠登録 -->
+  <insert id="registerAttendances">
+    INSERT INTO attendances (
+      date,
+      is_attendance,
+      id
+    )
+    VALUES (
+      #{date},
+      #{isAttendance},
+      #{id}
+    )
+  </insert>
+
+  <!-- 休み希望日の登録 -->
+  <update id="registerHoliday">
+    UPDATE
+      attendances
+    SET
+      is_attendance = #{isAttendance}
+    WHERE id = #{id} AND date = #{date}
+  </update>
+
+  <!-- 登録した休み希望日の確認 -->
+  <select id="findHoliday" resultMap="attendance">
+    SELECT
+     *
+    FROM
+      attendances
+    INNER JOIN
+      drivers
+    ON
+      attendances.id = drivers.id
+    WHERE
+      attendances.id = #{id} AND (date BETWEEN #{first} AND #{last}) AND is_attendance = false
+  </select>
+
+  <!-- 指定した拠点で休み希望日を提出している人数を取得 -->
+  <select id="findSubmittedNumber" resultType="_int">
+	  <![CDATA[
+      SELECT
+			 count(*)
+			FROM
+				(
+				SELECT
+				  attendances.id
+				FROM
+				  attendances
+				INNER JOIN
+				  drivers
+				ON
+				  attendances.id = drivers.id
+				WHERE
+				  date = #{date} AND area_id = #{areaId}
+				GROUP BY
+				  attendances.id
+				)
+				AS
+				  count
+	 ]]>
+  </select>
+
+  <!-- 指定したドライバーが休み希望を提出しているか検索 -->
+  <select id="isSubmitted" resultType="_int">
+    <![CDATA[
+      SELECT
+       count(*)
+      FROM
+        (
+        SELECT
+          attendances.id
+        FROM
+          attendances
+        INNER JOIN
+          drivers
+        ON
+          attendances.id = drivers.id
+        WHERE
+          date = #{date} AND area_id = #{areaId} AND course = #{courseId}
+        GROUP BY
+          attendances.id
+        )
+        AS
+          count
+   ]]>
+  </select>
+</mapper>

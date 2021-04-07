@@ -29,4 +29,24 @@
     id = #{id}
   </select>
 
+  <!-- 指定した拠点の総ドライバー数を取得 -->
+  <select id="findTotalDrivers" resultType="_int">
+    SELECT
+    total_drivers
+    FROM
+    areas
+    WHERE
+    id = #{areaId}
+  </select>
+
+  <!-- 指定した拠点の総コース数を取得 -->
+  <select id="findTotalCourses" resultType="_int">
+    SELECT
+    total_courses
+    FROM
+    areas
+    WHERE
+    id = #{areaId}
+  </select>
+
 </mapper>

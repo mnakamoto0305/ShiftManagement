@@ -3,7 +3,6 @@ package com.masahiro.nakamoto.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.masahiro.nakamoto.domain.Area;
 import com.masahiro.nakamoto.mybatis.AreaMapper;
@@ -14,14 +13,44 @@ public class AreaService {
 	@Autowired
 	AreaMapper areaMapper;
 
-	@Transactional
+	/**
+	 * 指定した拠点IDの拠点名を取得
+	 *
+	 * @param areaId
+	 * @return
+	 */
 	public Area findAreaName(Integer areaId) {
 		return areaMapper.findAreaName(areaId);
 	}
 
-	@Transactional
+	/**
+	 * 指定したドライバーの担当拠点を取得
+	 *
+	 * @param id
+	 * @return
+	 */
 	public Integer findAreaId(String id) {
 		return areaMapper.findAreaId(id);
+	}
+
+	/**
+	 * 指定した拠点の総ドライバー数を取得
+	 *
+	 * @param areaId
+	 * @return
+	 */
+	public int findTotalDrivers(int areaId) {
+		return areaMapper.findTotalDrivers(areaId);
+	}
+
+	/**
+	 * 指定した拠点の総コース数を取得
+	 *
+	 * @param areaId
+	 * @return
+	 */
+	public int findTotalCourses(int areaId) {
+		return areaMapper.findTotalCourses(areaId);
 	}
 
 }
