@@ -135,4 +135,17 @@
     DELETE FROM users WHERE id = #{id}
   </delete>
 
+  <!-- 拠点IDとコースIDからドライバーのメールアドレスを取得 -->
+  <select id="getId" resultType="string">
+    SELECT
+      users.id
+    FROM
+      users
+    INNER JOIN
+      drivers
+    ON
+      users.id = drivers.id
+    WHERE
+      area_id = #{areaId} AND course = #{courseId}
+  </select>
 </mapper>

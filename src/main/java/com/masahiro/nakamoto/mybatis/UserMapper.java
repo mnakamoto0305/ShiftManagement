@@ -1,6 +1,7 @@
 package com.masahiro.nakamoto.mybatis;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.masahiro.nakamoto.domain.Driver;
 import com.masahiro.nakamoto.domain.Employee;
@@ -58,5 +59,14 @@ public interface UserMapper {
 	 * @param id
 	 */
 	public void deleteDriver(String id);
+
+	/**
+	 * 拠点IDとコースIDからドライバーのメールアドレスを取得
+	 *
+	 * @param areaId
+	 * @param courseId
+	 * @return
+	 */
+	public String getId(@Param("areaId") int areaId, @Param("courseId") int courseId);
 
 }

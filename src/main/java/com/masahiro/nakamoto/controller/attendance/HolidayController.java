@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -47,6 +49,9 @@ public class HolidayController {
 
 	@Autowired
 	ShiftForm shiftForm;
+
+	@Autowired
+	HttpSession session;
 
 	/**
 	 * 休み希望の登録フォームを表示
@@ -185,11 +190,18 @@ public class HolidayController {
 		}
 	}
 
+	/**
+	 * 各拠点のドライバーの休み希望提出状況を表示
+	 *
+	 * @param model
+	 * @param areaId
+	 * @return
+	 */
 	@GetMapping("/submitted/detail/{areaId}")
 	public String getIsSubmitted(Model model, @PathVariable int areaId) {
 		//拠点名
 		String areaName = areaService.findAreaName(areaId).getName();
-		model.addAttribute(areaName, areaName);
+		model.addAttribute("areaName", areaName);
 		model.addAttribute("areaId", areaId);
 		//コース数
 		int totalCourses = areaService.findTotalCourses(areaId);
@@ -203,4 +215,36 @@ public class HolidayController {
 		model.addAttribute("contents", "attendances/isSubmitted :: isSubmitted");
 		return "main/adminLayout";
 	}
+
+	/**
+	 * 管理者が休み希望を代理登録するカレンダーを表示
+	 *
+	 * @param areaId
+	 * @param courseId
+	 * @param registerHolidayForm
+	 * @return
+	 */
+	@GetMapping("/register/holiday/{areaId}/{courseId}")
+	public String getProxyRegister(@PathVariable int areaId, @PathVariable int courseId, @ModelAttribute RegisterHolidayForm registerHolidayForm) {
+		session.setAttribute("areaId", areaId);
+		session.setAttribute("courseId", courseId);
+		return "attendances/proxyRegister";
+	}
+
+	/**
+	 * 管理者が休み希望を代理登録
+	 *
+	 * @param registerHolidayForm
+	 * @return
+	 */
+	@PostMapping("/register/proxy_holiday")
+	public String postProxyRegister(@ModelAttribute RegisterHolidayForm registerHolidayForm) {
+		int areaId = (int) session.getAttribute("areaId");
+		int courseId = (int) session.getAttribute("courseId");
+		holidayService.proxyRegister(areaId, courseId, registerHolidayForm);
+		session.removeAttribute("areaId");
+		session.removeAttribute("courseId");
+		return "redirect:/admin";
+	}
+
 }

@@ -15,6 +15,7 @@ import com.masahiro.nakamoto.domain.attendance.RegisterHolidayForm;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
 import com.masahiro.nakamoto.domain.shift.ShiftResult;
 import com.masahiro.nakamoto.mybatis.HolidayMapper;
+import com.masahiro.nakamoto.mybatis.UserMapper;
 
 
 /**
@@ -34,6 +35,9 @@ public class HolidayService {
 
 	@Autowired
 	DriverService driverService;
+
+	@Autowired
+	UserMapper userMapper;
 
 	/**
 	 * 休み希望登録前にその月をすべて出勤扱いで登録
@@ -182,6 +186,13 @@ public class HolidayService {
 			list.add(isSubmitted);
 		}
 		return list;
+	}
+
+	public void proxyRegister(int areaId, int courseId, RegisterHolidayForm registerHolidayForm) {
+		String id = userMapper.getId(areaId, courseId);
+		Attendance attendance = new Attendance();
+		registerAttendances(attendance, id);
+		registerHoliday(registerHolidayForm, attendance, id);
 	}
 
 }

@@ -58,17 +58,17 @@
                   <h3 class="card-title">来月の休み希望日を選択してください。(8日分)</h3>
                 </div>
                 <div class="card-body">
-				          <div class="d-flex align-items-center justify-content-center">
-				            <main id="main" class="tmp_demo">
-				              <div class="box_demo">
-				                <div type="text" id="js-datepicker">
-				                  <p th:text="${message}" class="text-danger"></p>
-				                  <form th:action="@{/register/attendances}" method="post" th:object="${registerHolidayForm}" id="registerHoliday">
-					                  <div th:classappend="${#fields.hasErrors('holiday')}?'has-error'">
-						                  <input type="hidden" id="datepickerValue" th:field="*{holiday}">
-						                  <span class="text-danger" th:if="${#fields.hasErrors('holiday')}" th:errors="*{holiday}"></span>
-					                  </div>
-				                  </form>
+                  <div class="d-flex align-items-center justify-content-center">
+                    <main id="main" class="tmp_demo">
+                      <div class="box_demo">
+                        <div type="text" id="js-datepicker">
+                          <p th:text="${message}" class="text-danger"></p>
+                          <form th:action="@{/register/proxy_holiday}" method="post" th:object="${registerHolidayForm}" id="registerHoliday">
+                            <div th:classappend="${#fields.hasErrors('holiday')}?'has-error'">
+                              <input type="hidden" id="datepickerValue" th:field="*{holiday}">
+                              <span class="text-danger" th:if="${#fields.hasErrors('holiday')}" th:errors="*{holiday}"></span>
+                            </div>
+                          </form>
                         </div>
                       </div>
                     </main>
