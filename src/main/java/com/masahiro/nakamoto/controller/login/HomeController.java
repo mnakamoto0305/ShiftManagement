@@ -19,6 +19,7 @@ import com.masahiro.nakamoto.service.AreaService;
 import com.masahiro.nakamoto.service.CourseService;
 import com.masahiro.nakamoto.service.DateService;
 import com.masahiro.nakamoto.service.DriverService;
+import com.masahiro.nakamoto.service.HolidayService;
 import com.masahiro.nakamoto.service.HomeService;
 import com.masahiro.nakamoto.service.PositionService;
 import com.masahiro.nakamoto.service.ShiftService;
@@ -48,6 +49,9 @@ public class HomeController {
 	DriverService driverService;
 
 	@Autowired
+	HolidayService holidayService;
+
+	@Autowired
 	ShiftForm shiftForm;
 
 	@Autowired
@@ -71,7 +75,7 @@ public class HomeController {
 		String id = user.getUsername();
 		//日付と拠点をセット
 		shiftForm.setDate(LocalDate.now());
-		Integer areaId = areaService.findAreaId(id);
+		int areaId = areaService.findAreaId(id);
 		shiftForm.setArea(areaId);
 		//役職を取得
 		int position = positionService.findPosition(id);
@@ -93,6 +97,9 @@ public class HomeController {
 			//名前を取得
 			driver = driverService.findDriverInfo(id);
 			model.addAttribute("driver", driver);
+			//休み希望日の登録状況を確認
+			int isSubmitHoliday = holidayService.isSubmitted(areaId, courseId);
+			model.addAttribute("isSubmitHoliday", isSubmitHoliday);
 
 			//代走ドライバーのコース設定
 			if (courseId > totalCourses) {

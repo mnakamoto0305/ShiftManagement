@@ -52,6 +52,16 @@
 								</div>
 							</div>
 						</div>
+						<div th:if="!${isSubmitHoliday}">
+						  <div class="card card-danger">
+              <div class="card-header">
+                <h3 class="card-title">連絡事項</h3>
+              </div>
+              <div class="card-body">
+								<p class="lead">来月の休み希望日が<u>まだ登録されていません</u>。</p>
+								<p class="lead"><mark>20日までの登録</mark>をお願いします。</p>
+              </div>
+              <!-- /.card-body -->
 					<!--/.col (left) -->
 				</div>
 

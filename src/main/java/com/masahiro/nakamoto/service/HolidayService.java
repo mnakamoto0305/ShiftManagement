@@ -188,6 +188,19 @@ public class HolidayService {
 		return list;
 	}
 
+	public int isSubmitted(int areaId, int courseId) {
+		//来月の1日のLocalDateを取得
+		LocalDate date = LocalDate.now().plusMonths(1).withDayOfMonth(1);
+		return holidayMapper.isSubmitted(areaId, courseId, date);
+	}
+
+	/**
+	 * 指定したドライバーの休み希望を代理登録
+	 *
+	 * @param areaId
+	 * @param courseId
+	 * @param registerHolidayForm
+	 */
 	public void proxyRegister(int areaId, int courseId, RegisterHolidayForm registerHolidayForm) {
 		String id = userMapper.getId(areaId, courseId);
 		Attendance attendance = new Attendance();
