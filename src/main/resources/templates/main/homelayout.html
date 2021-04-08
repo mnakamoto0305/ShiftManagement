@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
+  <title>シフト管理アプリ</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
@@ -33,7 +33,7 @@
     </nav>
 
     <!-- Main Sidebar Container -->
-    <aside th:include="/layout/side_menu :: side_menu" class="main-sidebar sidebar-dark-danger elevation-4"></aside>
+    <aside th:include="/layout/side_menu :: side_menu" class="main-sidebar sidebar-dark-primary elevation-4"></aside>
 
     <!-- Content Wrapper. Contains page content -->
     <div th:include="__${contents}__"></div>
@@ -70,6 +70,23 @@
   <script th:src="@{/assets/AdminLTE/dist/js/adminlte.min.js}"></script>
   <!-- AdminLTE for demo purposes -->
   <script th:src="@{/assets/AdminLTE/dist/js/demo.js}"></script>
+  <script type="text/javascript">
+	  $(function () {
+	    var url = window.location;
+	    // for single sidebar menu
+	    $('ul.nav-sidebar a').filter(function () {
+	        return this.href == url;
+	    }).addClass('active');
+
+	    // for sidebar menu and treeview
+	    $('ul.nav-treeview a').filter(function () {
+	        return this.href == url;
+	    }).parentsUntil(".nav-sidebar > .nav-treeview")
+	        .css({'display': 'block'})
+	        .addClass('menu-open').prev('a')
+	        .addClass('active');
+	});
+  </script>
 </body>
 
 </html>
