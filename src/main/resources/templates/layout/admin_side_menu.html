@@ -11,43 +11,84 @@
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
-          <a th:href="@{/admin/shift_make}" class="nav-link">
-            <p>シフト作成</p>
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-file-alt"></i>
+            <p>
+              シフト
+              <i class="fas fa-angle-left right"></i>
+            </p>
           </a>
+      	  <ul class="nav nav-treeview" style="display: none;">
+	        <li class="nav-item">
+	          <a th:href="@{/admin/shift_make}" class="nav-link">
+	          	<i class="far fa-circle nav-icon"></i>
+	            <p>シフト作成</p>
+	          </a>
+	        </li>
+            <li class="nav-item">
+	          <a th:href="@{/admin/shift_search}" class="nav-link">
+	        	<i class="far fa-circle nav-icon"></i>
+	            <p>シフト確認</p>
+	          </a>
+	        </li>
+          </ul>
         </li>
         <li class="nav-item">
-          <a th:href="@{/admin/shift_search}" class="nav-link">
-            <p>シフト確認</p>
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-user"></i>
+            <p>
+              社員
+              <i class="fas fa-angle-left right"></i>
+            </p>
           </a>
+      	  <ul class="nav nav-treeview" style="display: none;">
+	        <li class="nav-item">
+	          <a th:href="@{/create/employee}" class="nav-link">
+	     	    <i class="far fa-circle nav-icon"></i>
+	            <p>社員登録</p>
+	          </a>
+	        </li>
+            <li class="nav-item">
+	          <a th:href="@{/search/employee}" class="nav-link">
+	     	    <i class="far fa-circle nav-icon"></i>
+	            <p>社員検索</p>
+	          </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-truck"></i>
+            <p>
+              ドライバー
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+      	  <ul class="nav nav-treeview" style="display: none;">
+	        <li class="nav-item">
+	          <a th:href="@{/create/driver}" class="nav-link">
+	          	<i class="far fa-circle nav-icon"></i>
+	            <p>ドライバー登録</p>
+	          </a>
+	        </li>
+            <li class="nav-item">
+		      <a th:href="@{/search/driver}" class="nav-link">
+		      	<i class="far fa-circle nav-icon"></i>
+		        <p>ドライバー検索</p>
+		      </a>
+            </li>
+          </ul>
         </li>
         <li class="nav-item">
           <a th:href="@{/accounting}" class="nav-link">
+          	<i class="nav-icon fas fa-file-invoice-dollar"></i>
             <p>支払額確認</p>
           </a>
         </li>
-       <li class="nav-item">
-          <a th:href="@{/create/employee}" class="nav-link">
-            <p>社員登録</p>
-          </a>
-        </li>
-       <li class="nav-item">
-          <a th:href="@{/search/employee}" class="nav-link">
-            <p>社員検索</p>
-          </a>
-        </li>
         <li class="nav-item">
-          <a th:href="@{/create/driver}" class="nav-link">
-            <p>ドライバー登録</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a th:href="@{/search/driver}" class="nav-link">
-            <p>ドライバー検索</p>
-          </a>
-        </li>
-       <li class="nav-item">
-          <a th:href="@{/}" class="nav-link">
-            <p>通常画面へ戻る</p>
+          <a th:href="@{'/logout'}" class="nav-link">
+            <i class="nav-icon fas fa-sign-out-alt"></i>
+            <p>ログアウト</p>
           </a>
         </li>
       </ul>

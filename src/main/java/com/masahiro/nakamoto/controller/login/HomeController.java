@@ -69,9 +69,6 @@ public class HomeController {
 	 */
 	@GetMapping ("/")
 	public String getHome(Model model, Principal principal) {
-		//今日の日付を取得
-		String today = dateService.getToday();
-		model.addAttribute("today", today);
 		//社員IDの取得
 		Authentication auth = (Authentication)principal;
 		UserDetails user = (UserDetails) auth.getPrincipal();
@@ -80,9 +77,11 @@ public class HomeController {
 		int position = positionService.findPosition(id);
 
 		if (position == 1) {
-			model.addAttribute("contents", "home/admin_index :: index");
-			return "main/homeLayout";
+			return "forward:/admin";
 		} else {
+			//今日の日付を取得
+			String today = dateService.getToday();
+			model.addAttribute("today", today);
 			//日付と拠点をセット
 			shiftForm.setDate(LocalDate.now());
 			int areaId = areaService.findAreaId(id);
