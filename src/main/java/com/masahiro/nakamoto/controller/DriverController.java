@@ -118,8 +118,6 @@ public class DriverController {
 	@PostMapping("/create/driver")
 	public String postCreateDriver(Model model, @ModelAttribute @Validated(GroupOrder.class) Driver driver, BindingResult bindingResult) {
 		if (!bindingResult.hasErrors()) {
-			System.out.println(driver.getAreaId());
-			System.out.println(driver.getCourseId());
 			try {
 				//指定したコース番号が不正なものでないかを確認
 				driverService.isCorrectCourse(driver);

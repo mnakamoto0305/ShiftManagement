@@ -16,6 +16,7 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven { url 'http://jasperreports.sourceforge.net/maven2/' }
 }
 
 dependencies {
@@ -32,9 +33,13 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	implementation 'javax.validation:validation-api:2.0.1.Final'
-  runtimeOnly 'org.hibernate.validator:hibernate-validator:6.0.17.Final'
-  implementation 'org.webjars:jquery:3.5.0'
-  implementation 'org.webjars:bootstrap:4.4.1-1'
+	runtimeOnly 'org.hibernate.validator:hibernate-validator:6.0.17.Final'
+	implementation 'org.webjars:jquery:3.5.0'
+	implementation 'org.webjars:bootstrap:4.4.1-1'
+	compile group: 'com.lowagie', name: 'itext', version: '2.1.7.js5'
+	implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '10.0.5'
+	implementation group: 'net.sf.jasperreports', name: 'jasperreports', version: '6.16.0'
+	implementation group: 'com.googlecode.libphonenumber', name: 'libphonenumber', version: '3.6'
 }
 
 test {

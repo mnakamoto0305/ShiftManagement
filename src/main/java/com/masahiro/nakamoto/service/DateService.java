@@ -38,6 +38,16 @@ public class DateService {
 		return convertedDate;
 	}
 
+	public String convertDate() {
+		LocalDate ld = LocalDate.now();
+
+		DateTimeFormatter formmater = DateTimeFormatter.ofPattern("MM");
+
+		String month = ld.format(formmater);
+
+		return month;
+	}
+
 	public int getNextMonthNum() {
 		LocalDate thisMonth = LocalDate.now().plusMonths(1);
 

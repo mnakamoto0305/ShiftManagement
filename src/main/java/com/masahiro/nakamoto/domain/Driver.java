@@ -150,4 +150,6 @@ public class Driver {
 	@Min(value=0, groups = ValidGroup2.class)
 	private Integer monthlyExpenses;
 
+	private String payment;
+
 }

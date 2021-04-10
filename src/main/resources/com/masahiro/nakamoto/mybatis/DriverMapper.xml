@@ -51,6 +51,8 @@
     drivers.id = users.id
     WHERE
     area_id = #{areaId}
+    ORDER BY
+    course
   </select>
 
   <!-- 指定した拠点ID・コースIDのドライバー情報を取得する -->

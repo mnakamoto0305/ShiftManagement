@@ -23,9 +23,11 @@ import com.masahiro.nakamoto.domain.attendance.Attendance;
 import com.masahiro.nakamoto.domain.attendance.MultiAttendances;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
 import com.masahiro.nakamoto.domain.shift.ShiftResult;
+import com.masahiro.nakamoto.service.AccountingService;
 import com.masahiro.nakamoto.service.AreaService;
 import com.masahiro.nakamoto.service.CourseService;
 import com.masahiro.nakamoto.service.DateService;
+import com.masahiro.nakamoto.service.DriverService;
 import com.masahiro.nakamoto.service.HomeService;
 import com.masahiro.nakamoto.service.PositionService;
 import com.masahiro.nakamoto.service.ShiftService;
@@ -56,6 +58,12 @@ public class ShiftController {
 	PositionService positionService;
 
 	@Autowired
+	DriverService driverService;
+
+	@Autowired
+	AccountingService accountingService;
+
+	@Autowired
 	Attendance attendance;
 
 	@Autowired
@@ -82,7 +90,6 @@ public class ShiftController {
 		model.addAttribute("contents", "shift/shiftSearchIndex :: shift_index");
 		return "main/adminLayout";
 	}
-
 
 	/**
 	 * 作成するシフトを検索するフォームを表示
@@ -186,6 +193,13 @@ public class ShiftController {
 			//勤怠情報をセット
 			ShiftResult shiftResult = shiftService.findShift(shiftForm);
 			model.addAttribute("shiftResult", shiftResult);
+			//支払予定額を取得
+			Driver driver = driverService.findDriverInfo(id);
+			int dailyWages = driver.getDailyWages();
+			int monthlyExpenses = driver.getMonthlyExpenses();
+			int workingDays = shiftResult.getWorkingDays();
+			String profit = accountingService.commaOf1000(accountingService.getProfit(dailyWages, monthlyExpenses, workingDays));
+			model.addAttribute("profit", profit);
 
 			//代走ドライバーの場合は走るコース番号をセット
 			if (courseId > totalCourses) {

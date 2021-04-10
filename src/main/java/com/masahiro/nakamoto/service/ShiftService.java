@@ -280,7 +280,6 @@ public class ShiftService {
 	 * @param shiftForm
 	 * @return
 	 */
-	@Transactional
 	public List<Integer> findTotalAttendance(ShiftForm shiftForm) {
 		//フォームから受け取った日付をLocalDateに変換
 		String designatedDate = shiftForm.getYear() + "/" + shiftForm.getMonth();

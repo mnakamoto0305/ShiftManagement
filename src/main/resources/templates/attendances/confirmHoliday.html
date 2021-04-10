@@ -18,7 +18,7 @@
       <div class="container-fluid">
         <div class="row">
           <!-- left column -->
-          <div class="col-sm-6">
+          <div class="col-sm-6 col-md-12 col-lg-6">
             <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title" th:text="|${year}年${month}月 休み希望日|"></h3>
@@ -26,8 +26,8 @@
               <div class="card-body">
 		            <div th:if="${shiftResult}" class="container">
 		              <!-- 休み希望日を表示するテーブル -->
-		              <table class="table table-striped text-center table-bordered" th:object=${shiftResult}>
-		                <tr>
+		              <table class="table text-center table-bordered" th:object=${shiftResult}>
+		                <tr class="thead-light">
 		                  <th></th>
 		                  <th>休み希望日</th>
 		                </tr>

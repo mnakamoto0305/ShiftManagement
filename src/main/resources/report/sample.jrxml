@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sample" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="637a162c-1978-43ed-9ac3-659253838e35">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<subDataset name="Empty Dataset1" uuid="db4be111-d7cf-4bd4-8354-83bdf7881466"/>
+	<subDataset name="Dataset1" uuid="e8289732-19b0-40ac-accf-aeaebb40d1fe">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<parameter name="driver_name" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="driver_name" class="java.lang.String"/>
+	<field name="daily_wages" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="117" splitType="Stretch">
+			<staticText>
+				<reportElement x="230" y="30" width="100" height="30" uuid="b7a794a8-870f-44a5-a334-60afe19428d8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAexg" size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[請求書]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="230" y="87" width="100" height="30" uuid="5d9a17cf-d431-4e7f-b70c-c66af72ad0b7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAexg" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{month}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="470" y="87" width="100" height="30" uuid="89f7db03-8db9-4190-9ca5-d851ba0c1e2d"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="208" splitType="Stretch">
+			<staticText>
+				<reportElement x="366" y="19" width="100" height="30" uuid="7ae61e43-4785-4db2-9bb9-22ad75ee03b0"/>
+				<textElement>
+					<font fontName="IPAexg"/>
+				</textElement>
+				<text><![CDATA[〒100-0004]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField pattern="#,##0.###;#,##0.###-">
+				<reportElement x="260" y="-5" width="210" height="30" uuid="1a130f5a-260b-45ce-aa8e-d8bf805309eb">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="47e5336f-141d-4141-b8b8-576acffaed5a"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="IPAexg"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{daily_wages}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
