@@ -148,4 +148,25 @@
     WHERE
       area_id = #{areaId} AND course = #{courseId}
   </select>
+
+  <!-- 拠点IDとコースIDからドライバーのメールアドレスを取得 -->
+  <select id="getPassword" resultType="string">
+    SELECT
+      users.password
+    FROM
+      users
+    WHERE
+      id = #{id}
+  </select>
+
+  <!-- パスワードを更新 -->
+  <update id="changePassword">
+    UPDATE
+      users
+    SET
+      password = #{password}
+    WHERE
+      id = #{id}
+  </update>
+
 </mapper>

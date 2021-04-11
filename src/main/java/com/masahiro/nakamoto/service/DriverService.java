@@ -3,11 +3,13 @@ package com.masahiro.nakamoto.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.masahiro.nakamoto.domain.Driver;
 import com.masahiro.nakamoto.domain.DriverForm;
+import com.masahiro.nakamoto.domain.PassChangeConfirmForm;
 import com.masahiro.nakamoto.mybatis.CourseMapper;
 import com.masahiro.nakamoto.mybatis.DriverMapper;
 import com.masahiro.nakamoto.mybatis.UserMapper;
@@ -27,6 +29,9 @@ public class DriverService {
 
 	@Autowired
 	CourseMapper courseMapper;
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	/**
 	 * 指定したIDのドライバー情報を取得
@@ -131,6 +136,22 @@ public class DriverService {
 	public void deleteDriver(String id) {
 		driverMapper.deleteDriver(id);
 		userMapper.deleteDriver(id);
+	}
+
+	/**
+	 * 入力されたパスワードと登録済みのパスワードが一致するかを確認
+	 *
+	 * @param inputPassword
+	 * @param id
+	 * @return
+	 */
+	public boolean isCorrectPassword(String inputPassword, String id) {
+		String dbPassword = userMapper.getPassword(id);
+		return passwordEncoder.matches(inputPassword, dbPassword);
+	}
+
+	public void changePassword(PassChangeConfirmForm passChangeConfirmForm ) {
+		userMapper.changePassword(passChangeConfirmForm);
 	}
 
 }

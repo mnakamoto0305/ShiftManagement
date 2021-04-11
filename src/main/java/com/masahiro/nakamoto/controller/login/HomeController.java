@@ -7,12 +7,20 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import com.masahiro.nakamoto.Valid.GroupOrder;
 import com.masahiro.nakamoto.domain.Course;
 import com.masahiro.nakamoto.domain.Driver;
+import com.masahiro.nakamoto.domain.PassChangeConfirmForm;
+import com.masahiro.nakamoto.domain.PassChangeForm;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
 import com.masahiro.nakamoto.domain.shift.Today;
 import com.masahiro.nakamoto.service.AreaService;
@@ -50,6 +58,9 @@ public class HomeController {
 
 	@Autowired
 	HolidayService holidayService;
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	@Autowired
 	ShiftForm shiftForm;
@@ -110,6 +121,52 @@ public class HomeController {
 			model.addAttribute("contents", "home/user_index :: index");
 			return "main/homeLayout";
 		}
+	}
+
+	@GetMapping("/change/password")
+	public String getChangePassword(Model model, @ModelAttribute PassChangeForm passChangeForm) {
+		model.addAttribute("contents", "home/password :: confirm");
+		return "/main/homeLayout";
+	}
+
+	@PostMapping("/confirm/password")
+	public String postComfirmPassword(Model model, @ModelAttribute @Validated(GroupOrder.class) PassChangeForm passChangeForm , BindingResult bindingResult, @ModelAttribute PassChangeConfirmForm passChangeConfirmForm, Principal principal) {
+		if (!bindingResult.hasErrors()) {
+			//社員IDの取得
+			Authentication auth = (Authentication)principal;
+			UserDetails user = (UserDetails) auth.getPrincipal();
+			String id = user.getUsername();
+			if (driverService.isCorrectPassword(passChangeForm.getPassword(), id)) {
+				model.addAttribute("contents", "home/password :: change");
+				return "/main/homeLayout";
+			} else {
+				model.addAttribute("contents", "home/password :: confirm");
+				return "/main/homeLayout";
+			}
+		} else {
+			model.addAttribute("contents", "home/password :: confirm");
+			return "/main/homeLayout";
+		}
+	}
+
+	@PostMapping("/change/password")
+	public String postChangePassword(Model model, Principal principal, @ModelAttribute @Validated(GroupOrder.class) PassChangeConfirmForm passChangeConfirmForm , BindingResult bindingResult) {
+		if (!bindingResult.hasErrors()) {
+			//社員IDの取得
+			Authentication auth = (Authentication)principal;
+			UserDetails user = (UserDetails) auth.getPrincipal();
+			passChangeConfirmForm.setId(user.getUsername());
+			// パスワードをハッシュ化
+			String password = passChangeConfirmForm.getPassword();
+			password = passwordEncoder.encode(password);
+			passChangeConfirmForm.setPassword(password);
+			driverService.changePassword(passChangeConfirmForm);
+			return "redirect:/";
+		} else {
+			model.addAttribute("contents", "home/password :: change");
+			return "/main/homeLayout";
+		}
+
 	}
 
 }

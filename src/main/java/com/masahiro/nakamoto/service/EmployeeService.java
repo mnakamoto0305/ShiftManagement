@@ -3,6 +3,7 @@ package com.masahiro.nakamoto.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,9 @@ public class EmployeeService {
 
 	@Autowired
 	UserMapper userMapper;
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	/**
 	 * 社員情報の全件検索
@@ -67,10 +71,27 @@ public class EmployeeService {
 		userMapper.updateEmployee(employee);
 	}
 
+	/**
+	 * 指定したIdの社員情報を削除
+	 *
+	 * @param id
+	 */
 	@Transactional
 	public void deleteEmployee(String id) {
 		employeeMapper.deleteEmployee(id);
 		userMapper.deleteEmployee(id);
+	}
+
+	/**
+	 * 入力されたパスワードと登録済みのパスワードが一致するかを確認
+	 *
+	 * @param inputPassword
+	 * @param id
+	 * @return
+	 */
+	public boolean isCorrectPassword(String inputPassword, String id) {
+		String dbPassword = userMapper.getPassword(id);
+		return passwordEncoder.matches(inputPassword, dbPassword);
 	}
 
 }

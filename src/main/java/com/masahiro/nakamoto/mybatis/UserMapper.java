@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.masahiro.nakamoto.domain.Driver;
 import com.masahiro.nakamoto.domain.Employee;
+import com.masahiro.nakamoto.domain.PassChangeConfirmForm;
 import com.masahiro.nakamoto.domain.SiteUser;
 
 @Mapper
@@ -68,5 +69,20 @@ public interface UserMapper {
 	 * @return
 	 */
 	public String getId(@Param("areaId") int areaId, @Param("courseId") int courseId);
+
+	/**
+	 * 指定したIDのパスワードを取得
+	 *
+	 * @param id
+	 * @return
+	 */
+	public String getPassword(String id);
+
+	/**
+	 * パスワードを変更
+	 *
+	 * @param driver
+	 */
+	public void changePassword(PassChangeConfirmForm passChangeConfirmForm);
 
 }
