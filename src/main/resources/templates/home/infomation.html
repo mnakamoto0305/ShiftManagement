@@ -1,0 +1,81 @@
+<div th:fragment="infomation">
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1>登録情報変更</h1>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+
+		<!-- Main content -->
+		<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-sm-12">
+            <div class="card" th:object="${infomationForm}">
+              <div class="card-header">
+                <h3 class="card-title">下記の項目を修正して「更新」ボタンを押してください。</h3>
+              </div>
+              <!-- /.card-header -->
+              <form th:action="@{/update/infomation}" method="POST">
+                  <div class="card-body">
+
+                    <div class="form-group">
+                      <label for="id">メールアドレス</label>
+                      <input type="email" name="id" th:field=*{id} id="id" class="form-control">
+                      <div th:if="${#fields.hasErrors('id')}" th:errors="*{id}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="id">メールアドレス(再入力)</label>
+                      <input type="email" name="idConfirm" th:field=*{idConfirm} id="idConfirm" class="form-control">
+                      <div th:if="${#fields.hasErrors('idConfirm')}" th:errors="*{idConfirm}" class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="phoneNumber">電話番号</label>
+                      <input type="text" name="phoneNumber" th:field="*{phoneNumber}" id="phoneNumber"
+                        class="form-control">
+                      <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"
+                        class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="postalCode">郵便番号</label>
+                      <input type="text" name="postalCode" th:field="*{postalCode}" id="postalCode" class="form-control" size="10" maxlength="8" onKeyUp="AjaxZip3.zip2addr(this,'','address','address');">
+                      <div th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}"
+                        class="has-error text-danger"></div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="address">住所</label>
+                      <input type="text" name="address" th:field="*{address}" id="address"
+                        class="form-control" size="60">
+                      <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="has-error text-danger">
+                      </div>
+                    </div>
+
+                  </div>
+                  <!-- /.card-body -->
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">変更する</button>
+                  </div>
+                </form>
+              <!-- /.card-body -->
+            </div>
+          </div>
+          <!--/.col (left) -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+</div>

@@ -9,9 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.masahiro.nakamoto.domain.Driver;
 import com.masahiro.nakamoto.domain.DriverForm;
+import com.masahiro.nakamoto.domain.InfomationForm;
 import com.masahiro.nakamoto.domain.PassChangeConfirmForm;
 import com.masahiro.nakamoto.mybatis.CourseMapper;
 import com.masahiro.nakamoto.mybatis.DriverMapper;
+import com.masahiro.nakamoto.mybatis.ShiftMapper;
 import com.masahiro.nakamoto.mybatis.UserMapper;
 
 /**
@@ -32,6 +34,9 @@ public class DriverService {
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
+
+	@Autowired
+	ShiftMapper shiftMapper;
 
 	/**
 	 * 指定したIDのドライバー情報を取得
@@ -123,6 +128,7 @@ public class DriverService {
 	 */
 	@Transactional
 	public void updateDriver(Driver driver) {
+		shiftMapper.updateId(driver.getPreviousId(), driver.getId());
 		driverMapper.updateDriver(driver);
 		userMapper.updateDriver(driver);
 	}
@@ -150,8 +156,34 @@ public class DriverService {
 		return passwordEncoder.matches(inputPassword, dbPassword);
 	}
 
-	public void changePassword(PassChangeConfirmForm passChangeConfirmForm ) {
+	/**
+	 * パスワードを変更
+	 *
+	 * @param passChangeConfirmForm
+	 */
+	public void changePassword(PassChangeConfirmForm passChangeConfirmForm) {
 		userMapper.changePassword(passChangeConfirmForm);
+	}
+
+	/**
+	 * 個人ページから登録情報を更新
+	 *
+	 * @param infomationForm
+	 */
+	public void updateInfomation(InfomationForm infomationForm) {
+		shiftMapper.updateId(infomationForm.getPreviousId(), infomationForm.getId());
+		userMapper.updateInfomation(infomationForm);
+		driverMapper.updateInfomation(infomationForm);
+	}
+
+	/**
+	 * 更新用の情報を取得
+	 *
+	 * @param id
+	 * @return
+	 */
+	public InfomationForm getInfomation(String id) {
+	    return driverMapper.getInfomationForm(id);
 	}
 
 }

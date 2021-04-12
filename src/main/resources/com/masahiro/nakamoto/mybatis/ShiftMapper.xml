@@ -227,4 +227,14 @@
         )
   </update>
 
+  <!-- idを変更 -->
+  <update id="updateId">
+    UPDATE
+      attendances
+    SET
+      id = #{id}
+    WHERE
+      id = #{previousId}
+  </update>
+
 </mapper>

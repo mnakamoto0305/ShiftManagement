@@ -19,21 +19,31 @@
 			       </a>
 			       <div class="dropdown-divider"></div>
 			    </li>
-			</th:block>
-			<th:block sec:authorize="hasRole('USER')">
+				</th:block>
+				<th:block sec:authorize="hasRole('USER')">
 		     	<li>
 			       <a href="/change/password" class="dropdown-item">
 			         パスワード変更
 			       </a>
 			       <div class="dropdown-divider"></div>
 			    </li>
-			</th:block>
-		    <li>
-		       <a href="#" class="dropdown-item">
-		         登録情報変更
-		       </a>
-		       <div class="dropdown-divider"></div>
-		    </li>
+				</th:block>
+				<!-- <th:block sec:authorize="hasRole('ADMIN')">
+		     	<li>
+		      	<a href="/admin/update/information" class="dropdown-item">
+		        	登録情報変更
+		      	</a>
+		      	<div class="dropdown-divider"></div>
+		    	</li>
+				</th:block> -->
+				<th:block sec:authorize="hasRole('USER')">
+		     	<li>
+		      	<a href="/update/information" class="dropdown-item">
+		        	登録情報変更
+		      	</a>
+		      	<div class="dropdown-divider"></div>
+		    	</li>
+				</th:block>
 		    <li>
 		       <a th:href="@{/logout}" class="dropdown-item">
 		         <i class="nav-icon fas fa-sign-out-alt"></i>

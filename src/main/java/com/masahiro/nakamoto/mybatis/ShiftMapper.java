@@ -126,4 +126,11 @@ public interface ShiftMapper {
 	 */
 	public List<Integer> findHolidayDriver(@Param("shiftForm") ShiftForm shiftForm, @Param("course") Course course);
 
+	/**
+	 * ドライバーのIDを変更
+	 *
+	 * @param previousId
+	 */
+	public void updateId(@Param("previousId") String previousId, @Param("id") String id);
+
 }

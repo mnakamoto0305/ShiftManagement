@@ -51,6 +51,13 @@
 	  <result column="monthly_expenses" property="monthlyExpenses" />
 	</resultMap>
 
+	<resultMap type="com.masahiro.nakamoto.domain.InfomationForm" id="infomationForm">
+	  <id column="id" property="id" />
+	  <result column="phone_number" property="phoneNumber" />
+	  <result column="postal_code" property="postalCode" />
+	  <result column="address" property="address" />
+	</resultMap>
+
 	<select id="identifyUser" resultMap="user">
 	  SELECT
 	    id,
@@ -167,6 +174,16 @@
       password = #{password}
     WHERE
       id = #{id}
+  </update>
+
+	<!-- idを更新 -->
+  <update id="updateInfomation">
+    UPDATE
+      users
+    SET
+      id = #{id}
+    WHERE
+      id = #{previousId}
   </update>
 
 </mapper>

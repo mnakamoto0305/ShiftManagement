@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.masahiro.nakamoto.Valid.GroupOrder;
 import com.masahiro.nakamoto.domain.Course;
 import com.masahiro.nakamoto.domain.Driver;
+import com.masahiro.nakamoto.domain.InfomationForm;
 import com.masahiro.nakamoto.domain.PassChangeConfirmForm;
 import com.masahiro.nakamoto.domain.PassChangeForm;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
@@ -70,6 +73,9 @@ public class HomeController {
 
 	@Autowired
 	Driver driver;
+
+	@Autowired
+	HttpSession session;
 
 	/**
 	 * ログイン後のホーム画面を表示
@@ -123,12 +129,29 @@ public class HomeController {
 		}
 	}
 
+	/**
+	 * パスワードの変更画面を表示
+	 *
+	 * @param model
+	 * @param passChangeForm
+	 * @return
+	 */
 	@GetMapping("/change/password")
 	public String getChangePassword(Model model, @ModelAttribute PassChangeForm passChangeForm) {
 		model.addAttribute("contents", "home/password :: confirm");
 		return "/main/homeLayout";
 	}
 
+	/**
+	 * 新しいパスワードの入力画面を表示
+	 *
+	 * @param model
+	 * @param passChangeForm
+	 * @param bindingResult
+	 * @param passChangeConfirmForm
+	 * @param principal
+	 * @return
+	 */
 	@PostMapping("/confirm/password")
 	public String postComfirmPassword(Model model, @ModelAttribute @Validated(GroupOrder.class) PassChangeForm passChangeForm , BindingResult bindingResult, @ModelAttribute PassChangeConfirmForm passChangeConfirmForm, Principal principal) {
 		if (!bindingResult.hasErrors()) {
@@ -149,6 +172,15 @@ public class HomeController {
 		}
 	}
 
+	/**
+	 * パスワードの入力処理
+	 *
+	 * @param model
+	 * @param principal
+	 * @param passChangeConfirmForm
+	 * @param bindingResult
+	 * @return
+	 */
 	@PostMapping("/change/password")
 	public String postChangePassword(Model model, Principal principal, @ModelAttribute @Validated(GroupOrder.class) PassChangeConfirmForm passChangeConfirmForm , BindingResult bindingResult) {
 		if (!bindingResult.hasErrors()) {
@@ -166,7 +198,49 @@ public class HomeController {
 			model.addAttribute("contents", "home/password :: change");
 			return "/main/homeLayout";
 		}
+	}
 
+	/**
+	 * 登録情報の更新画面を表示
+	 *
+	 * @param model
+	 * @param principal
+	 * @return
+	 */
+	@GetMapping("/update/information")
+	public String getUpdateInfomation(Model model, Principal principal) {
+		//社員IDの取得
+		Authentication auth = (Authentication)principal;
+		UserDetails user = (UserDetails) auth.getPrincipal();
+		String id = user.getUsername();
+		//社員情報の取得
+		InfomationForm infomationForm = driverService.getInfomation(id);
+		session.setAttribute("previousId", id);
+		model.addAttribute("infomationForm", infomationForm);
+		model.addAttribute("contents", "home/infomation :: infomation");
+		return "/main/homeLayout";
+	}
+
+	/**
+	 * 登録情報を更新
+	 *
+	 * @param model
+	 * @param principal
+	 * @param infomationForm
+	 * @param bindingResult
+	 * @return
+	 */
+	@PostMapping("/update/infomation")
+	public String postUpdateInfomation(Model model, Principal principal, @ModelAttribute @Validated(GroupOrder.class) InfomationForm infomationForm, BindingResult bindingResult) {
+		if (!bindingResult.hasErrors()) {
+			infomationForm.setPreviousId((String) session.getAttribute("previousId"));
+			driverService.updateInfomation(infomationForm);
+			session.removeAttribute("previousId");
+			return "redirect:/logout";
+		} else {
+			model.addAttribute("contents", "home/infomation :: infomation");
+			return "/main/homeLayout";
+		}
 	}
 
 }

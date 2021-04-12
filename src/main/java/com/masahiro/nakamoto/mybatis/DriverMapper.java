@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.masahiro.nakamoto.domain.Driver;
 import com.masahiro.nakamoto.domain.DriverForm;
+import com.masahiro.nakamoto.domain.InfomationForm;
 
 @Mapper
 public interface DriverMapper {
@@ -79,5 +80,20 @@ public interface DriverMapper {
 	 * @param id
 	 */
 	public void deleteDriver(String id);
+
+	/**
+	 * 個人ページから登録情報を更新
+	 *
+	 * @param infomationForm
+	 */
+	public void updateInfomation(InfomationForm infomationForm);
+
+	/**
+	 * 更新用の情報を取得
+	 *
+	 * @param id
+	 * @return
+	 */
+	public InfomationForm getInfomationForm(String id);
 
 }
