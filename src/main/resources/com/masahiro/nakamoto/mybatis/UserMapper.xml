@@ -94,7 +94,6 @@
       users
     SET
       id = #{id},
-      password = #{password},
       role = #{role},
       pass_update_date = NOW()
     WHERE
@@ -130,7 +129,6 @@
       users
     SET
       id = #{id},
-      password = #{password},
       role = #{role},
       pass_update_date = NOW()
     WHERE

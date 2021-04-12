@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.masahiro.nakamoto.Valid.GroupOrder;
 import com.masahiro.nakamoto.domain.Driver;
 import com.masahiro.nakamoto.domain.DriverForm;
+import com.masahiro.nakamoto.domain.PassChangeConfirmForm;
 import com.masahiro.nakamoto.service.DriverService;
 
 @Controller
@@ -172,6 +173,8 @@ public class DriverController {
 	@GetMapping("/update/driver/{id}")
 	public String getUpdateDriver(Model model, @PathVariable String id) {
 		Driver driver = driverService.findDriverInfo(id);
+		driver.setPassword("password");
+		driver.setPasswordConfirm("password");
 		session.setAttribute("previousId", driver.getId());
 		model.addAttribute("driver", driver);
 		model.addAttribute("contents", "driver/update :: update");
@@ -187,15 +190,16 @@ public class DriverController {
 	 * @return
 	 */
 	@PostMapping("/update/driver/{id}")
-	public String postUpdateDriver(Model model, @PathVariable String id, @ModelAttribute Driver driver) {
-		driver.setPreviousId((String) session.getAttribute("previousId"));
-		// パスワードをハッシュ化
-		String password = driver.getPassword();
-		password = passwordEncoder.encode(password);
-		driver.setPassword(password);
-		driverService.updateDriver(driver);
-		session.removeAttribute("previousId");
-		return "redirect:/search/driver";
+	public String postUpdateDriver(Model model, @PathVariable String id, @ModelAttribute @Validated(GroupOrder.class) Driver driver, BindingResult bindingResult) {
+		if (!bindingResult.hasErrors()) {
+			driver.setPreviousId((String) session.getAttribute("previousId"));
+			driverService.updateDriver(driver);
+			session.removeAttribute("previousId");
+			return "redirect:/search/driver";
+		} else {
+			model.addAttribute("contents", "driver/update :: update");
+			return "main/adminLayout";
+		}
 	}
 
 	/**
@@ -224,6 +228,47 @@ public class DriverController {
 	public String postDeleteDriver(Model model, @PathVariable String id) {
 		driverService.deleteDriver(id);
 		return "redirect:/search/driver";
+	}
+
+	/**
+	 * パスワードの初期化フォームを表示
+	 *
+	 * @param model
+	 * @param id
+	 * @param passChangeConfirmForm
+	 * @return
+	 */
+	@GetMapping("/initialize/password/{id}")
+	public String getInitializePassword(Model model, @PathVariable String id, @ModelAttribute PassChangeConfirmForm passChangeConfirmForm) {
+		model.addAttribute("id", id);
+		model.addAttribute("contents", "driver/password :: initialize");
+		return "main/adminLayout";
+	}
+
+	/**
+	 * パスワードの初期化を実行
+	 *
+	 * @param model
+	 * @param id
+	 * @param passChangeConfirmForm
+	 * @param bindingResult
+	 * @param driver
+	 * @return
+	 */
+	@PostMapping("/initialize/password/{id}")
+	public String postInitializePassword(Model model, @PathVariable String id, @ModelAttribute @Validated(GroupOrder.class) PassChangeConfirmForm passChangeConfirmForm, BindingResult bindingResult, @ModelAttribute Driver driver) {
+		if (!bindingResult.hasErrors()) {
+			passChangeConfirmForm.setId(id);
+			// パスワードをハッシュ化
+			String password = passChangeConfirmForm.getPassword();
+			password = passwordEncoder.encode(password);
+			passChangeConfirmForm.setPassword(password);
+			driverService.changePassword(passChangeConfirmForm);
+			return "redirect:/";
+		} else {
+			model.addAttribute("contents", "driver/password :: initialize");
+			return "/main/homeLayout";
+		}
 	}
 
 }

@@ -126,6 +126,8 @@ public class EmployeeController {
 	@GetMapping("/update/employee/{id}")
 	public String getUpdateEmployee(Model model, @PathVariable String id) {
 		Employee employee = employeeService.findEmployee(id);
+		employee.setPassword("password");
+		employee.setPasswordConfirm("password");
 		session.setAttribute("previousId", employee.getId());
 		model.addAttribute("employee", employee);
 		model.addAttribute("contents", "employee/update :: update");
@@ -141,15 +143,20 @@ public class EmployeeController {
 	 * @return
 	 */
 	@PostMapping("/update/employee/{id}")
-	public String postUpdateEmployee(Model model, @PathVariable String id, @ModelAttribute Employee employee) {
-		employee.setPreviousId((String) session.getAttribute("previousId"));
-		// パスワードをハッシュ化
-		String password = employee.getPassword();
-		password = passwordEncoder.encode(password);
-		employee.setPassword(password);
-		employeeService.updateEmployee(employee);
-		session.removeAttribute("previousId");
-		return "redirect:/search/employee";
+	public String postUpdateEmployee(Model model, @PathVariable String id, @ModelAttribute @Validated(GroupOrder.class) Employee employee, BindingResult bindiResult) {
+		if (!bindiResult.hasErrors()) {
+			employee.setPreviousId((String) session.getAttribute("previousId"));
+			// パスワードをハッシュ化
+			String password = employee.getPassword();
+			password = passwordEncoder.encode(password);
+			employee.setPassword(password);
+			employeeService.updateEmployee(employee);
+			session.removeAttribute("previousId");
+			return "redirect:/search/employee";
+		} else {
+			model.addAttribute("contents", "employee/update :: update");
+			return "main/adminLayout";
+		}
 	}
 
 	/**

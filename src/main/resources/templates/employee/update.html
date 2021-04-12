@@ -6,7 +6,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>社員更新</h1>
+            <h1>社員情報更新</h1>
           </div>
         </div>
       </div>
@@ -26,6 +26,9 @@
               <!-- /.card-header -->
               <form th:action="@{/update/employee/{id}(id=${employee.id})}" method="POST" th:object="${employee}">
                   <div class="card-body">
+
+                  	<input type="hidden" th:field="*{password}">
+                  	<input type="hidden" th:field="*{passwordConfirm}">
 
                     <div class="form-group">
                       <label for="lastName">名字</label>
@@ -49,18 +52,6 @@
                       <label for="id">メールアドレス(再入力)</label>
                       <input type="email" name="idConfirm" th:field=${employee.idConfirm} id="idConfirm" class="form-control">
                       <div th:if="${#fields.hasErrors('idConfirm')}" th:errors="${employee.idConfirm}" class="has-error text-danger"></div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="password">初期パスワード</label>
-                      <input type="password" name="password" th:field=${employee.password} id="password" class="form-control">
-                      <div th:if="${#fields.hasErrors('password')}" th:errors="${employee.password}" class="has-error text-danger"></div>
-                    </div>
-
-                    <div class="form-group">
-                      <label for="passwordConfirm">初期パスワード(確認用)</label>
-                      <input type="password" name="passwordConfirm" th:field=${employee.passwordConfirm} id="passwordConfirm" class="form-control">
-                      <div th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="${employee.passwordConfirm}" class="has-error text-danger"></div>
                     </div>
 
                     <div class="form-group">
