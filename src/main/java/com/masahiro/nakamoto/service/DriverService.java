@@ -161,6 +161,7 @@ public class DriverService {
 	 *
 	 * @param passChangeConfirmForm
 	 */
+	@Transactional
 	public void changePassword(PassChangeConfirmForm passChangeConfirmForm) {
 		userMapper.changePassword(passChangeConfirmForm);
 	}
@@ -170,6 +171,7 @@ public class DriverService {
 	 *
 	 * @param infomationForm
 	 */
+	@Transactional
 	public void updateInfomation(InfomationForm infomationForm) {
 		shiftMapper.updateId(infomationForm.getPreviousId(), infomationForm.getId());
 		userMapper.updateInfomation(infomationForm);

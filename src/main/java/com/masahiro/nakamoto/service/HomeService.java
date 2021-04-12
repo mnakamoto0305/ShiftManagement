@@ -79,6 +79,13 @@ public class HomeService {
 
 	}
 
+	/**
+	 * コース情報をリストで取得
+	 *
+	 * @param mapList
+	 * @param courseId
+	 * @return
+	 */
 	public List<Integer> findCourse(List<Map<Integer, Integer>> mapList, int courseId) {
 		List<Integer> list = new ArrayList<>();
 

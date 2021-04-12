@@ -201,6 +201,7 @@ public class HolidayService {
 	 * @param courseId
 	 * @param registerHolidayForm
 	 */
+	@Transactional
 	public void proxyRegister(int areaId, int courseId, RegisterHolidayForm registerHolidayForm) {
 		String id = userMapper.getId(areaId, courseId);
 		Attendance attendance = new Attendance();
