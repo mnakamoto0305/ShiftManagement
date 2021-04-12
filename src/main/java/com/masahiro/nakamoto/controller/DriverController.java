@@ -19,6 +19,7 @@ import com.masahiro.nakamoto.Valid.GroupOrder;
 import com.masahiro.nakamoto.domain.Driver;
 import com.masahiro.nakamoto.domain.DriverForm;
 import com.masahiro.nakamoto.domain.PassChangeConfirmForm;
+import com.masahiro.nakamoto.service.AccountingService;
 import com.masahiro.nakamoto.service.DriverService;
 
 @Controller
@@ -32,6 +33,9 @@ public class DriverController {
 
 	@Autowired
 	HttpSession session;
+
+	@Autowired
+	AccountingService accountingService;
 
 	/**
 	 * ドライバー情報の全件取得
@@ -156,9 +160,14 @@ public class DriverController {
 	 */
 	@GetMapping("/detail/driver/{id}")
 	public String getDetailDriver(Model model, @PathVariable String id) {
+		//ドライバー情報を取得
 		Driver driver = driverService.findDriverInfo(id);
-		System.out.println(driver);
 		model.addAttribute("driver", driver);
+		//単価と経費をカンマ区切りに変換
+		String dailyWages = accountingService.commaOf1000(driver.getDailyWages());
+		model.addAttribute("dailyWages", dailyWages);
+		String monthlyExpenses = accountingService.commaOf1000(driver.getMonthlyExpenses());
+		model.addAttribute("monthlyExpenses", monthlyExpenses);
 		model.addAttribute("contents", "driver/detail :: detail");
 		return "main/adminLayout";
 	}
