@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.masahiro.nakamoto.Valid.GroupOrder;
+import com.masahiro.nakamoto.Valid.group.GroupOrder;
 import com.masahiro.nakamoto.domain.Employee;
-import com.masahiro.nakamoto.domain.EmployeeForm;
+import com.masahiro.nakamoto.domain.form.EmployeeForm;
 import com.masahiro.nakamoto.service.EmployeeService;
 
 @Controller

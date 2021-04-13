@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.masahiro.nakamoto.domain.attendance.Attendance;
-import com.masahiro.nakamoto.domain.attendance.RegisterHolidayForm;
+import com.masahiro.nakamoto.domain.holiday.Attendance;
+import com.masahiro.nakamoto.domain.holiday.RegisterHolidayForm;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
 import com.masahiro.nakamoto.domain.shift.ShiftResult;
 import com.masahiro.nakamoto.mybatis.HolidayMapper;

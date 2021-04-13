@@ -1,11 +1,11 @@
-package com.masahiro.nakamoto;
+package com.masahiro.nakamoto.Valid.password;
 
 import java.util.Objects;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.masahiro.nakamoto.domain.PassChangeConfirmForm;
+import com.masahiro.nakamoto.domain.form.PassChangeConfirmForm;
 
 public class ConfirmedChangePasswordValidator implements ConstraintValidator<ConfirmedChangePassword, PassChangeConfirmForm> {
 

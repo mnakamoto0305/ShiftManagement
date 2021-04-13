@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.masahiro.nakamoto.domain.Driver;
-import com.masahiro.nakamoto.domain.DriverForm;
-import com.masahiro.nakamoto.domain.InfomationForm;
-import com.masahiro.nakamoto.domain.PassChangeConfirmForm;
+import com.masahiro.nakamoto.domain.form.DriverForm;
+import com.masahiro.nakamoto.domain.form.InfomationForm;
+import com.masahiro.nakamoto.domain.form.PassChangeConfirmForm;
 import com.masahiro.nakamoto.mybatis.CourseMapper;
 import com.masahiro.nakamoto.mybatis.DriverMapper;
 import com.masahiro.nakamoto.mybatis.ShiftMapper;

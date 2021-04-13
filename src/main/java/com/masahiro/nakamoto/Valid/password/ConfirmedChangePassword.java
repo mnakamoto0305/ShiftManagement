@@ -1,4 +1,4 @@
-package com.masahiro.nakamoto;
+package com.masahiro.nakamoto.Valid.password;
 
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.*;

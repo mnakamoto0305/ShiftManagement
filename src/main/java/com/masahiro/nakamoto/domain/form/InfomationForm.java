@@ -1,4 +1,4 @@
-package com.masahiro.nakamoto.domain;
+package com.masahiro.nakamoto.domain.form;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -6,9 +6,9 @@ import javax.validation.constraints.Size;
 
 import org.springframework.stereotype.Component;
 
-import com.masahiro.nakamoto.ConfirmedUpdateId;
-import com.masahiro.nakamoto.Valid.ValidGroup1;
-import com.masahiro.nakamoto.Valid.ValidGroup2;
+import com.masahiro.nakamoto.Valid.group.ValidGroup1;
+import com.masahiro.nakamoto.Valid.group.ValidGroup2;
+import com.masahiro.nakamoto.Valid.id.ConfirmedUpdateId;
 
 import lombok.Data;
 

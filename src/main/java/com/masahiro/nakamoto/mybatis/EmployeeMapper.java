@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.masahiro.nakamoto.domain.Employee;
-import com.masahiro.nakamoto.domain.EmployeeForm;
+import com.masahiro.nakamoto.domain.form.EmployeeForm;
 
 @Mapper
 public interface EmployeeMapper {

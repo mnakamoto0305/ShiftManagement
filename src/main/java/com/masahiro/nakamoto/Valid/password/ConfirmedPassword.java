@@ -1,4 +1,4 @@
-package com.masahiro.nakamoto;
+package com.masahiro.nakamoto.Valid.password;
 
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.*;
@@ -13,13 +13,12 @@ import javax.validation.Payload;
 @Documented
 @Retention(RUNTIME)
 @Target(TYPE)
-@Constraint(validatedBy = ConfirmedDriverIdValidator.class)
-public @interface ConfirmedDriverId {
+@Constraint(validatedBy = ConfirmedPasswordValidator.class)
+public @interface ConfirmedPassword {
 
-	String message() default "メールアドレスとメールアドレス再入力が一致しません";
+	String message() default "パスワードとパスワード再入力が一致しません";
 
 	Class<?>[] groups() default {};
 
 	Class<? extends Payload>[] payload() default {};
-
 }

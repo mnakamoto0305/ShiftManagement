@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.masahiro.nakamoto.domain.Course;
 import com.masahiro.nakamoto.domain.Driver;
-import com.masahiro.nakamoto.domain.attendance.Attendance;
+import com.masahiro.nakamoto.domain.holiday.Attendance;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
 import com.masahiro.nakamoto.domain.shift.Today;
 

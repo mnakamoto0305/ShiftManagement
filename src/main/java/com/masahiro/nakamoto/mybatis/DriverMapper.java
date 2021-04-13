@@ -6,8 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.masahiro.nakamoto.domain.Driver;
-import com.masahiro.nakamoto.domain.DriverForm;
-import com.masahiro.nakamoto.domain.InfomationForm;
+import com.masahiro.nakamoto.domain.form.DriverForm;
+import com.masahiro.nakamoto.domain.form.InfomationForm;
 
 @Mapper
 public interface DriverMapper {

@@ -5,9 +5,9 @@ import org.apache.ibatis.annotations.Param;
 
 import com.masahiro.nakamoto.domain.Driver;
 import com.masahiro.nakamoto.domain.Employee;
-import com.masahiro.nakamoto.domain.InfomationForm;
-import com.masahiro.nakamoto.domain.PassChangeConfirmForm;
 import com.masahiro.nakamoto.domain.SiteUser;
+import com.masahiro.nakamoto.domain.form.InfomationForm;
+import com.masahiro.nakamoto.domain.form.PassChangeConfirmForm;
 
 @Mapper
 public interface UserMapper {

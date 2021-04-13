@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.masahiro.nakamoto.Valid.GroupOrder;
+import com.masahiro.nakamoto.Valid.group.GroupOrder;
 import com.masahiro.nakamoto.domain.Driver;
-import com.masahiro.nakamoto.domain.DriverForm;
-import com.masahiro.nakamoto.domain.PassChangeConfirmForm;
+import com.masahiro.nakamoto.domain.form.DriverForm;
+import com.masahiro.nakamoto.domain.form.PassChangeConfirmForm;
 import com.masahiro.nakamoto.service.AccountingService;
 import com.masahiro.nakamoto.service.DriverService;
 

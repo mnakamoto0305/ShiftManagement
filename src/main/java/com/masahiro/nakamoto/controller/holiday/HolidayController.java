@@ -1,4 +1,4 @@
-package com.masahiro.nakamoto.controller.attendance;
+package com.masahiro.nakamoto.controller.holiday;
 
 import java.security.Principal;
 import java.time.LocalDate;
@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.masahiro.nakamoto.domain.Driver;
-import com.masahiro.nakamoto.domain.attendance.Attendance;
-import com.masahiro.nakamoto.domain.attendance.RegisterHolidayForm;
+import com.masahiro.nakamoto.domain.holiday.Attendance;
+import com.masahiro.nakamoto.domain.holiday.RegisterHolidayForm;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
 import com.masahiro.nakamoto.domain.shift.ShiftResult;
 import com.masahiro.nakamoto.mybatis.HolidayMapper;

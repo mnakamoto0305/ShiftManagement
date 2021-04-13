@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.masahiro.nakamoto.domain.Course;
-import com.masahiro.nakamoto.domain.Substitute;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
+import com.masahiro.nakamoto.domain.shift.Substitute;
 import com.masahiro.nakamoto.mybatis.ShiftMapper;
 
 /**

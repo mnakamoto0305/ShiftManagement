@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.masahiro.nakamoto.domain.attendance.Attendance;
+import com.masahiro.nakamoto.domain.holiday.Attendance;
 
 import lombok.Data;
 

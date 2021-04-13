@@ -1,4 +1,4 @@
-package com.masahiro.nakamoto.Valid;
+package com.masahiro.nakamoto.Valid.group;
 
 import javax.validation.GroupSequence;
 

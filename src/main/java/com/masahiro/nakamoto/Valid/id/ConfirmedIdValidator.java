@@ -1,16 +1,16 @@
-package com.masahiro.nakamoto;
+package com.masahiro.nakamoto.Valid.id;
 
 import java.util.Objects;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.masahiro.nakamoto.domain.InfomationForm;
+import com.masahiro.nakamoto.domain.Employee;
 
-public class ConfirmedUpdateIdValidator implements ConstraintValidator<ConfirmedUpdateId, InfomationForm> {
+public class ConfirmedIdValidator implements ConstraintValidator<ConfirmedId, Employee> {
 
 	@Override
-	public boolean isValid(InfomationForm value, ConstraintValidatorContext context) {
+	public boolean isValid(Employee value, ConstraintValidatorContext context) {
 		if (Objects.equals(value.getId(), value.getIdConfirm())) {
 			return true;
 		} else {

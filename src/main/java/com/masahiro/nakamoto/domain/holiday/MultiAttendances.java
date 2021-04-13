@@ -1,4 +1,4 @@
-package com.masahiro.nakamoto.domain.attendance;
+package com.masahiro.nakamoto.domain.holiday;
 
 import java.util.List;
 

@@ -11,11 +11,11 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.stereotype.Component;
 
-import com.masahiro.nakamoto.ConfirmedDriverId;
-import com.masahiro.nakamoto.ConfirmedDriverPassword;
-import com.masahiro.nakamoto.Valid.ValidGroup1;
-import com.masahiro.nakamoto.Valid.ValidGroup2;
-import com.masahiro.nakamoto.Valid.ValidGroup3;
+import com.masahiro.nakamoto.Valid.group.ValidGroup1;
+import com.masahiro.nakamoto.Valid.group.ValidGroup2;
+import com.masahiro.nakamoto.Valid.group.ValidGroup3;
+import com.masahiro.nakamoto.Valid.id.ConfirmedDriverId;
+import com.masahiro.nakamoto.Valid.password.ConfirmedDriverPassword;
 
 import lombok.Data;
 

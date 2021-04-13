@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.masahiro.nakamoto.domain.attendance.Attendance;
+import com.masahiro.nakamoto.domain.holiday.Attendance;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
 
 

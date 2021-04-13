@@ -24,7 +24,7 @@
   <result column="monthly_expenses" property="monthlyExpenses" />
 </resultMap>
 
-<resultMap type="com.masahiro.nakamoto.domain.InfomationForm" id="infomationForm">
+<resultMap type="com.masahiro.nakamoto.domain.form.InfomationForm" id="infomationForm">
   <id column="id" property="id" />
   <result column="phone_number" property="phoneNumber" />
   <result column="postal_code" property="postalCode" />

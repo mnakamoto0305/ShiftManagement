@@ -1,13 +1,13 @@
-package com.masahiro.nakamoto.domain;
+package com.masahiro.nakamoto.domain.form;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.masahiro.nakamoto.Valid.ValidGroup1;
-import com.masahiro.nakamoto.Valid.ValidGroup2;
-import com.masahiro.nakamoto.Valid.ValidGroup3;
+import com.masahiro.nakamoto.Valid.group.ValidGroup1;
+import com.masahiro.nakamoto.Valid.group.ValidGroup2;
+import com.masahiro.nakamoto.Valid.group.ValidGroup3;
 
 import lombok.Data;
 

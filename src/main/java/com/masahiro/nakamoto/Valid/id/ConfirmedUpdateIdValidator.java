@@ -1,16 +1,16 @@
-package com.masahiro.nakamoto;
+package com.masahiro.nakamoto.Valid.id;
 
 import java.util.Objects;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.masahiro.nakamoto.domain.Driver;
+import com.masahiro.nakamoto.domain.form.InfomationForm;
 
-public class ConfirmedDriverIdValidator implements ConstraintValidator<ConfirmedDriverId, Driver> {
+public class ConfirmedUpdateIdValidator implements ConstraintValidator<ConfirmedUpdateId, InfomationForm> {
 
 	@Override
-	public boolean isValid(Driver value, ConstraintValidatorContext context) {
+	public boolean isValid(InfomationForm value, ConstraintValidatorContext context) {
 		if (Objects.equals(value.getId(), value.getIdConfirm())) {
 			return true;
 		} else {

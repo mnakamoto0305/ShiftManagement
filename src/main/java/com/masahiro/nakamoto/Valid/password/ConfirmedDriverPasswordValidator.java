@@ -1,16 +1,16 @@
-package com.masahiro.nakamoto;
+package com.masahiro.nakamoto.Valid.password;
 
 import java.util.Objects;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.masahiro.nakamoto.domain.Employee;
+import com.masahiro.nakamoto.domain.Driver;
 
-public class ConfirmedPasswordValidator implements ConstraintValidator<ConfirmedPassword, Employee> {
+public class ConfirmedDriverPasswordValidator implements ConstraintValidator<ConfirmedDriverPassword, Driver> {
 
 	@Override
-	public boolean isValid(Employee value, ConstraintValidatorContext context) {
+	public boolean isValid(Driver value, ConstraintValidatorContext context) {
 		if (Objects.equals(value.getPassword(), value.getPasswordConfirm())) {
 			return true;
 		} else {

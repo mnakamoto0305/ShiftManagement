@@ -2,7 +2,7 @@ package com.masahiro.nakamoto.domain.shift;
 
 import org.springframework.stereotype.Component;
 
-import com.masahiro.nakamoto.domain.attendance.MultiAttendances;
+import com.masahiro.nakamoto.domain.holiday.MultiAttendances;
 
 import lombok.Data;
 

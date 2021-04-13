@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.masahiro.nakamoto.Valid.GroupOrder;
-import com.masahiro.nakamoto.domain.PassChangeConfirmForm;
-import com.masahiro.nakamoto.domain.PassChangeForm;
+import com.masahiro.nakamoto.Valid.group.GroupOrder;
+import com.masahiro.nakamoto.domain.form.PassChangeConfirmForm;
+import com.masahiro.nakamoto.domain.form.PassChangeForm;
 import com.masahiro.nakamoto.service.DriverService;
 import com.masahiro.nakamoto.service.HolidayService;
 

@@ -1,4 +1,4 @@
-package com.masahiro.nakamoto.domain;
+package com.masahiro.nakamoto.domain.form;
 
 import org.springframework.stereotype.Component;
 
