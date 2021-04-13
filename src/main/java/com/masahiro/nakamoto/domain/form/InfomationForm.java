@@ -43,7 +43,7 @@ public class InfomationForm {
 	 */
 	@NotBlank(groups = ValidGroup1.class)
 	@Pattern(regexp="^[0-9]{7}$", groups = ValidGroup2.class)
-	private String postalCode;
+	private Integer postalCode;
 
 	/**
 	 * 住所
@@ -51,5 +51,25 @@ public class InfomationForm {
 	@NotBlank(groups = ValidGroup1.class)
 	@Size(max = 100, groups = ValidGroup2.class)
 	private String address;
+
+	public InfomationForm(@NotBlank(groups = ValidGroup1.class) String id,
+			@NotBlank(groups = ValidGroup1.class) @Pattern(regexp = "^0\\d{9,10}$", groups = ValidGroup2.class) String phoneNumber,
+			@NotBlank(groups = ValidGroup1.class) @Pattern(regexp = "^[0-9]{7}$", groups = ValidGroup2.class) Integer postalCode,
+			@NotBlank(groups = ValidGroup1.class) @Size(max = 100, groups = ValidGroup2.class) String address) {
+		super();
+		this.id = id;
+		this.phoneNumber = phoneNumber;
+		this.postalCode = postalCode;
+		this.address = address;
+	}
+
+	/**
+	 * 引数なしコンストラクタ
+	 */
+	public InfomationForm() {
+		super();
+	}
+
+
 
 }

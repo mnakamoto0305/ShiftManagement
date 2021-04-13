@@ -31,6 +31,7 @@
   <result column="address" property="address" />
 </resultMap>
 
+
   <!-- ドライバー情報を取得 -->
   <select id="findDriverInfo" resultMap="driver">
     SELECT
@@ -115,22 +116,7 @@
 
   <!-- ドライバー情報を登録 -->
   <insert id="createDriver">
-    INSERT INTO drivers (
-      id,
-      position_id,
-      last_name,
-      first_name,
-      sex,
-      date_of_birth,
-      postal_code,
-      address,
-      phone_number,
-      join_date,
-      area_id,
-      course,
-      daily_wages,
-      monthly_expenses
-    )
+    INSERT INTO drivers
     VALUES (
       #{id},
       #{positionId},
