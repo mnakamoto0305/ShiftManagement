@@ -3,7 +3,6 @@ package com.masahiro.nakamoto.mybatis;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -70,7 +69,6 @@ public class DriverMapperTest {
 	public void findCourseDriverで指定した拠点とコースIDのドライバー情報を受け取る() throws Exception {
 		Driver actual = sut.findCourseDriver(1, 1);
 
-		DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		assertThat(actual.getId(), is("koto@sample.com"));
 		assertThat(actual.getLastName() , is("佐藤"));
 		assertThat(actual.getFirstName() , is("太郎"));

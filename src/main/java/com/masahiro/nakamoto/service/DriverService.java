@@ -7,6 +7,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.masahiro.nakamoto.AlreadyRegisteredException;
+import com.masahiro.nakamoto.IllegalCourseException;
 import com.masahiro.nakamoto.domain.Driver;
 import com.masahiro.nakamoto.domain.form.DriverForm;
 import com.masahiro.nakamoto.domain.form.InfomationForm;
@@ -90,7 +92,7 @@ public class DriverService {
 	public void isRegistered(Driver driver) throws Exception {
 		Driver dr = driverMapper.isRegistered(driver);
 		if (dr != null) {
-			throw new Exception();
+			throw new AlreadyRegisteredException();
 		}
 	}
 
@@ -105,7 +107,7 @@ public class DriverService {
 		int courseId = driver.getCourseId();
 		int maxCourse = courseMapper.findTotalCourses(areaId);
 		if (courseId > maxCourse) {
-			throw new Exception();
+			throw new IllegalCourseException();
 		}
 	}
 
