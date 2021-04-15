@@ -38,20 +38,6 @@ public class DriverController {
 	AccountingService accountingService;
 
 	/**
-	 * ドライバー情報の全件取得
-	 *
-	 * @param model
-	 * @return
-	 */
-//	@GetMapping("/search/driver")
-//	public String getSearchDriver(Model model) {
-//		List<Driver> driverList = driverService.findAll();
-//		model.addAttribute("driverList", driverList);
-//		model.addAttribute("contents", "driver/find :: findDriver");
-//		return "main/adminLayout";
-//	}
-
-	/**
 	 * ドライバーの検索フォーム表示
 	 *
 	 * @param model

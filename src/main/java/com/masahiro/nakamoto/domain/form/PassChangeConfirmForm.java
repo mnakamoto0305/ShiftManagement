@@ -28,4 +28,20 @@ public class PassChangeConfirmForm {
 
 	private String id;
 
+	public PassChangeConfirmForm(
+			@NotBlank(groups = ValidGroup1.class) @Length(min = 8, max = 100, groups = ValidGroup2.class) @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class) String password,
+			@NotBlank(groups = ValidGroup1.class) @Length(min = 8, max = 100, groups = ValidGroup2.class) @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class) String passwordConfirm) {
+		super();
+		this.password = password;
+		this.passwordConfirm = passwordConfirm;
+	}
+
+	/**
+	 * 引数なしコンストラクタ
+	 */
+	public PassChangeConfirmForm() {
+		super();
+	}
+
+
 }

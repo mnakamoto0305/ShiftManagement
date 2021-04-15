@@ -43,7 +43,7 @@ public class InfomationForm {
 	 */
 	@NotBlank(groups = ValidGroup1.class)
 	@Pattern(regexp="^[0-9]{7}$", groups = ValidGroup2.class)
-	private Integer postalCode;
+	private String postalCode;
 
 	/**
 	 * 住所
@@ -54,7 +54,7 @@ public class InfomationForm {
 
 	public InfomationForm(@NotBlank(groups = ValidGroup1.class) String id,
 			@NotBlank(groups = ValidGroup1.class) @Pattern(regexp = "^0\\d{9,10}$", groups = ValidGroup2.class) String phoneNumber,
-			@NotBlank(groups = ValidGroup1.class) @Pattern(regexp = "^[0-9]{7}$", groups = ValidGroup2.class) Integer postalCode,
+			@NotBlank(groups = ValidGroup1.class) @Pattern(regexp = "^[0-9]{7}$", groups = ValidGroup2.class) String postalCode,
 			@NotBlank(groups = ValidGroup1.class) @Size(max = 100, groups = ValidGroup2.class) String address) {
 		super();
 		this.id = id;

@@ -49,7 +49,7 @@ class DriverServiceTest {
 		@Test
 		public void isRegisteredで既にドライバーが登録されていた場合例外を送出する() throws Exception {
 			// SetUp
-			Driver driver = new Driver("koto@sample.com", "佐藤", "太郎", 2, "1", "1990-01-01", "08000000000", 1000004, "東京都千代田区大手町1-1-1", "2020-01-01", "$2a$10$zjHq1xmqY3/cgKSpK7dywOSYFsthdmUrBhOZ8YjzTyrJxSqfEBJYG", "2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000);
+			Driver driver = new Driver("koto@sample.com", "佐藤", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "$2a$10$zjHq1xmqY3/cgKSpK7dywOSYFsthdmUrBhOZ8YjzTyrJxSqfEBJYG", "2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000);
 			when(driverMapper.isRegistered(driver)).thenReturn(getDriver1());
 
 			//Verify
@@ -61,7 +61,7 @@ class DriverServiceTest {
 		@Test
 		public void isCorrectCourseで不正なコース番号が指定された場合例外を送出する() throws Exception {
 			// SetUp
-			Driver driver = new Driver("koto@sample.com", "佐藤", "太郎", 2, "1", "1990-01-01", "08000000000", 1000004, "東京都千代田区大手町1-1-1", "2020-01-01", "$2a$10$zjHq1xmqY3/cgKSpK7dywOSYFsthdmUrBhOZ8YjzTyrJxSqfEBJYG", "2021-04-12 12:29:41", "USER", 1, 8, 20000, 30000);
+			Driver driver = new Driver("koto@sample.com", "佐藤", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "$2a$10$zjHq1xmqY3/cgKSpK7dywOSYFsthdmUrBhOZ8YjzTyrJxSqfEBJYG", "2021-04-12 12:29:41", "USER", 1, 8, 20000, 30000);
 			when(courseMapper.findTotalCourses(driver.getAreaId())).thenReturn(7);
 			// Verify
 			assertThatThrownBy(() -> {
@@ -70,7 +70,7 @@ class DriverServiceTest {
 		}
 
 		public Driver getDriver1() {
-			Driver actual = new Driver("koto@sample.com", "佐藤", "太郎", 2, "1", "1990-01-01", "08000000000", 1000004, "東京都千代田区大手町1-1-1", "2020-01-01", "$2a$10$zjHq1xmqY3/cgKSpK7dywOSYFsthdmUrBhOZ8YjzTyrJxSqfEBJYG", "2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000);
+			Driver actual = new Driver("koto@sample.com", "佐藤", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "$2a$10$zjHq1xmqY3/cgKSpK7dywOSYFsthdmUrBhOZ8YjzTyrJxSqfEBJYG", "2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000);
 			return actual;
 		}
 	}

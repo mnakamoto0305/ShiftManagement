@@ -79,7 +79,7 @@ public class Driver {
 	 */
 	@NotBlank(groups = ValidGroup1.class)
 	@Pattern(regexp="^[0-9]{7}$", groups = ValidGroup2.class)
-	private Integer postalCode;
+	private String postalCode;
 
 	/**
 	 * 住所
@@ -164,7 +164,7 @@ public class Driver {
 			@NotBlank(groups = ValidGroup1.class) String sex,
 			@NotBlank(groups = ValidGroup1.class) @Pattern(regexp = "^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$", groups = ValidGroup2.class) String dateOfBirth,
 			@NotBlank(groups = ValidGroup1.class) @Pattern(regexp = "^0\\d{9,10}$", groups = ValidGroup2.class) String phoneNumber,
-			@NotBlank(groups = ValidGroup1.class) @Pattern(regexp = "^[0-9]{7}$", groups = ValidGroup2.class) Integer postalCode,
+			@NotBlank(groups = ValidGroup1.class) @Pattern(regexp = "^[0-9]{7}$", groups = ValidGroup2.class) String postalCode,
 			@NotBlank(groups = ValidGroup1.class) @Size(max = 100, groups = ValidGroup2.class) String address,
 			@NotBlank(groups = ValidGroup1.class) @Pattern(regexp = "^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$", groups = ValidGroup2.class) String joinDate,
 			@NotBlank(groups = ValidGroup1.class) @Length(min = 8, max = 100, groups = ValidGroup2.class) @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class) String password,
@@ -192,7 +192,43 @@ public class Driver {
 		this.monthlyExpenses = monthlyExpenses;
 	}
 
-
+	public Driver(@NotBlank(groups = ValidGroup1.class) String id,
+			@NotBlank(groups = ValidGroup1.class) String idConfirm,
+			@NotBlank(groups = ValidGroup1.class) String lastName,
+			@NotBlank(groups = ValidGroup1.class) String firstName, Integer positionId,
+			@NotBlank(groups = ValidGroup1.class) String sex,
+			@NotBlank(groups = ValidGroup1.class) @Pattern(regexp = "^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$", groups = ValidGroup2.class) String dateOfBirth,
+			@NotBlank(groups = ValidGroup1.class) @Pattern(regexp = "^0\\d{9,10}$", groups = ValidGroup2.class) String phoneNumber,
+			@NotNull(groups = ValidGroup1.class) @Pattern(regexp = "^[0-9]{7}$", groups = ValidGroup2.class) String postalCode,
+			@NotBlank(groups = ValidGroup1.class) @Size(max = 100, groups = ValidGroup2.class) String address,
+			@NotBlank(groups = ValidGroup1.class) @Pattern(regexp = "^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$", groups = ValidGroup2.class) String joinDate,
+			@NotBlank(groups = ValidGroup1.class) @Length(min = 8, max = 100, groups = ValidGroup2.class) @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class) String password,
+			@NotBlank(groups = ValidGroup1.class) @Length(min = 8, max = 100, groups = ValidGroup2.class) @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class) String passwordConfirm,
+			String passUpdateDate, @NotBlank(groups = ValidGroup1.class) String role,
+			@NotNull(groups = ValidGroup1.class) Integer areaId, @NotNull(groups = ValidGroup1.class) Integer courseId,
+			@NotNull(groups = ValidGroup1.class) @Min(value = 0, groups = ValidGroup2.class) Integer dailyWages,
+			@NotNull(groups = ValidGroup1.class) @Min(value = 0, groups = ValidGroup2.class) Integer monthlyExpenses) {
+		super();
+		this.id = id;
+		this.idConfirm = idConfirm;
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.positionId = positionId;
+		this.sex = sex;
+		this.dateOfBirth = dateOfBirth;
+		this.phoneNumber = phoneNumber;
+		this.postalCode = postalCode;
+		this.address = address;
+		this.joinDate = joinDate;
+		this.password = password;
+		this.passwordConfirm = passwordConfirm;
+		this.passUpdateDate = passUpdateDate;
+		this.role = role;
+		this.areaId = areaId;
+		this.courseId = courseId;
+		this.dailyWages = dailyWages;
+		this.monthlyExpenses = monthlyExpenses;
+	}
 
 
 }

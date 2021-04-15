@@ -45,7 +45,7 @@ public class DriverMapperTest {
 		assertThat(actual.getPositionId() , is(2));
 		assertThat(actual.getSex() , is("1"));
 		assertThat(actual.getDateOfBirth() , is("1990-01-01"));
-		assertThat(actual.getPostalCode() , is(1000004));
+		assertThat(actual.getPostalCode() , is("1000004"));
 		assertThat(actual.getAddress() , is("東京都千代田区大手町1-1-1"));
 		assertThat(actual.getPhoneNumber() , is("08012345678"));
 		assertThat(actual.getJoinDate() , is("2020-01-01"));
@@ -75,7 +75,7 @@ public class DriverMapperTest {
 		assertThat(actual.getPositionId() , is(2));
 		assertThat(actual.getSex() , is("1"));
 		assertThat(actual.getDateOfBirth() , is("1990-01-01"));
-		assertThat(actual.getPostalCode() , is(1000004));
+		assertThat(actual.getPostalCode() , is("1000004"));
 		assertThat(actual.getAddress() , is("東京都千代田区大手町1-1-1"));
 		assertThat(actual.getPhoneNumber() , is("08012345678"));
 		assertThat(actual.getJoinDate() , is("2020-01-01"));
@@ -123,7 +123,7 @@ public class DriverMapperTest {
 		assertThat(actual.get(0).getPositionId() , is(2));
 		assertThat(actual.get(0).getSex() , is("1"));
 		assertThat(actual.get(0).getDateOfBirth() , is("1990-01-01"));
-		assertThat(actual.get(0).getPostalCode() , is(1000004));
+		assertThat(actual.get(0).getPostalCode() , is("1000004"));
 		assertThat(actual.get(0).getAddress() , is("東京都千代田区大手町1-1-1"));
 		assertThat(actual.get(0).getPhoneNumber() , is("08012345678"));
 		assertThat(actual.get(0).getJoinDate() , is("2020-01-01"));
@@ -139,7 +139,7 @@ public class DriverMapperTest {
 	@Test
 	public void createDriverでドライバー情報を1件登録できる() throws Exception {
 		//SetUp
-		Driver driver = new Driver("edogawa3@sample.com", "山本", "太郎", 2, "1", "1990-01-01", "08000000000", 1000004, "東京都千代田区大手町1-1-1", "2020-01-01", "$2a$10$zjHq1xmqY3/cgKSpK7dywOSYFsthdmUrBhOZ8YjzTyrJxSqfEBJYG", "2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000);
+		Driver driver = new Driver("edogawa3@sample.com", "山本", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "$2a$10$zjHq1xmqY3/cgKSpK7dywOSYFsthdmUrBhOZ8YjzTyrJxSqfEBJYG", "2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000);
 
 		//Excercize
 		sut.createDriver(driver);
@@ -153,7 +153,7 @@ public class DriverMapperTest {
 	@Test
 	public void updateDriverでドライバー情報を1件更新できる() throws Exception {
 		//SetUp
-		Driver driver = new Driver("koto@sample.com", "加藤", "太郎", 2, "1", "1990-01-01", "08000000000", 1000003, "東京都千代田区大手町1-1-1", "2020-01-01", "$2a$10$zjHq1xmqY3/cgKSpK7dywOSYFsthdmUrBhOZ8YjzTyrJxSqfEBJYG", "2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000);
+		Driver driver = new Driver("koto@sample.com", "加藤", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "$2a$10$zjHq1xmqY3/cgKSpK7dywOSYFsthdmUrBhOZ8YjzTyrJxSqfEBJYG", "2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000);
 		driver.setPreviousId("koto@sample.com");
 
 		//Excercize
@@ -175,7 +175,7 @@ public class DriverMapperTest {
 	@Test
 	public void updateInfomationでドライバー情報を更新できる() throws Exception {
 		// SetUp
-		InfomationForm form = new InfomationForm("koto@sample.com", "08012341234", 1000005, "東京都千代田区丸の内1-1-1");
+		InfomationForm form = new InfomationForm("koto@sample.com", "08012341234", "1000005", "東京都千代田区丸の内1-1-1");
 		form.setPreviousId("koto@sample.com");
 
 		// Exercise
@@ -185,7 +185,7 @@ public class DriverMapperTest {
 		// Verify
 		assertThat(actual.getId(), is("koto@sample.com"));
 		assertThat(actual.getPhoneNumber(), is("08012341234"));
-		assertThat(actual.getPostalCode(), is(1000005));
+		assertThat(actual.getPostalCode(), is("1000005"));
 		assertThat(actual.getAddress(), is("東京都千代田区丸の内1-1-1"));
 	}
 
@@ -195,7 +195,7 @@ public class DriverMapperTest {
 
 		assertThat(actual.getId(), is("koto@sample.com"));
 		assertThat(actual.getPhoneNumber(), is("08012345678"));
-		assertThat(actual.getPostalCode(), is(1000004));
+		assertThat(actual.getPostalCode(), is("1000004"));
 		assertThat(actual.getAddress(), is("東京都千代田区大手町1-1-1"));
 	}
 
