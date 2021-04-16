@@ -1,7 +1,6 @@
 package com.masahiro.nakamoto.domain;
 
 import java.util.Collection;
-import java.util.Date;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +24,7 @@ public class SiteUser implements UserDetails {
 	/**
 	 * パスワード更新日付
 	 */
-	private Date passUpdateDate;
+	private String passUpdateDate;
 
 	/**
 	 * 権限

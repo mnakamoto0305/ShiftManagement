@@ -18,7 +18,7 @@ import com.masahiro.nakamoto.domain.form.InfomationForm;
 
 @RunWith(SpringRunner.class)
 @MybatisTest
-@TestPropertySource(locations = "classpath:/resources/test.properties")
+@TestPropertySource(locations = "classpath:/test.properties")
 public class DriverMapperTest {
 
 	@Autowired

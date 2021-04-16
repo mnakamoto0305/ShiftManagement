@@ -1,0 +1,3 @@
+id,password,role,position_id,pass_update_date
+koto@sample.com,$2a$10$zjHq1xmqY3/cgKSpK7dywOSYFsthdmUrBhOZ8YjzTyrJxSqfEBJYG,USER,2,2021/4/12 12:29
+koto2@sample.com,$2a$10$zjHq1xmqY3/cgKSpK7dywOSYFsthdmUrBhOZ8YjzTyrJxSqfEBJYG,USER,2,2021/4/12 12:29
