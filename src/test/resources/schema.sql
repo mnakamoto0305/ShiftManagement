@@ -24,3 +24,17 @@ CREATE TABLE IF NOT EXISTS users(
          ,position_id		INT  NOT NULL
          ,pass_update_date		TIMESTAMP  NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS areas(
+          id	INT	NOT NULL	PRIMARY KEY
+         ,area_name	VARCHAR	(10)	 NOT NULL
+         ,total_courses	INT	NOT NULL
+         ,total_drivers		INT  NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS attendances(
+          "DATE"	DATE	NOT NULL
+         ,is_attendance	TINYINT(1)	 NOT NULL
+         ,id	VARCHAR(255)	NOT NULL
+);
+

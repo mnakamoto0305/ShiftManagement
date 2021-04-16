@@ -30,7 +30,7 @@ import com.masahiro.nakamoto.service.DriverService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@TestPropertySource(locations = "classpath:/resources/test.properties")
+@TestPropertySource(locations = "classpath:/test.properties")
 @AutoConfigureMockMvc
 class DriverControllerTest {
 

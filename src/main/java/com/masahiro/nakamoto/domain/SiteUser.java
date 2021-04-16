@@ -77,4 +77,19 @@ public class SiteUser implements UserDetails {
 		return false;
 	}
 
+	/**
+	 * 引数なしコンストラクタ
+	 */
+	public SiteUser() {
+		super();
+	}
+
+	public SiteUser(String id, String password, String passUpdateDate, String role) {
+		super();
+		this.id = id;
+		this.password = password;
+		this.passUpdateDate = passUpdateDate;
+		this.role = role;
+	}
+
 }
