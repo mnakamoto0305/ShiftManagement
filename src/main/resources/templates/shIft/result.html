@@ -133,7 +133,7 @@
       <div class="container-fluid">
         <div class="row">
           <!-- left column -->
-          <div class="col-sm-6 col-md-12">
+          <div class="col-sm-6">
 	          <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title" th:text="|${year}年${month}月 シフト|"></h3>
@@ -169,7 +169,8 @@
 			                 <!-- 支払予定額 -->
                        <tr>
                         <td class="table-active">支払予定額</td>
-                        <td class="table-active">[[|${profit}円|]]</td>
+                        <td th:if="*{workingDays} neq 0" class="table-active">[[|${profit}円|]]</td>
+                        <td th:if="*{workingDays} eq 0" class="table-active">0円</td>
                        </tr>
 		                </tbody>
 		              </table>
@@ -211,7 +212,7 @@
       <div class="container-fluid">
         <div class="row">
           <!-- left column -->
-          <div class="col-sm-12">
+          <div class="col-sm-6">
             <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title" th:text="|${year}年${month}月 シフト|"></h3>
@@ -245,12 +246,17 @@
 			                 </tr>
 			                 <!-- 支払予定額 -->
 			                 <tr>
-			                  <td class="table-active">支払予定額</td>
-			                  <td class="table-active">[[|${profit}円|]]</td>
-			                 </tr>
+                        <td class="table-active">支払予定額</td>
+                        <td th:if="*{workingDays} neq 0" class="table-active">[[|${profit}円|]]</td>
+                        <td th:if="*{workingDays} eq 0" class="table-active">0円</td>
+                       </tr>
 		                </tbody>
 		              </table>
 		            </div>
+		            <div class="card-footer">
+              	  <button type="button" id="export-btn" class="btn btn-success float-left">Excel出力</button>
+             		</div>
+           		 </div>
               </div>
             </div>
           </div>

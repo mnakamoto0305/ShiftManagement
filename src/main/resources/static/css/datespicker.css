@@ -1,0 +1,5 @@
+/* ホバー時の動作 */
+td.ui-datepicker-week-end a.ui-state-hover{
+  opacity: 0.8;
+}
+

@@ -22,6 +22,9 @@
 	  rel="stylesheet"></link>
 	<script th:src="@{/webjars/jquery/3.5.0/jquery.min.js}"></script>
 	<script th:src="@{/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js}"></script>
+  <!-- xlsx出力用 -->
+  <link rel="stylesheet" th:href="@{/css/tableexport.css}">
+  <script th:src="@{/js/xlsx.core.min.js}"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -66,12 +69,29 @@
   <script th:src="@{/assets/AdminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js}"></script>
   <!-- AdminLTE App -->
   <script th:src="@{/assets/AdminLTE/dist/js/adminlte.min.js}"></script>
+  <!-- Ajax -->
+  <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script th:src="@{/assets/AdminLTE/dist/js/demo.js}"></script>
+ <!-- xlsx出力用 -->
+  <script th:src="@{/js/tableexport.js}"></script>
+  <script th:src="@{/js/FileSaver.js}"></script>
+  <script>
+	  $('#table').tableExport({
+		    formats: ["xlsx"],
+		    bootstrap: false
+		});
+
+		$('#table caption').hide();
+
+		$('#export-btn').on('click', function(){
+		    $('.table caption button').trigger('click');
+		});
+  </script>
   <!-- ドロップダウン -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <!-- AdminLTE for demo purposes -->
-  <script th:src="@{/assets/AdminLTE/dist/js/demo.js}"></script>
   <script type="text/javascript">
 	  $(function () {
 	    var url = window.location;
@@ -87,7 +107,7 @@
 	        .css({'display': 'block'})
 	        .addClass('menu-open').prev('a')
 	        .addClass('active');
-	});
+		});
   </script>
 </body>
 

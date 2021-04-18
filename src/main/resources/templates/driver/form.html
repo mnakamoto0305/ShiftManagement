@@ -23,7 +23,7 @@
               <div class="card-header">
                 <h3 class="card-title">拠点検索</h3>
               </div>
-              <form th:action="@{/search/driver/result/area}" method="post" th:object="${driverForm}">
+              <form th:action="@{/admin/search/driver/result/area}" method="post" th:object="${driverForm}">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="areaId">検索したい拠点を選択してください。</label>
@@ -46,7 +46,7 @@
               <div class="card-header">
                 <h3 class="card-title">ワード検索</h3>
               </div>
-              <form th:action="@{/search/driver/result}" method="post" th:object="${driverForm}">
+              <form th:action="@{/admin/search/driver/result}" method="post" th:object="${driverForm}">
                 <div class="card-body">
                   <div class="form-group">
                     <label>検索したいドライバーの氏名かメールアドレスを入力してください。</br>(何も入力がない場合は全社員のデータを表示します)</label>

@@ -59,7 +59,7 @@ public class HolidayController {
 	 * @param registerHolidayForm
 	 * @return
 	 */
-	@GetMapping("/attendances")
+	@GetMapping("/user/attendances")
 	public String getAttendances(Model model, @ModelAttribute RegisterHolidayForm registerHolidayForm) {
 		LocalDate date = LocalDate.now();
 		LocalDate twenty = date.withDayOfMonth(20);
@@ -78,7 +78,7 @@ public class HolidayController {
 	 * @param principal
 	 * @return
 	 */
-	@PostMapping("/register/attendances")
+	@PostMapping("/user/register/attendances")
 	public String postAttendances(Model model, @ModelAttribute @Validated RegisterHolidayForm registerHolidayForm, BindingResult bindingResult, Principal principal) {
 		//社員IDの取得
 		Authentication auth = (Authentication)principal;
@@ -120,7 +120,7 @@ public class HolidayController {
 	 * @param principal
 	 * @return
 	 */
-	@GetMapping("/confirm/holiday")
+	@GetMapping("/user/confirm/holiday")
 	public String getConfirmHoliday(Model model, @ModelAttribute ShiftForm shiftForm, Principal principal) {
 		//社員IDのセット
 		Authentication auth = (Authentication)principal;
@@ -155,7 +155,7 @@ public class HolidayController {
 	 * @param registerHolidayForm
 	 * @return
 	 */
-	@GetMapping("/fix/holiday")
+	@GetMapping("/user/fix/holiday")
 	public String getUpdateHoliday(Model model, @ModelAttribute RegisterHolidayForm registerHolidayForm) {
 		LocalDate date = LocalDate.now();
 		LocalDate twenty = date.withDayOfMonth(20);
@@ -174,7 +174,7 @@ public class HolidayController {
 	 * @param principal
 	 * @return
 	 */
-	@PostMapping("/fix/holiday")
+	@PostMapping("/user/fix/holiday")
 	public String postUpdateHoliday(@ModelAttribute @Validated RegisterHolidayForm registerHolidayForm, BindingResult bindingResult, Principal principal) {
 		if(!bindingResult.hasErrors()) {
 			//社員IDの取得
@@ -197,7 +197,7 @@ public class HolidayController {
 	 * @param areaId
 	 * @return
 	 */
-	@GetMapping("/submitted/detail/{areaId}")
+	@GetMapping("/admin/submitted/detail/{areaId}")
 	public String getIsSubmitted(Model model, @PathVariable int areaId) {
 		//拠点名
 		String areaName = areaService.findAreaName(areaId).getName();
@@ -224,7 +224,7 @@ public class HolidayController {
 	 * @param registerHolidayForm
 	 * @return
 	 */
-	@GetMapping("/register/holiday/{areaId}/{courseId}")
+	@GetMapping("/admin/register/holiday/{areaId}/{courseId}")
 	public String getProxyRegister(@PathVariable int areaId, @PathVariable int courseId, @ModelAttribute RegisterHolidayForm registerHolidayForm) {
 		session.setAttribute("areaId", areaId);
 		session.setAttribute("courseId", courseId);
@@ -237,7 +237,7 @@ public class HolidayController {
 	 * @param registerHolidayForm
 	 * @return
 	 */
-	@PostMapping("/register/proxy_holiday")
+	@PostMapping("/admin/register/proxy_holiday")
 	public String postProxyRegister(@ModelAttribute RegisterHolidayForm registerHolidayForm) {
 		int areaId = (int) session.getAttribute("areaId");
 		int courseId = (int) session.getAttribute("courseId");

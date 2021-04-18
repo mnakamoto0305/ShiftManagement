@@ -53,7 +53,7 @@ public class InvoiceController {
 	ShiftForm shiftForm;
 
 
-	@GetMapping("/invoice")
+	@GetMapping("/user/invoice")
 	public String getInvoice(HttpServletResponse response, Principal principal) {
 
 		//ドライバー情報の取得

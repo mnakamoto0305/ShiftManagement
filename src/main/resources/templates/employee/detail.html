@@ -19,7 +19,7 @@
         <div class="row">
           <!-- left column -->
           <div class="col-sm-12">
-            <div class="card" th:object="${employee}">
+            <div class="card card-primary" th:object="${employee}">
               <div class="card-header">
                 <h3 class="card-title">[[|*{lastName} *{firstName}|]]</h3>
               </div>
@@ -67,9 +67,9 @@
                   </tr>
                 </table>
                 <div class="card-footer text-right">
-                   <a th:href="@{/initialize/password/{id}(id=${employee.id})}" class="btn btn-secondary float-left">パスワード初期化</a>
-                   <a th:href="@{/update/employee/{id}(id=${employee.id})}" class="btn btn-warning">更新</a>
-                   <a th:href="@{/delete/employee/{id}(id=${employee.id})}" class="btn btn-danger">削除</a>
+                   <a th:href="@{/admin/initialize/password/{id}(id=${employee.id})}" class="btn btn-secondary float-left">パスワード初期化</a>
+                   <a th:href="@{/admin/update/employee/{id}(id=${employee.id})}" class="btn btn-warning">更新</a>
+                   <a th:href="@{/admin/delete/employee/{id}(id=${employee.id})}" class="btn btn-danger">削除</a>
                 </div>
               </div>
               <!-- /.card-body -->

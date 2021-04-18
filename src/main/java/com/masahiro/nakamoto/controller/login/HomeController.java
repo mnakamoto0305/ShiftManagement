@@ -136,7 +136,7 @@ public class HomeController {
 	 * @param passChangeForm
 	 * @return
 	 */
-	@GetMapping("/change/password")
+	@GetMapping("/user/change/password")
 	public String getChangePassword(Model model, @ModelAttribute PassChangeForm passChangeForm) {
 		model.addAttribute("contents", "home/password :: confirm");
 		return "/main/homeLayout";
@@ -152,7 +152,7 @@ public class HomeController {
 	 * @param principal
 	 * @return
 	 */
-	@PostMapping("/confirm/password")
+	@PostMapping("/user/confirm/password")
 	public String postComfirmPassword(Model model, @ModelAttribute @Validated(GroupOrder.class) PassChangeForm passChangeForm , BindingResult bindingResult, @ModelAttribute PassChangeConfirmForm passChangeConfirmForm, Principal principal) {
 		if (!bindingResult.hasErrors()) {
 			//社員IDの取得
@@ -181,7 +181,7 @@ public class HomeController {
 	 * @param bindingResult
 	 * @return
 	 */
-	@PostMapping("/change/password")
+	@PostMapping("/user/change/password")
 	public String postChangePassword(Model model, Principal principal, @ModelAttribute @Validated(GroupOrder.class) PassChangeConfirmForm passChangeConfirmForm , BindingResult bindingResult) {
 		if (!bindingResult.hasErrors()) {
 			//社員IDの取得
@@ -207,7 +207,7 @@ public class HomeController {
 	 * @param principal
 	 * @return
 	 */
-	@GetMapping("/update/information")
+	@GetMapping("/user/update/information")
 	public String getUpdateInfomation(Model model, Principal principal) {
 		//社員IDの取得
 		Authentication auth = (Authentication)principal;
@@ -230,13 +230,14 @@ public class HomeController {
 	 * @param bindingResult
 	 * @return
 	 */
-	@PostMapping("/update/infomation")
+	@PostMapping("/user/update/infomation")
 	public String postUpdateInfomation(Model model, Principal principal, @ModelAttribute @Validated(GroupOrder.class) InfomationForm infomationForm, BindingResult bindingResult) {
 		if (!bindingResult.hasErrors()) {
 			infomationForm.setPreviousId((String) session.getAttribute("previousId"));
 			driverService.updateInfomation(infomationForm);
 			session.removeAttribute("previousId");
-			return "redirect:/logout";
+			//return "redirect:/logout";
+			return "/home/logout";
 		} else {
 			model.addAttribute("contents", "home/infomation :: infomation");
 			return "/main/homeLayout";

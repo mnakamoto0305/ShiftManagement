@@ -18,13 +18,13 @@
         <div class="row">
           <!-- left column -->
           <div class="col-md-12">
-            <div class="card">
+            <div class="card card-primary">
               <div class="card-header">
                 <h3>拠点別 休み希望提出者数</h3>
               </div>
               <div class="card-body">
                 <table class="table table-hover table-bordered text-center">
-                  <thead>
+                  <thead class="thead-light">
                     <tr>
                       <th>拠点名</th>
                       <th>ドライバー数</th>
@@ -38,15 +38,15 @@
                       <td>7</td>
                       <td th:text="${submittedNumber.get(0)}" th:styleappend="${__${submittedNumber.get(0)}__ < 7} ? 'color:#FF0000;'"></td>
                       <td>
-                        <a th:href="@{/submitted/detail/1}" class="btn btn-primary">詳細</a>
+                        <a th:href="@{/admin/submitted/detail/1}" class="btn btn-primary">詳細</a>
                       </td>
                     </tr>
                     <tr>
                       <td>江戸川</td>
-                      <td>8</td>
+                      <td>9</td>
                       <td th:text="${submittedNumber.get(1)}" th:styleappend="${__${submittedNumber.get(1)}__ < 8} ? 'color:#FF0000;'"></td>
                       <td>
-                        <a th:href="@{/submitted/detail/2}" class="btn btn-primary">詳細</a>
+                        <a th:href="@{/admin/submitted/detail/2}" class="btn btn-primary">詳細</a>
                       </td>
                     </tr>
                     <tr>
@@ -54,7 +54,7 @@
                       <td>9</td>
                       <td th:text="${submittedNumber.get(2)}" th:styleappend="${__${submittedNumber.get(2)}__ < 9} ? 'color:#FF0000;'"></td>
                       <td>
-                        <a th:href="@{/submitted/detail/3}" class="btn btn-primary">詳細</a>
+                        <a th:href="@{/admin/submitted/detail/3}" class="btn btn-primary">詳細</a>
                       </td>
                     </tr>
                     <tr>
@@ -62,7 +62,7 @@
                       <td>10</td>
                       <td th:text="${submittedNumber.get(3)}" th:styleappend="${__${submittedNumber.get(3)}__ < 10} ? 'color:#FF0000;'"></td>
                       <td>
-                        <a th:href="@{/submitted/detail/4}" class="btn btn-primary">詳細</a>
+                        <a th:href="@{/admin/submitted/detail/4}" class="btn btn-primary">詳細</a>
                       </td>
                     </tr>
                     <tr>
@@ -70,7 +70,7 @@
                       <td>4</td>
                       <td th:text="${submittedNumber.get(4)}" th:styleappend="${__${submittedNumber.get(4)}__ < 4} ? 'color:#FF0000;'"></td>
                       <td>
-                        <a th:href="@{/submitted/detail/5}" class="btn btn-primary">詳細</a>
+                        <a th:href="@{/admin/submitted/detail/5}" class="btn btn-primary">詳細</a>
                       </td>
                     </tr>
                   </tbody>

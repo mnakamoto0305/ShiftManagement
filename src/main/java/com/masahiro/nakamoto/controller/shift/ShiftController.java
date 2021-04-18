@@ -72,7 +72,14 @@ public class ShiftController {
 	@Autowired
 	Area area;
 
-	@GetMapping("/shift_search")
+	/**
+	 * シフトを検索するための条件を指定するフォームを表示(ドライバー画面用)
+	 *
+	 * @param model
+	 * @param shiftForm
+	 * @return
+	 */
+	@GetMapping("/user/shift_search")
 	public String getShiftForm(Model model, @ModelAttribute ShiftForm shiftForm) {
 		model.addAttribute("contents", "shift/shiftSearchIndex :: shift_search");
 		return "main/homeLayout";
@@ -164,7 +171,7 @@ public class ShiftController {
 	 * @param principal
 	 * @return
 	 */
-	@PostMapping("/shift_result")
+	@PostMapping("/user/shift_result")
 	public String postShiftResult(Model model, @ModelAttribute ShiftForm shiftForm, Principal principal) {
 		//社員IDをセット
 		Authentication auth = (Authentication)principal;

@@ -18,7 +18,8 @@
   <!-- Theme style -->
   <link rel="stylesheet" th:href="@{/assets/AdminLTE/dist/css/adminlte.min.css}">
   <!-- JQuery UI -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/redmond/jquery-ui.css">
+	<link rel="stylesheet" th:href="@{/css/datespicker.css}">
   <!-- MultiDatesPicker -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-multidatespicker/1.6.6/jquery-ui.multidatespicker.min.css" rel="stylesheet">
 </head>
@@ -30,7 +31,7 @@
     </nav>
 
     <!-- Main Sidebar Container -->
-    <aside th:include="/layout/side_menu :: side_menu" class="main-sidebar sidebar-dark-primary elevation-4"></aside>
+    <aside th:include="/layout/admin_side_menu :: side_menu" class="main-sidebar sidebar-dark-primary elevation-4"></aside>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -63,7 +64,7 @@
                       <div class="box_demo">
                         <div type="text" id="js-datepicker">
                           <p th:text="${message}" class="text-danger"></p>
-                          <form th:action="@{/register/proxy_holiday}" method="post" th:object="${registerHolidayForm}" id="registerHoliday">
+                          <form th:action="@{/admin/register/proxy_holiday}" method="post" th:object="${registerHolidayForm}" id="registerHoliday">
                             <div th:classappend="${#fields.hasErrors('holiday')}?'has-error'">
                               <input type="hidden" id="datepickerValue" th:field="*{holiday}">
                               <span class="text-danger" th:if="${#fields.hasErrors('holiday')}" th:errors="*{holiday}"></span>

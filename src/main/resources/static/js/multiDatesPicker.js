@@ -106,6 +106,7 @@ document
                 /,/g,
                 '、');
           }
+
         });
 
       $datepicker.datepicker(

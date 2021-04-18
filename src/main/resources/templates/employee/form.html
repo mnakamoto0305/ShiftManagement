@@ -23,7 +23,7 @@
               <div class="card-header">
                 <h3 class="card-title">社員検索フォーム</h3>
               </div>
-              <form th:action="@{/search/employee/result}" method="post" th:object="${employeeForm}">
+              <form th:action="@{/admin/search/employee/result}" method="post" th:object="${employeeForm}">
                 <div class="card-body">
                   <div class="form-group">
                     <label>検索したい社員の氏名かメールアドレスを入力してください。</br>(何も入力がない場合は全社員のデータを表示します)</label>

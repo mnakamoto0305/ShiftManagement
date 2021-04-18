@@ -32,13 +32,13 @@ public class AccountingController {
 	@Autowired
 	AreaService areaService;
 
-	@GetMapping("/accounting")
+	@GetMapping("/admin/accounting")
 	public String getAccounting(Model model, @ModelAttribute ShiftForm shiftForm) {
 		model.addAttribute("contents", "accounting/form :: form");
 		return "main/adminLayout";
 	}
 
-	@PostMapping("/accounting")
+	@PostMapping("/admin/accounting")
 	public String postAccounting(Model model, @ModelAttribute ShiftForm shiftForm) {
 		//出勤日数を取得
 		List<Integer> workingDaysList = shiftService.findTotalAttendance(shiftForm);

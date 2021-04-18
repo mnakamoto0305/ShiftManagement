@@ -19,7 +19,7 @@
         <div class="row">
           <!-- left column -->
           <div class="col-sm-12">
-            <div class="card" th:object="${driver}">
+            <div class="card card-primary" th:object="${driver}">
               <div class="card-header">
                 <h3 class="card-title">[[|*{lastName} *{firstName}|]]</h3>
               </div>
@@ -96,9 +96,9 @@
                   </tr>
                 </table>
                 <div class="card-footer text-right">
-                	 <a th:href="@{/initialize/password/{id}(id=${driver.id})}" class="btn btn-secondary float-left">パスワード初期化</a>
-                   <a th:href="@{/update/driver/{id}(id=${driver.id})}" class="btn btn-warning">更新</a>
-                   <a th:href="@{/delete/driver/{id}(id=${driver.id})}" class="btn btn-danger">削除</a>
+                	 <a th:href="@{/admin/initialize/password/{id}(id=${driver.id})}" class="btn btn-secondary float-left">パスワード初期化</a>
+                   <a th:href="@{/admin/update/driver/{id}(id=${driver.id})}" class="btn btn-warning">更新</a>
+                   <a th:href="@{/admin/delete/driver/{id}(id=${driver.id})}" class="btn btn-danger">削除</a>
                 </div>
               </div>
               <!-- /.card-body -->

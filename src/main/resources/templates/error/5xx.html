@@ -53,7 +53,7 @@
 						</th:block>
 						<th:block sec:authorize="hasRole('USER')">
 				     	<li>
-					       <a href="/change/password" class="dropdown-item">
+					       <a href="/user/change/password" class="dropdown-item">
 					         パスワード変更
 					       </a>
 					       <div class="dropdown-divider"></div>
@@ -69,7 +69,7 @@
 						</th:block> -->
 						<th:block sec:authorize="hasRole('USER')">
 				     	<li>
-				      	<a href="/update/information" class="dropdown-item">
+				      	<a href="/user/update/information" class="dropdown-item">
 				        	登録情報変更
 				      	</a>
 				      	<div class="dropdown-divider"></div>
@@ -101,25 +101,25 @@
 			    <nav class="mt-2">
 			      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 			        <li class="nav-item">
-			          <a th:href="@{/attendances}" class="nav-link">
+			          <a th:href="@{/user/attendances}" class="nav-link">
 			            <i class="nav-icon fas fa-edit"></i>
 			            <p>休み希望提出</p>
 			          </a>
 			        </li>
 			        <li class="nav-item">
-			          <a th:href="@{/confirm/holiday}" class="nav-link">
+			          <a th:href="@{/user/confirm/holiday}" class="nav-link">
 			            <i class="nav-icon fas fa-calendar-check"></i>
 			            <p>休み希望確認</p>
 			          </a>
 			        </li>
 			       <li class="nav-item">
-			          <a th:href="@{/shift_search}" class="nav-link">
+			          <a th:href="@{/user/shift_search}" class="nav-link">
 			            <i class="nav-icon fas fa-table"></i>
 			            <p>シフト確認</p>
 			          </a>
 			        </li>
 			       <li class="nav-item">
-			          <a th:href="@{/invoice}" class="nav-link">
+			          <a th:href="@{/user/invoice}" class="nav-link">
 			            <i class="nav-icon fas fa-file-invoice-dollar"></i>
 			            <p>請求書作成</p>
 			          </a>
@@ -175,13 +175,13 @@
 			          </a>
 			      	  <ul class="nav nav-treeview" style="display: none;">
 				        <li class="nav-item">
-				          <a th:href="@{/create/employee}" class="nav-link">
+				          <a th:href="@{/admin/create/employee}" class="nav-link">
 				     	    <i class="far fa-circle nav-icon"></i>
 				            <p>社員登録</p>
 				          </a>
 				        </li>
 			            <li class="nav-item">
-				          <a th:href="@{/search/employee}" class="nav-link">
+				          <a th:href="@{/admin/search/employee}" class="nav-link">
 				     	    <i class="far fa-circle nav-icon"></i>
 				            <p>社員検索</p>
 				          </a>
@@ -198,13 +198,13 @@
 			          </a>
 			      	  <ul class="nav nav-treeview" style="display: none;">
 				        <li class="nav-item">
-				          <a th:href="@{/create/driver}" class="nav-link">
+				          <a th:href="@{/admin/create/driver}" class="nav-link">
 				          	<i class="far fa-circle nav-icon"></i>
 				            <p>ドライバー登録</p>
 				          </a>
 				        </li>
 			            <li class="nav-item">
-					      <a th:href="@{/search/driver}" class="nav-link">
+					      <a th:href="@{/admin/search/driver}" class="nav-link">
 					      	<i class="far fa-circle nav-icon"></i>
 					        <p>ドライバー検索</p>
 					      </a>
@@ -212,7 +212,7 @@
 			          </ul>
 			        </li>
 			        <li class="nav-item">
-			          <a th:href="@{/accounting}" class="nav-link">
+			          <a th:href="@{/admin/accounting}" class="nav-link">
 			          	<i class="nav-icon fas fa-file-invoice-dollar"></i>
 			            <p>支払額確認</p>
 			          </a>

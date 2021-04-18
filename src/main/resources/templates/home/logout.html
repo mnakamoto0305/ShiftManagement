@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
+
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title></title>
 
   <!-- Google Font: Source Sans Pro -->
@@ -40,71 +40,12 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>休み希望変更</h1>
+              <h1>2秒後にログイン画面へ戻ります。</h1>
             </div>
           </div>
         </div>
         <!-- /.container-fluid -->
       </section>
-
-      <!-- Main content -->
-      <section class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <!-- left column -->
-            <div class="col-md-6">
-              <!-- jquery validation -->
-              <div class="card card-primary">
-                <div class="card-header">
-                  <h3 class="card-title">来月の休み希望日を選択してください。(8日分)</h3>
-                </div>
-                <div class="card-body">
-                  <div class="d-flex align-items-center justify-content-center">
-				            <main id="main" class="tmp_demo">
-				              <div class="box_demo">
-				                <div type="text" id="js-datepicker">
-				                  <form th:action="@{/user/fix/holiday}" method="post" th:object="${registerHolidayForm}" id="registerHoliday">
-				                    <div th:classappend="${#fields.hasErrors('holiday')}?'has-error'">
-				                      <input type="hidden" id="datepickerValue" th:field="*{holiday}">
-				                      <span class="text-danger" th:if="${#fields.hasErrors('holiday')}" th:errors="*{holiday}"></span>
-				                    </div>
-				                  </form>
-				                </div>
-				              </div>
-				            </main>
-				          </div>
-                </div>
-                <div class="card-footer">
-			            <button type="submit" value="送信" form="registerHoliday" class="btn btn-primary float-right mt-3">送信</button>
-                </div>
-              </div>
-              <!-- /.card -->
-            </div>
-            <!--/.col (left) -->
-            <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-              ntegrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-              crossorigin="anonymous"></script>
-            <script
-              src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"
-              defer></script>
-            <script
-              src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-multidatespicker/1.6.6/jquery-ui.multidatespicker.min.js"
-              defer></script>
-            <script
-              th:src="@{/js/multiDatesPicker.js}">
-            </script>
-          </div>
-          <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
-      </section>
-      <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-
-    <!-- /.content-wrapper -->
-
-    <footer th:include="/layout/footer :: footer" class="main-footer"></footer>
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -152,6 +93,14 @@
           .addClass('active');
     });
   </script>
+  <SCRIPT type="text/javascript">
+
+setTimeout("link()", 2000);
+function link(){
+location.href='/logout';
+}
+
+</SCRIPT>
 </body>
 
 </html>

@@ -19,14 +19,14 @@
         <div class="row">
           <!-- left column -->
           <div class="col-sm-12">
-            <div class="card">
+            <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title">検索結果一覧</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <table class="table table-bordered text-center" id="table">
-                  <thead>
+                  <thead class="thead-light">
                     <tr>
                       <th style="width: 10%"></th>
                       <th style="width: 10%">名字</th>
@@ -47,8 +47,8 @@
                       <td th:if="${driver.sex == '0'}">不明</td>
                       <td th:text="${driver.id}"></td>
                       <td>
-                        <a th:href="@{/detail/driver/{id}(id=${driver.id})}" class="btn btn-primary">詳細</a>
-                        <a th:href="@{/update/driver/{id}(id=${driver.id})}" class="btn btn-warning">更新</a>
+                        <a th:href="@{/admin/detail/driver/{id}(id=${driver.id})}" class="btn btn-primary">詳細</a>
+                        <a th:href="@{/admin/update/driver/{id}(id=${driver.id})}" class="btn btn-warning">更新</a>
                       </td>
                     </tr>
                   </tbody>

@@ -44,7 +44,7 @@ public class DriverController {
 	 * @param employeeForm
 	 * @return
 	 */
-	@GetMapping("/search/driver")
+	@GetMapping("/admin/search/driver")
 	public String getDriverForm(Model model, @ModelAttribute DriverForm driverForm) {
 		model.addAttribute("contents", "driver/form :: form");
 		return "main/adminLayout";
@@ -57,7 +57,7 @@ public class DriverController {
 	 * @param employeeForm
 	 * @return
 	 */
-	@PostMapping("/search/driver/result")
+	@PostMapping("/admin/search/driver/result")
 	public String postSearchResult(Model model, @ModelAttribute DriverForm driverForm) {
 		if (driverForm.getSearchWord() == null) {
 			List<Driver> driverList = driverService.findAll();
@@ -77,7 +77,7 @@ public class DriverController {
 	 * @param driverForm
 	 * @return
 	 */
-	@PostMapping("/search/driver/result/area")
+	@PostMapping("/admin/search/driver/result/area")
 	public String postSearchArea(Model model, @ModelAttribute DriverForm driverForm) {
 		List<Driver> driverList = driverService.findAreaDriver(driverForm.getAreaId());
 		model.addAttribute("driverList", driverList);
@@ -92,7 +92,7 @@ public class DriverController {
 	 * @param employee
 	 * @return
 	 */
-	@GetMapping("/create/driver")
+	@GetMapping("/admin/create/driver")
 	public String getCreateDriver(Model model, @ModelAttribute Driver driver) {
 		model.addAttribute("contents", "driver/create :: createForm");
 		return "main/adminLayout";
@@ -106,7 +106,7 @@ public class DriverController {
 	 * @param bindingResult
 	 * @return
 	 */
-	@PostMapping("/create/driver")
+	@PostMapping("/admin/create/driver")
 	public String postCreateDriver(Model model, @ModelAttribute @Validated(GroupOrder.class) Driver driver, BindingResult bindingResult) {
 		if (!bindingResult.hasErrors()) {
 			try {
@@ -144,7 +144,7 @@ public class DriverController {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/detail/driver/{id}")
+	@GetMapping("/admin/detail/driver/{id}")
 	public String getDetailDriver(Model model, @PathVariable String id) {
 		//ドライバー情報を取得
 		Driver driver = driverService.findDriverInfo(id);
@@ -165,7 +165,7 @@ public class DriverController {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/update/driver/{id}")
+	@GetMapping("/admin/update/driver/{id}")
 	public String getUpdateDriver(Model model, @PathVariable String id) {
 		Driver driver = driverService.findDriverInfo(id);
 		driver.setPassword("password");
@@ -184,7 +184,7 @@ public class DriverController {
 	 * @param driver
 	 * @return
 	 */
-	@PostMapping("/update/driver/{id}")
+	@PostMapping("/admin/update/driver/{id}")
 	public String postUpdateDriver(Model model, @PathVariable String id, @ModelAttribute @Validated(GroupOrder.class) Driver driver, BindingResult bindingResult) {
 		if (!bindingResult.hasErrors()) {
 			driver.setPreviousId((String) session.getAttribute("previousId"));
@@ -204,7 +204,7 @@ public class DriverController {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/delete/driver/{id}")
+	@GetMapping("/admin/delete/driver/{id}")
 	public String getDeleteConfirm(Model model, @PathVariable String id) {
 		Driver driver = driverService.findDriverInfo(id);
 		model.addAttribute("driver", driver);
@@ -219,7 +219,7 @@ public class DriverController {
 	 * @param id
 	 * @return
 	 */
-	@PostMapping("/delete/driver/{id}")
+	@PostMapping("/admin/delete/driver/{id}")
 	public String postDeleteDriver(Model model, @PathVariable String id) {
 		driverService.deleteDriver(id);
 		return "redirect:/search/driver";
@@ -233,7 +233,7 @@ public class DriverController {
 	 * @param passChangeConfirmForm
 	 * @return
 	 */
-	@GetMapping("/initialize/password/{id}")
+	@GetMapping("/admin/initialize/password/{id}")
 	public String getInitializePassword(Model model, @PathVariable String id, @ModelAttribute PassChangeConfirmForm passChangeConfirmForm) {
 		model.addAttribute("id", id);
 		model.addAttribute("contents", "driver/password :: initialize");
@@ -250,7 +250,7 @@ public class DriverController {
 	 * @param driver
 	 * @return
 	 */
-	@PostMapping("/initialize/password/{id}")
+	@PostMapping("/admin/initialize/password/{id}")
 	public String postInitializePassword(Model model, @PathVariable String id, @ModelAttribute @Validated(GroupOrder.class) PassChangeConfirmForm passChangeConfirmForm, BindingResult bindingResult, @ModelAttribute Driver driver) {
 		if (!bindingResult.hasErrors()) {
 			passChangeConfirmForm.setId(id);

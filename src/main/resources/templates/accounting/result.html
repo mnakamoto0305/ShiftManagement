@@ -19,7 +19,7 @@
         <div class="row">
           <!-- left column -->
           <div class="col-sm-12">
-            <div class="card">
+            <div class="card card-primary">
               <div class="card-header">
                 <h3 class="card-title">[[|${year}年${month}月 ${areaName}|]]</h3>
               </div>
@@ -39,7 +39,7 @@
                   <tbody>
                     <tr th:each="driver, stat : ${driverList}">
                       <td th:text="${stat.index} + 1"></td>
-                      <td><a th:href="@{'/detail/driver/' + ${driver.id}}">[[|${driver.lastName} ${driver.firstName}|]]</a></td>
+                      <td><a th:href="@{'/admin/detail/driver/' + ${driver.id}}">[[|${driver.lastName} ${driver.firstName}|]]</a></td>
                       <td>[[|${accountingList[__${stat.index}__].getDailyWages}円|]]</td>
                       <td>[[|${accountingList[__${stat.index}__].getMonthlyExpenses}円|]]</td>
                       <td>[[|${workingDaysList[__${stat.index}__]}日|]]</td>

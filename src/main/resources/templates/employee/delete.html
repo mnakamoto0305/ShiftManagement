@@ -19,12 +19,12 @@
         <div class="row">
           <!-- left column -->
           <div class="col-sm-12">
-            <div class="card" th:object="${employee}">
+            <div class="card card-primary" th:object="${employee}">
               <div class="card-header">
                 <h3 class="card-title">下記の社員情報を削除してもよろしいですか？</h3>
               </div>
               <!-- /.card-header -->
-              <form th:action="@{/delete/employee/{id} (id=${employee.id})}" method="post">
+              <form th:action="@{/admin/delete/employee/{id} (id=${employee.id})}" method="post">
 	              <div class="card-body">
 	                <table class="table table-bordered text-center">
 	                  <tr>

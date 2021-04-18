@@ -39,7 +39,7 @@ public class EmployeeController {
 	 * @param employeeForm
 	 * @return
 	 */
-	@GetMapping("/search/employee")
+	@GetMapping("/admin/search/employee")
 	public String getEmployeeForm(Model model, @ModelAttribute EmployeeForm employeeForm) {
 		model.addAttribute("contents", "employee/form :: form");
 		return "main/adminLayout";
@@ -52,7 +52,7 @@ public class EmployeeController {
 	 * @param employeeForm
 	 * @return
 	 */
-	@PostMapping("/search/employee/result")
+	@PostMapping("/admin/search/employee/result")
 	public String postSearchResult(Model model, @ModelAttribute EmployeeForm employeeForm) {
 		if (employeeForm.getSearchWord() == null) {
 			List<Employee> employeeList = employeeService.findAll();
@@ -72,7 +72,7 @@ public class EmployeeController {
 	 * @param employee
 	 * @return
 	 */
-	@GetMapping("/create/employee")
+	@GetMapping("/admin/create/employee")
 	public String getCreateEmployee(Model model, @ModelAttribute Employee employee) {
 		model.addAttribute("contents", "employee/create :: createForm");
 		return "main/adminLayout";
@@ -86,7 +86,7 @@ public class EmployeeController {
 	 * @param bindingResult
 	 * @return
 	 */
-	@PostMapping("/create/employee")
+	@PostMapping("/admin/create/employee")
 	public String postCreateEmployee(Model model, @ModelAttribute @Validated(GroupOrder.class) Employee employee, BindingResult bindingResult) {
 		if (!bindingResult.hasErrors()) {
 			// パスワードをハッシュ化
@@ -108,7 +108,7 @@ public class EmployeeController {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/detail/employee/{id}")
+	@GetMapping("/admin/detail/employee/{id}")
 	public String getDetailEmployee(Model model, @PathVariable String id) {
 		Employee employee = employeeService.findEmployee(id);
 		model.addAttribute("employee", employee);
@@ -123,7 +123,7 @@ public class EmployeeController {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/update/employee/{id}")
+	@GetMapping("/admin/update/employee/{id}")
 	public String getUpdateEmployee(Model model, @PathVariable String id) {
 		Employee employee = employeeService.findEmployee(id);
 		employee.setPassword("password");
@@ -142,7 +142,7 @@ public class EmployeeController {
 	 * @param employee
 	 * @return
 	 */
-	@PostMapping("/update/employee/{id}")
+	@PostMapping("/admin/update/employee/{id}")
 	public String postUpdateEmployee(Model model, @PathVariable String id, @ModelAttribute @Validated(GroupOrder.class) Employee employee, BindingResult bindiResult) {
 		if (!bindiResult.hasErrors()) {
 			employee.setPreviousId((String) session.getAttribute("previousId"));
@@ -166,7 +166,7 @@ public class EmployeeController {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/delete/employee/{id}")
+	@GetMapping("/admin/delete/employee/{id}")
 	public String getDeleteConfirm(Model model, @PathVariable String id) {
 		Employee employee = employeeService.findEmployee(id);
 		model.addAttribute("employee", employee);
@@ -181,7 +181,7 @@ public class EmployeeController {
 	 * @param id
 	 * @return
 	 */
-	@PostMapping("/delete/employee/{id}")
+	@PostMapping("/admin/delete/employee/{id}")
 	public String postDeleteEmployee(Model model, @PathVariable String id) {
 		employeeService.deleteEmployee(id);
 		return "redirect:/search/employee";

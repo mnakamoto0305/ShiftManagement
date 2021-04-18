@@ -18,17 +18,17 @@
 				<div class="row">
 					<!-- left column -->
 					<div class="col-12" th:object="${driver}">
-						<p>[[|*{lastName} *{firstName}さん お疲れさまです！|]]</p>
+						<h5>[[|*{lastName} *{firstName}さん お疲れさまです！|]]</h5>
 					</div>
 
 					<div th:object="${todayShift}" class="col-md-6">
 						<div>
-							<th:block th:with="todayAttendance = (*{isAttendance} == true ? '出勤日' : '休み')">
-								<p>[[|今日は${todayAttendance}です。|]]</p>
+							<th:block th:with="todayAttendance = (*{isAttendance} == true ? '出勤日' : 'お休み')">
+								<h5>[[|今日は${todayAttendance}です。|]]</h5>
 							</th:block>
 						</div>
 						<div>
-							<div th:if="*{isAttendance}">
+							<div th:if="*{isAttendance}" class="mt-4">
 								<div class="card">
 									<div class="card-header">
 										<h3 class="card-title">今日の勤務情報</h3>
