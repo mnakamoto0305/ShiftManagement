@@ -17,6 +17,9 @@ import com.masahiro.nakamoto.Valid.password.ConfirmedDriverPassword;
 
 import lombok.Data;
 
+/**
+ * ドライバー情報を表現するオブジェクト
+ */
 @Data
 @Component
 @ConfirmedDriverPassword(groups = ValidGroup2.class)
@@ -35,6 +38,9 @@ public class Driver {
 	@NotBlank(groups = ValidGroup1.class)
 	private String idConfirm;
 
+	/**
+	 * 変更前のID
+	 */
 	private String previousId;
 
 	/**
@@ -158,6 +164,27 @@ public class Driver {
 		super();
 	}
 
+	/**
+	 * コンストラクタ
+	 *
+	 * @param id
+	 * @param lastName
+	 * @param firstName
+	 * @param positionId
+	 * @param sex
+	 * @param dateOfBirth
+	 * @param phoneNumber
+	 * @param postalCode
+	 * @param address
+	 * @param joinDate
+	 * @param password
+	 * @param passUpdateDate
+	 * @param role
+	 * @param areaId
+	 * @param courseId
+	 * @param dailyWages
+	 * @param monthlyExpenses
+	 */
 	public Driver(@NotBlank(groups = ValidGroup1.class) String id,
 			@NotBlank(groups = ValidGroup1.class) String lastName,
 			@NotBlank(groups = ValidGroup1.class) String firstName, Integer positionId,
@@ -192,6 +219,29 @@ public class Driver {
 		this.monthlyExpenses = monthlyExpenses;
 	}
 
+	/**
+	 * コンストラクタ
+	 *
+	 * @param id
+	 * @param idConfirm
+	 * @param lastName
+	 * @param firstName
+	 * @param positionId
+	 * @param sex
+	 * @param dateOfBirth
+	 * @param phoneNumber
+	 * @param postalCode
+	 * @param address
+	 * @param joinDate
+	 * @param password
+	 * @param passwordConfirm
+	 * @param passUpdateDate
+	 * @param role
+	 * @param areaId
+	 * @param courseId
+	 * @param dailyWages
+	 * @param monthlyExpenses
+	 */
 	public Driver(@NotBlank(groups = ValidGroup1.class) String id,
 			@NotBlank(groups = ValidGroup1.class) String idConfirm,
 			@NotBlank(groups = ValidGroup1.class) String lastName,

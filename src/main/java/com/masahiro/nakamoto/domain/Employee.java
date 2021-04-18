@@ -17,6 +17,9 @@ import com.masahiro.nakamoto.Valid.password.ConfirmedPassword;
 
 import lombok.Data;
 
+/**
+ * 社員情報を表現するオブジェクト
+ */
 @Data
 @Component
 @ConfirmedPassword(groups = ValidGroup2.class)
@@ -35,6 +38,9 @@ public class Employee {
 	@NotBlank(groups = ValidGroup1.class)
 	private String idConfirm;
 
+	/**
+	 * 変更前のID
+	 */
 	private String previousId;
 
 	/**

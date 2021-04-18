@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import com.masahiro.nakamoto.domain.Accounting;
 import com.masahiro.nakamoto.domain.Driver;
 
+/**
+ * 支払額確認を行うサービス
+ */
 @Service
 public class AccountingService {
 
@@ -61,8 +64,8 @@ public class AccountingService {
 	 * @return
 	 */
 	public String commaOf1000(int number) {
-    	return String.format("%,d", number);
-    }
+		return String.format("%,d", number);
+	}
 
 	/**
 	 * リストで受け取った数字をカンマに変換

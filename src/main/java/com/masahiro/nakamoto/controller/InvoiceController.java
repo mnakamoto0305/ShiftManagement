@@ -28,6 +28,9 @@ import com.masahiro.nakamoto.service.DriverService;
 import com.masahiro.nakamoto.service.InvoiceService;
 import com.masahiro.nakamoto.service.ShiftService;
 
+/**
+ * 請求書作成に関するコントローラー
+ */
 @Controller
 public class InvoiceController {
 
@@ -52,12 +55,14 @@ public class InvoiceController {
 	@Autowired
 	ShiftForm shiftForm;
 
-
+	/**
+	 * 請求書を作成
+	 */
 	@GetMapping("/user/invoice")
 	public String getInvoice(HttpServletResponse response, Principal principal) {
 
 		//ドライバー情報の取得
-		Authentication auth = (Authentication)principal;
+		Authentication auth = (Authentication) principal;
 		UserDetails user = (UserDetails) auth.getPrincipal();
 		String id = user.getUsername();
 		Driver driver = driverService.findDriverInfo(id);
@@ -89,22 +94,22 @@ public class InvoiceController {
 		List<Invoice> fields = new ArrayList<>();
 		fields.add(new Invoice(name, phoneNumber, email, area, workingDays, dailyWages, monthlyExpenses, amount, earnings));
 
-		byte[] output  = invoiceService.OrderReporting2(params, fields);
+		byte[] output = invoiceService.OrderReporting2(params, fields);
 
 		response.setContentType("application/octet-stream");
-        response.setHeader("Content-Disposition", "attachment; filename=" + "sample.pdf");
-        response.setContentLength(output.length);
+		response.setHeader("Content-Disposition", "attachment; filename=" + "sample.pdf");
+		response.setContentLength(output.length);
 
-        OutputStream os = null;
-        try {
-            os = response.getOutputStream();
-            os.write(output);
-            os.flush();
+		OutputStream os = null;
+		try {
+			os = response.getOutputStream();
+			os.write(output);
+			os.flush();
 
-            os.close();
-        } catch (IOException e) {
-            e.getStackTrace();
-        }
+			os.close();
+		} catch (IOException e) {
+			e.getStackTrace();
+		}
 
 		return null;
 	}

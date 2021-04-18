@@ -11,11 +11,17 @@ import com.masahiro.nakamoto.Valid.group.ValidGroup3;
 
 import lombok.Data;
 
+/**
+ * 現在のパスワードを入力するフォームオブジェクト
+ */
 @Data
 public class PassChangeForm {
 
+	/**
+	 * パスワード
+	 */
 	@NotBlank(groups = ValidGroup1.class)
-	@Length(min=8,max=100, groups = ValidGroup2.class)
+	@Length(min = 8, max = 100, groups = ValidGroup2.class)
 	@Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class)
 	private String password;
 

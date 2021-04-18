@@ -13,8 +13,8 @@ import com.masahiro.nakamoto.domain.shift.ShiftForm;
 import com.masahiro.nakamoto.domain.shift.Today;
 
 /**
- * @author nakamotomasahiro
- *
+ * シフト情報に関するリポジトリ
+ * シフトの作成や更新・検索を行う
  */
 @Mapper
 public interface ShiftMapper {

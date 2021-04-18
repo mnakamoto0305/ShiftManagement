@@ -4,6 +4,9 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.masahiro.nakamoto.domain.Area;
 
+/**
+ * 拠点情報に関するリポジトリ
+ */
 @Mapper
 public interface AreaMapper {
 

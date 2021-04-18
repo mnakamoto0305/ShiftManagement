@@ -6,6 +6,9 @@ import java.util.Locale;
 
 import org.springframework.stereotype.Service;
 
+/**
+ * 日付処理を行うサービス
+ */
 @Service
 public class DateService {
 
@@ -38,6 +41,9 @@ public class DateService {
 		return convertedDate;
 	}
 
+	/**
+	 * 今の月を返す
+	 */
 	public String convertDate() {
 		LocalDate ld = LocalDate.now();
 
@@ -48,6 +54,9 @@ public class DateService {
 		return month;
 	}
 
+	/**
+	 * 来月の日数を返す
+	 */
 	public int getNextMonthNum() {
 		LocalDate thisMonth = LocalDate.now().plusMonths(1);
 
@@ -56,6 +65,9 @@ public class DateService {
 		return monthNum;
 	}
 
+	/**
+	 * 今月の日数を返す
+	 */
 	public int getThisMonthNum() {
 		LocalDate thisMonth = LocalDate.now();
 

@@ -1,7 +1,10 @@
- package com.masahiro.nakamoto.mybatis;
+package com.masahiro.nakamoto.mybatis;
 
 import org.apache.ibatis.annotations.Mapper;
 
+/**
+ * コース情報に関するリポジトリ
+ */
 @Mapper
 public interface CourseMapper {
 

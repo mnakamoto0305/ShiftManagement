@@ -19,8 +19,7 @@ import com.masahiro.nakamoto.mybatis.ShiftMapper;
 import com.masahiro.nakamoto.mybatis.UserMapper;
 
 /**
- * @author nakamotomasahiro
- *
+ * ドライバー情報に関する処理を行うサービス
  */
 @Service
 public class DriverService {
@@ -78,12 +77,15 @@ public class DriverService {
 		return driverMapper.findAll();
 	}
 
+	/**
+	 * フォーム検索に合致するドライバー情報をリストで返す
+	 */
 	public List<Driver> findFromForm(DriverForm driverForm) {
 		return driverMapper.findFromForm(driverForm);
 	}
 
 	/**
-	 * 指定した拠点・コースのドライバー情報が登録されているかのboolean値を返す
+	 * 指定した拠点・コースのドライバー情報が既に登録されている場合に例外を送出する
 	 *
 	 * @param driver
 	 * @return
@@ -97,7 +99,7 @@ public class DriverService {
 	}
 
 	/**
-	 * 登録するコース番号が不正なものでないかを確認
+	 * 登録するコース番号が不正なものであった場合に例外を送出する
 	 *
 	 * @param driver
 	 * @throws Exception
@@ -187,7 +189,7 @@ public class DriverService {
 	 * @return
 	 */
 	public InfomationForm getInfomation(String id) {
-	    return driverMapper.getInfomationForm(id);
+		return driverMapper.getInfomationForm(id);
 	}
 
 }

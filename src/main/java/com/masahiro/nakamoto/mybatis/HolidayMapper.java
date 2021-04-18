@@ -11,8 +11,7 @@ import com.masahiro.nakamoto.domain.shift.ShiftForm;
 
 
 /**
- * Attendancesマッパー
- * 休み希望をデータベースに登録する
+ * 休み希望の登録や確認を行うリポジトリ
  */
 @Mapper
 public interface HolidayMapper {

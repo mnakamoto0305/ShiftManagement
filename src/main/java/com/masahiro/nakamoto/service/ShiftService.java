@@ -18,6 +18,9 @@ import com.masahiro.nakamoto.domain.shift.Today;
 import com.masahiro.nakamoto.mybatis.AreaMapper;
 import com.masahiro.nakamoto.mybatis.ShiftMapper;
 
+/**
+ * シフト情報に関する処理を行うサービス
+ */
 @Service
 public class ShiftService {
 
@@ -33,6 +36,12 @@ public class ShiftService {
 	@Autowired
 	Course course;
 
+	/**
+	 * 指定したドライバーの今日の勤怠情報を取得
+	 *
+	 * @param id
+	 * @return
+	 */
 	public Today findTodayShift(String id) {
 		Today today = shiftMapper.findTodayShift(LocalDate.now(), id);
 		today.setAreaName(areaMapper.findAreaName(today.getAreaId()).getName());
@@ -46,7 +55,6 @@ public class ShiftService {
 	 * @return
 	 * @throws Exception
 	 */
-	@Transactional
 	public List<ShiftResult> makeMultiAttendances(ShiftForm shiftForm) throws Exception {
 		//月初と月末の指定
 		LocalDate first = LocalDate.now().plusMonths(1).withDayOfMonth(1);
@@ -76,7 +84,6 @@ public class ShiftService {
 			first = first.plusDays(1);
 		}
 
-
 		return multiAttendances;
 	}
 
@@ -86,7 +93,6 @@ public class ShiftService {
 	 * @param shiftForm
 	 * @return
 	 */
-	@Transactional
 	public List<ShiftResult> findMultiAttendances(ShiftForm shiftForm) {
 		//フォームから受け取った日付をLocalDateに変換
 		String designatedDate = shiftForm.getYear() + "/" + shiftForm.getMonth();
@@ -145,7 +151,7 @@ public class ShiftService {
 			for (Attendance attendance : attendancesList) {
 				LocalDate ld = attendance.getDate();
 				attendance.setConvertedDate(dateService.convertDate(ld));
- 			}
+			}
 			ShiftResult shiftResult = new ShiftResult();
 			shiftResult.setAttendanceList(attendancesList);
 			shiftResult.setNumberOfTrue(shiftMapper.findNumberOfTrue(shiftForm));
@@ -189,14 +195,12 @@ public class ShiftService {
 		return multiAttendances;
 	}
 
-
 	/**
 	 * 指定した年月のシフトを検索(ドライバーの個人ページ用)
 	 *
 	 * @param shiftForm
 	 * @return
 	 */
-	@Transactional
 	public ShiftResult findShift(ShiftForm shiftForm) {
 		//フォームから受け取った日付をLocalDateに変換
 		String designatedDate = shiftForm.getYear() + "/" + shiftForm.getMonth();
@@ -243,7 +247,6 @@ public class ShiftService {
 	 * @param shiftForm
 	 * @return
 	 */
-	@Transactional
 	public List<Driver> findDriverName(ShiftForm shiftForm) {
 		return shiftMapper.findDriverName(shiftForm);
 	}
@@ -254,7 +257,6 @@ public class ShiftService {
 	 * @param shiftForm
 	 * @return
 	 */
-	@Transactional
 	public List<Integer> findTotal(ShiftForm shiftForm) {
 		//月初と月末の指定
 		LocalDate first = LocalDate.now().plusMonths(1).withDayOfMonth(1);

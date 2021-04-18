@@ -9,6 +9,9 @@ import com.masahiro.nakamoto.domain.Driver;
 import com.masahiro.nakamoto.domain.form.DriverForm;
 import com.masahiro.nakamoto.domain.form.InfomationForm;
 
+/**
+ * ドライバー情報に関するリポジトリ
+ */
 @Mapper
 public interface DriverMapper {
 

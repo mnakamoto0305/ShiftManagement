@@ -35,8 +35,11 @@ import com.masahiro.nakamoto.service.HomeService;
 import com.masahiro.nakamoto.service.PositionService;
 import com.masahiro.nakamoto.service.ShiftService;
 
+/**
+ * ドライバー個人ページのホーム画面に関するコントローラー
+ */
 @Controller
-public class HomeController {
+public class UserController {
 
 	@Autowired
 	HomeService homeService;
@@ -78,41 +81,44 @@ public class HomeController {
 	HttpSession session;
 
 	/**
-	 * ログイン後のホーム画面を表示
-	 *
-	 * @param model
-	 * @param principal
-	 * @return
+	 * ログイン後のホーム画面
 	 */
-	@GetMapping ("/")
+	@GetMapping("/")
 	public String getHome(Model model, Principal principal) {
 		//社員IDの取得
-		Authentication auth = (Authentication)principal;
+		Authentication auth = (Authentication) principal;
 		UserDetails user = (UserDetails) auth.getPrincipal();
 		String id = user.getUsername();
+
 		//役職を取得
 		int position = positionService.findPosition(id);
 
+		//管理者はアドミンホーム画面へリダイレクト
 		if (position == 1) {
 			return "forward:/admin";
 		} else {
 			//今日の日付を取得
 			String today = dateService.getToday();
 			model.addAttribute("today", today);
+
 			//日付と拠点をセット
 			shiftForm.setDate(LocalDate.now());
 			int areaId = areaService.findAreaId(id);
 			shiftForm.setArea(areaId);
+
 			//コース情報を取得
 			course = shiftService.findCourseInfo(shiftForm);
 			int courseId = courseService.findCourseId(id);
 			int totalCourses = course.getTotalCourses();
+
 			//今日の勤怠情報を取得
 			Today todayShift = shiftService.findTodayShift(id);
 			model.addAttribute("todayShift", todayShift);
+
 			//名前を取得
 			driver = driverService.findDriverInfo(id);
 			model.addAttribute("driver", driver);
+
 			//休み希望日の登録状況を確認
 			int isSubmitHoliday = holidayService.isSubmitted(areaId, courseId);
 			model.addAttribute("isSubmitHoliday", isSubmitHoliday);
@@ -130,11 +136,7 @@ public class HomeController {
 	}
 
 	/**
-	 * パスワードの変更画面を表示
-	 *
-	 * @param model
-	 * @param passChangeForm
-	 * @return
+	 * パスワード変更前に現在のパスワードを入力する画面
 	 */
 	@GetMapping("/user/change/password")
 	public String getChangePassword(Model model, @ModelAttribute PassChangeForm passChangeForm) {
@@ -143,22 +145,18 @@ public class HomeController {
 	}
 
 	/**
-	 * 新しいパスワードの入力画面を表示
-	 *
-	 * @param model
-	 * @param passChangeForm
-	 * @param bindingResult
-	 * @param passChangeConfirmForm
-	 * @param principal
-	 * @return
+	 * 入力されたパスワードを確認してパスワード変更画面を表示
 	 */
 	@PostMapping("/user/confirm/password")
-	public String postComfirmPassword(Model model, @ModelAttribute @Validated(GroupOrder.class) PassChangeForm passChangeForm , BindingResult bindingResult, @ModelAttribute PassChangeConfirmForm passChangeConfirmForm, Principal principal) {
+	public String postComfirmPassword(Model model, @ModelAttribute @Validated(GroupOrder.class) PassChangeForm passChangeForm, BindingResult bindingResult,
+			@ModelAttribute PassChangeConfirmForm passChangeConfirmForm, Principal principal) {
 		if (!bindingResult.hasErrors()) {
 			//社員IDの取得
-			Authentication auth = (Authentication)principal;
+			Authentication auth = (Authentication) principal;
 			UserDetails user = (UserDetails) auth.getPrincipal();
 			String id = user.getUsername();
+
+			//入力されたパスワードが現在のパスワードと一致するかを確認
 			if (driverService.isCorrectPassword(passChangeForm.getPassword(), id)) {
 				model.addAttribute("contents", "home/password :: change");
 				return "/main/homeLayout";
@@ -173,25 +171,22 @@ public class HomeController {
 	}
 
 	/**
-	 * パスワードの入力処理
-	 *
-	 * @param model
-	 * @param principal
-	 * @param passChangeConfirmForm
-	 * @param bindingResult
-	 * @return
+	 * パスワードを変更
 	 */
 	@PostMapping("/user/change/password")
-	public String postChangePassword(Model model, Principal principal, @ModelAttribute @Validated(GroupOrder.class) PassChangeConfirmForm passChangeConfirmForm , BindingResult bindingResult) {
+	public String postChangePassword(Model model, Principal principal, @ModelAttribute @Validated(GroupOrder.class) PassChangeConfirmForm passChangeConfirmForm, BindingResult bindingResult) {
 		if (!bindingResult.hasErrors()) {
 			//社員IDの取得
-			Authentication auth = (Authentication)principal;
+			Authentication auth = (Authentication) principal;
 			UserDetails user = (UserDetails) auth.getPrincipal();
 			passChangeConfirmForm.setId(user.getUsername());
-			// パスワードをハッシュ化
+
+			//パスワードをハッシュ化
 			String password = passChangeConfirmForm.getPassword();
 			password = passwordEncoder.encode(password);
 			passChangeConfirmForm.setPassword(password);
+
+			//パスワードを変更
 			driverService.changePassword(passChangeConfirmForm);
 			return "redirect:/";
 		} else {
@@ -201,42 +196,39 @@ public class HomeController {
 	}
 
 	/**
-	 * 登録情報の更新画面を表示
-	 *
-	 * @param model
-	 * @param principal
-	 * @return
+	 * 登録情報の更新画面
 	 */
 	@GetMapping("/user/update/information")
 	public String getUpdateInfomation(Model model, Principal principal) {
 		//社員IDの取得
-		Authentication auth = (Authentication)principal;
+		Authentication auth = (Authentication) principal;
 		UserDetails user = (UserDetails) auth.getPrincipal();
 		String id = user.getUsername();
+
 		//社員情報の取得
 		InfomationForm infomationForm = driverService.getInfomation(id);
-		session.setAttribute("previousId", id);
 		model.addAttribute("infomationForm", infomationForm);
+
+		//セッションに現在のIDを登録
+		session.setAttribute("previousId", id);
+
 		model.addAttribute("contents", "home/infomation :: infomation");
 		return "/main/homeLayout";
 	}
 
 	/**
 	 * 登録情報を更新
-	 *
-	 * @param model
-	 * @param principal
-	 * @param infomationForm
-	 * @param bindingResult
-	 * @return
 	 */
 	@PostMapping("/user/update/infomation")
 	public String postUpdateInfomation(Model model, Principal principal, @ModelAttribute @Validated(GroupOrder.class) InfomationForm infomationForm, BindingResult bindingResult) {
 		if (!bindingResult.hasErrors()) {
+			//セッションから変更前のIDを取得して削除
 			infomationForm.setPreviousId((String) session.getAttribute("previousId"));
-			driverService.updateInfomation(infomationForm);
 			session.removeAttribute("previousId");
-			//return "redirect:/logout";
+
+			//登録情報を更新
+			driverService.updateInfomation(infomationForm);
+
 			return "/home/logout";
 		} else {
 			model.addAttribute("contents", "home/infomation :: infomation");

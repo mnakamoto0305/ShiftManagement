@@ -1,72 +1,72 @@
 <div th:fragment="result">
 
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>ドライバー検索</h1>
-          </div>
-        </div>
-      </div>
-      <!-- /.container-fluid -->
-    </section>
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1>ドライバー検索</h1>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <!-- left column -->
-          <div class="col-sm-12">
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">検索結果一覧</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table class="table table-bordered text-center" id="table">
-                  <thead class="thead-light">
-                    <tr>
-                      <th style="width: 10%"></th>
-                      <th style="width: 10%">名字</th>
-                      <th style="width: 10%">名前</th>
-                      <th style="width: 10%">性別</th>
-                      <th style="width: 30%">メールアドレス</th>
-                      <th style="width: 20%">編集</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr th:each="driver, stat : ${driverList}">
-                      <td th:text="${stat.index} + 1"></td>
-                      <td th:text="${driver.lastName}"></td>
-                      <td th:text="${driver.firstName}"></td>
-                      <td th:if="${driver.sex == '1'}">男性</td>
-                      <td th:if="${driver.sex == '2'}">女性</td>
-                      <td th:if="${driver.sex == '9'}">その他</td>
-                      <td th:if="${driver.sex == '0'}">不明</td>
-                      <td th:text="${driver.id}"></td>
-                      <td>
-                        <a th:href="@{/admin/detail/driver/{id}(id=${driver.id})}" class="btn btn-primary">詳細</a>
-                        <a th:href="@{/admin/update/driver/{id}(id=${driver.id})}" class="btn btn-warning">更新</a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer">
-                <button type="button" id="export-btn" class="btn btn-success float-left">Excel出力</button>
-              </div>
-            </div>
-          </div>
-          <!--/.col (left) -->
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-  </div>
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<!-- left column -->
+					<div class="col-sm-12">
+						<div class="card card-primary">
+							<div class="card-header">
+								<h3 class="card-title">検索結果一覧</h3>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body">
+								<table class="table table-bordered text-center" id="table">
+									<thead class="thead-light">
+										<tr>
+											<th style="width: 10%"></th>
+											<th style="width: 10%">名字</th>
+											<th style="width: 10%">名前</th>
+											<th style="width: 10%">性別</th>
+											<th style="width: 30%">メールアドレス</th>
+											<th style="width: 20%">編集</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="driver, stat : ${driverList}">
+											<td th:text="${stat.index} + 1"></td>
+											<td th:text="${driver.lastName}"></td>
+											<td th:text="${driver.firstName}"></td>
+											<td th:if="${driver.sex == '1'}">男性</td>
+											<td th:if="${driver.sex == '2'}">女性</td>
+											<td th:if="${driver.sex == '9'}">その他</td>
+											<td th:if="${driver.sex == '0'}">不明</td>
+											<td th:text="${driver.id}"></td>
+											<td>
+												<a th:href="@{/admin/detail/driver/{id}(id=${driver.id})}" class="btn btn-primary">詳細</a> <a th:href="@{/admin/update/driver/{id}(id=${driver.id})}" class="btn btn-warning">更新</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- /.card-body -->
+							<div class="card-footer">
+								<button type="button" id="export-btn" class="btn btn-success float-left">Excel出力</button>
+							</div>
+						</div>
+					</div>
+					<!--/.col (left) -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<!-- /.content -->
+
+	</div>
 
 </div>

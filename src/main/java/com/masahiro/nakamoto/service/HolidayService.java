@@ -17,9 +17,8 @@ import com.masahiro.nakamoto.domain.shift.ShiftResult;
 import com.masahiro.nakamoto.mybatis.HolidayMapper;
 import com.masahiro.nakamoto.mybatis.UserMapper;
 
-
 /**
- * 休み希望日を登録するサービス
+ * 休み希望日に関する処理を行うサービス
  */
 @Service
 public class HolidayService {
@@ -55,7 +54,7 @@ public class HolidayService {
 		LocalDate lastDay = today.withDayOfMonth(1).plusMonths(2).minusDays(1);
 
 		//月初から月末までの勤怠をtrueで登録するwhile文
-		while(!firstDay.equals(lastDay.plusDays(1))) {
+		while (!firstDay.equals(lastDay.plusDays(1))) {
 			//attendanceインスタンスのフィールドに値をセット
 			attendance.setId(id);
 			attendance.setIsAttendance(true);
@@ -86,7 +85,7 @@ public class HolidayService {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		//LocalDate型のリストを作成して、Stringから変換した日付を入れる
 		List<LocalDate> holidayList = new ArrayList<>();
-		for(String sd : stringDate) {
+		for (String sd : stringDate) {
 			LocalDate date = LocalDate.parse(sd, formatter);
 			holidayList.add(date);
 		}
@@ -138,7 +137,7 @@ public class HolidayService {
 		LocalDate lastDay = today.withDayOfMonth(1).plusMonths(2).minusDays(1);
 
 		//月初から月末までの勤怠をtrueで登録するwhile文
-		while(!firstDay.equals(lastDay.plusDays(1))) {
+		while (!firstDay.equals(lastDay.plusDays(1))) {
 			//attendanceインスタンスのフィールドに値をセット
 			attendance.setId(id);
 			attendance.setIsAttendance(true);
@@ -188,6 +187,13 @@ public class HolidayService {
 		return list;
 	}
 
+	/**
+	 * 休み希望日が既に登録されているかを確認
+	 *
+	 * @param areaId
+	 * @param courseId
+	 * @return
+	 */
 	public int isSubmitted(int areaId, int courseId) {
 		//来月の1日のLocalDateを取得
 		LocalDate date = LocalDate.now().plusMonths(1).withDayOfMonth(1);

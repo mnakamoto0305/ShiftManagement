@@ -2,6 +2,9 @@ package com.masahiro.nakamoto.domain;
 
 import lombok.Data;
 
+/**
+ * 支払予定額情報を表現するオブジェクト
+ */
 @Data
 public class Accounting {
 

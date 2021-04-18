@@ -12,6 +12,9 @@ import com.masahiro.nakamoto.domain.form.EmployeeForm;
 import com.masahiro.nakamoto.mybatis.EmployeeMapper;
 import com.masahiro.nakamoto.mybatis.UserMapper;
 
+/**
+ * 社員情報に関する処理を行うサービス
+ */
 @Service
 public class EmployeeService {
 
@@ -27,8 +30,7 @@ public class EmployeeService {
 	/**
 	 * 社員情報の全件検索
 	 */
-	@Transactional
-	public List<Employee> findAll(){
+	public List<Employee> findAll() {
 		return employeeMapper.findAll();
 	};
 
@@ -38,12 +40,16 @@ public class EmployeeService {
 	 * @param id
 	 * @return
 	 */
-	@Transactional
 	public Employee findEmployee(String id) {
 		return employeeMapper.findEmployee(id);
 	}
 
-	@Transactional
+	/**
+	 * フォーム検索に合致する社員情報をリストで返す
+	 *
+	 * @param employeeForm
+	 * @return
+	 */
 	public List<Employee> findFromForm(EmployeeForm employeeForm) {
 		return employeeMapper.findFromForm(employeeForm);
 	}

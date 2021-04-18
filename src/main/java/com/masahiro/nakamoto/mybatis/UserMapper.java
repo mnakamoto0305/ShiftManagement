@@ -9,6 +9,9 @@ import com.masahiro.nakamoto.domain.SiteUser;
 import com.masahiro.nakamoto.domain.form.InfomationForm;
 import com.masahiro.nakamoto.domain.form.PassChangeConfirmForm;
 
+/**
+ * ユーザー情報に関するリポジトリ
+ */
 @Mapper
 public interface UserMapper {
 

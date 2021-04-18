@@ -7,6 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Data;
 
+/**
+ * ログインユーザーの情報を表現するオブジェクト
+ */
 @Data
 public class SiteUser implements UserDetails {
 
@@ -84,6 +87,14 @@ public class SiteUser implements UserDetails {
 		super();
 	}
 
+	/**
+	 * コンストラクタ
+	 *
+	 * @param id
+	 * @param password
+	 * @param passUpdateDate
+	 * @param role
+	 */
 	public SiteUser(String id, String password, String passUpdateDate, String role) {
 		super();
 		this.id = id;

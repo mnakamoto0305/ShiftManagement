@@ -22,6 +22,9 @@ import com.masahiro.nakamoto.domain.form.PassChangeConfirmForm;
 import com.masahiro.nakamoto.service.AccountingService;
 import com.masahiro.nakamoto.service.DriverService;
 
+/**
+ * ドライバー情報に関するコントローラー
+ */
 @Controller
 public class DriverController {
 
@@ -39,10 +42,6 @@ public class DriverController {
 
 	/**
 	 * ドライバーの検索フォーム表示
-	 *
-	 * @param model
-	 * @param employeeForm
-	 * @return
 	 */
 	@GetMapping("/admin/search/driver")
 	public String getDriverForm(Model model, @ModelAttribute DriverForm driverForm) {
@@ -52,13 +51,11 @@ public class DriverController {
 
 	/**
 	 * フォームからの検索結果を表示
-	 *
-	 * @param model
-	 * @param employeeForm
-	 * @return
 	 */
 	@PostMapping("/admin/search/driver/result")
 	public String postSearchResult(Model model, @ModelAttribute DriverForm driverForm) {
+
+		//検索フォームが空欄の場合は全件検索
 		if (driverForm.getSearchWord() == null) {
 			List<Driver> driverList = driverService.findAll();
 			model.addAttribute("driverList", driverList);
@@ -66,31 +63,26 @@ public class DriverController {
 			List<Driver> driverList = driverService.findFromForm(driverForm);
 			model.addAttribute("driverList", driverList);
 		}
+
 		model.addAttribute("contents", "driver/result :: result");
 		return "main/adminLayout";
 	}
 
 	/**
 	 * 拠点検索の結果を表示
-	 *
-	 * @param model
-	 * @param driverForm
-	 * @return
 	 */
 	@PostMapping("/admin/search/driver/result/area")
 	public String postSearchArea(Model model, @ModelAttribute DriverForm driverForm) {
+		//ドライバー情報を検索
 		List<Driver> driverList = driverService.findAreaDriver(driverForm.getAreaId());
 		model.addAttribute("driverList", driverList);
+
 		model.addAttribute("contents", "driver/result :: result");
 		return "main/adminLayout";
 	}
 
 	/**
 	 * ドライバー登録フォームの表示
-	 *
-	 * @param model
-	 * @param employee
-	 * @return
 	 */
 	@GetMapping("/admin/create/driver")
 	public String getCreateDriver(Model model, @ModelAttribute Driver driver) {
@@ -100,36 +92,36 @@ public class DriverController {
 
 	/**
 	 * ドライバー情報の登録
-	 *
-	 * @param model
-	 * @param driver
-	 * @param bindingResult
-	 * @return
 	 */
 	@PostMapping("/admin/create/driver")
 	public String postCreateDriver(Model model, @ModelAttribute @Validated(GroupOrder.class) Driver driver, BindingResult bindingResult) {
 		if (!bindingResult.hasErrors()) {
+			//コース番号に不備があった場合はエラーメッセージを表示
 			try {
-				//指定したコース番号が不正なものでないかを確認
 				driverService.isCorrectCourse(driver);
 			} catch (Exception e) {
 				model.addAttribute("illegalCourse", "この拠点には指定したコース番号が存在しません。");
 				model.addAttribute("contents", "driver/create :: createForm");
 				return "main/adminLayout";
 			}
+
+			//既にドライバーが登録されている場合はエラーメッセージを表示
 			try {
-				//指定した拠点・コースにドライバーが登録されていないかを確認
 				driverService.isRegistered(driver);
 			} catch (Exception e) {
 				model.addAttribute("registered", "指定したコースは既に他のドライバーが登録されています。");
 				model.addAttribute("contents", "driver/create :: createForm");
 				return "main/adminLayout";
 			}
+
 			// パスワードをハッシュ化
 			String password = driver.getPassword();
 			password = passwordEncoder.encode(password);
 			driver.setPassword(password);
+
+			//ドライバー情報を登録
 			driverService.createDriver(driver);
+
 			return "redirect:/create/driver";
 		} else {
 			model.addAttribute("contents", "driver/create :: createForm");
@@ -139,57 +131,56 @@ public class DriverController {
 
 	/**
 	 * ドライバーの詳細情報を表示
-	 *
-	 * @param model
-	 * @param id
-	 * @return
 	 */
 	@GetMapping("/admin/detail/driver/{id}")
 	public String getDetailDriver(Model model, @PathVariable String id) {
 		//ドライバー情報を取得
 		Driver driver = driverService.findDriverInfo(id);
 		model.addAttribute("driver", driver);
+
 		//単価と経費をカンマ区切りに変換
 		String dailyWages = accountingService.commaOf1000(driver.getDailyWages());
 		model.addAttribute("dailyWages", dailyWages);
 		String monthlyExpenses = accountingService.commaOf1000(driver.getMonthlyExpenses());
 		model.addAttribute("monthlyExpenses", monthlyExpenses);
+
 		model.addAttribute("contents", "driver/detail :: detail");
 		return "main/adminLayout";
 	}
 
 	/**
 	 * ドライバ情報の更新画面を表示
-	 *
-	 * @param model
-	 * @param id
-	 * @return
 	 */
 	@GetMapping("/admin/update/driver/{id}")
 	public String getUpdateDriver(Model model, @PathVariable String id) {
+		//現在のドライバー情報を取得
 		Driver driver = driverService.findDriverInfo(id);
+		model.addAttribute("driver", driver);
+
+		//仮のパスワードを設定
 		driver.setPassword("password");
 		driver.setPasswordConfirm("password");
+
+		//セッションに現在のIDを登録
 		session.setAttribute("previousId", driver.getId());
-		model.addAttribute("driver", driver);
+
 		model.addAttribute("contents", "driver/update :: update");
 		return "main/adminLayout";
 	}
 
 	/**
 	 * ドライバー情報を更新
-	 *
-	 * @param model
-	 * @param id
-	 * @param driver
-	 * @return
 	 */
 	@PostMapping("/admin/update/driver/{id}")
 	public String postUpdateDriver(Model model, @PathVariable String id, @ModelAttribute @Validated(GroupOrder.class) Driver driver, BindingResult bindingResult) {
 		if (!bindingResult.hasErrors()) {
+			//セッションから変更前のIDを取得して削除
 			driver.setPreviousId((String) session.getAttribute("previousId"));
-			driverService.updateDriver(driver);
 			session.removeAttribute("previousId");
+
+			//ドライバー情報を更新
+			driverService.updateDriver(driver);
+
 			return "redirect:/search/driver";
 		} else {
 			model.addAttribute("contents", "driver/update :: update");
@@ -198,26 +189,20 @@ public class DriverController {
 	}
 
 	/**
-	 * 削除前の確認画面を表示
-	 *
-	 * @param model
-	 * @param id
-	 * @return
+	 * 削除前の確認画面
 	 */
 	@GetMapping("/admin/delete/driver/{id}")
 	public String getDeleteConfirm(Model model, @PathVariable String id) {
+		//ドライバー情報を取得
 		Driver driver = driverService.findDriverInfo(id);
 		model.addAttribute("driver", driver);
+
 		model.addAttribute("contents", "driver/delete :: delete");
 		return "main/adminLayout";
 	}
 
 	/**
 	 * ドライバー情報を削除
-	 *
-	 * @param model
-	 * @param id
-	 * @return
 	 */
 	@PostMapping("/admin/delete/driver/{id}")
 	public String postDeleteDriver(Model model, @PathVariable String id) {
@@ -226,12 +211,7 @@ public class DriverController {
 	}
 
 	/**
-	 * パスワードの初期化フォームを表示
-	 *
-	 * @param model
-	 * @param id
-	 * @param passChangeConfirmForm
-	 * @return
+	 * パスワードの初期化フォーム
 	 */
 	@GetMapping("/admin/initialize/password/{id}")
 	public String getInitializePassword(Model model, @PathVariable String id, @ModelAttribute PassChangeConfirmForm passChangeConfirmForm) {
@@ -242,22 +222,20 @@ public class DriverController {
 
 	/**
 	 * パスワードの初期化を実行
-	 *
-	 * @param model
-	 * @param id
-	 * @param passChangeConfirmForm
-	 * @param bindingResult
-	 * @param driver
-	 * @return
 	 */
 	@PostMapping("/admin/initialize/password/{id}")
-	public String postInitializePassword(Model model, @PathVariable String id, @ModelAttribute @Validated(GroupOrder.class) PassChangeConfirmForm passChangeConfirmForm, BindingResult bindingResult, @ModelAttribute Driver driver) {
+	public String postInitializePassword(Model model, @PathVariable String id, @ModelAttribute @Validated(GroupOrder.class) PassChangeConfirmForm passChangeConfirmForm, BindingResult bindingResult,
+			@ModelAttribute Driver driver) {
 		if (!bindingResult.hasErrors()) {
+			//IDをセット
 			passChangeConfirmForm.setId(id);
+
 			// パスワードをハッシュ化
 			String password = passChangeConfirmForm.getPassword();
 			password = passwordEncoder.encode(password);
 			passChangeConfirmForm.setPassword(password);
+
+			//パスワードを初期化
 			driverService.changePassword(passChangeConfirmForm);
 			return "redirect:/";
 		} else {

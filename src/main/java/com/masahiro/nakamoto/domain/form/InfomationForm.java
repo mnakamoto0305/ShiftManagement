@@ -12,6 +12,9 @@ import com.masahiro.nakamoto.Valid.id.ConfirmedUpdateId;
 
 import lombok.Data;
 
+/**
+ * ドライバーの個人情報を修正するフォームオブジェクト
+ */
 @Data
 @Component
 @ConfirmedUpdateId(groups = ValidGroup2.class)
@@ -29,20 +32,23 @@ public class InfomationForm {
 	@NotBlank(groups = ValidGroup1.class)
 	private String idConfirm;
 
+	/**
+	 * 変更前のID
+	 */
 	private String previousId;
 
 	/**
 	 * 電話番号
 	 */
 	@NotBlank(groups = ValidGroup1.class)
-	@Pattern(regexp="^0\\d{9,10}$", groups = ValidGroup2.class)
+	@Pattern(regexp = "^0\\d{9,10}$", groups = ValidGroup2.class)
 	private String phoneNumber;
 
 	/**
 	 * 郵便番号
 	 */
 	@NotBlank(groups = ValidGroup1.class)
-	@Pattern(regexp="^[0-9]{7}$", groups = ValidGroup2.class)
+	@Pattern(regexp = "^[0-9]{7}$", groups = ValidGroup2.class)
 	private String postalCode;
 
 	/**
@@ -52,6 +58,21 @@ public class InfomationForm {
 	@Size(max = 100, groups = ValidGroup2.class)
 	private String address;
 
+	/**
+	 * 引数なしコンストラクタ
+	 */
+	public InfomationForm() {
+		super();
+	}
+
+	/**
+	 * コンストラクタ
+	 *
+	 * @param id
+	 * @param phoneNumber
+	 * @param postalCode
+	 * @param address
+	 */
 	public InfomationForm(@NotBlank(groups = ValidGroup1.class) String id,
 			@NotBlank(groups = ValidGroup1.class) @Pattern(regexp = "^0\\d{9,10}$", groups = ValidGroup2.class) String phoneNumber,
 			@NotBlank(groups = ValidGroup1.class) @Pattern(regexp = "^[0-9]{7}$", groups = ValidGroup2.class) String postalCode,
@@ -62,14 +83,6 @@ public class InfomationForm {
 		this.postalCode = postalCode;
 		this.address = address;
 	}
-
-	/**
-	 * 引数なしコンストラクタ
-	 */
-	public InfomationForm() {
-		super();
-	}
-
 
 
 }

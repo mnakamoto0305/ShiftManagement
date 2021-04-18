@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import com.masahiro.nakamoto.domain.Area;
 import com.masahiro.nakamoto.mybatis.AreaMapper;
 
+/**
+ * 拠点情報に関する処理を行うサービス
+ */
 @Service
 public class AreaService {
 
