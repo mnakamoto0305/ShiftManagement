@@ -16,7 +16,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = ConfirmedChangePasswordValidator.class)
 public @interface ConfirmedChangePassword {
 
-	String message() default "パスワードとパスワード再入力が一致しません";
+	String message() default "\u30d1\u30b9\u30ef\u30fc\u30c9\u3068\u30d1\u30b9\u30ef\u30fc\u30c9\u518d\u5165\u529b\u304c\u4e00\u81f4\u3057\u307e\u305b\u3093";
 
 	Class<?>[] groups() default {};
 
