@@ -21,7 +21,7 @@
 					<div class="col-sm-12">
 						<div class="card card-primary">
 							<div class="card-header">
-								<h3 class="card-title" th:text="|${year}年${month}月 ${area.name}|"></h3>
+								<h4>[[|${year}年${month}月 ${area.name}|]]</h4>
 							</div>
 							<!-- シフトを作成するフォーム -->
 							<div class="card-body">
@@ -136,7 +136,7 @@
 					<div class="col-sm-6">
 						<div class="card card-primary">
 							<div class="card-header">
-								<h3 class="card-title" th:text="|${year}年${month}月 シフト|"></h3>
+								<h4 th:text="|${year}年${month}月 シフト|"></h4>
 							</div>
 							<p th:text="${message}" class="text-danger"></p>
 							<div class="card-body">
@@ -215,7 +215,7 @@
 					<div class="col-sm-6">
 						<div class="card card-primary">
 							<div class="card-header">
-								<h3 class="card-title" th:text="|${year}年${month}月 シフト|"></h3>
+								<h4 th:text="|${year}年${month}月 シフト|"></h4>
 							</div>
 							<p th:text="${message}" class="text-danger"></p>
 							<div class="card-body">

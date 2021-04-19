@@ -111,8 +111,13 @@ public class UserController {
 			int courseId = courseService.findCourseId(id);
 			int totalCourses = course.getTotalCourses();
 
-			//今日の勤怠情報を取得
-			Today todayShift = shiftService.findTodayShift(id);
+			//今日の勤怠情報を取得(シフトが未登録の場合は勤怠をfalseに設定)
+			Today todayShift = new Today();
+			try {
+				todayShift = shiftService.findTodayShift(id);
+			} catch (NullPointerException e) {
+				todayShift.setAttendance(false);
+			}
 			model.addAttribute("todayShift", todayShift);
 
 			//名前を取得
@@ -161,6 +166,7 @@ public class UserController {
 				model.addAttribute("contents", "home/password :: change");
 				return "/main/homeLayout";
 			} else {
+				model.addAttribute("message", "入力されたパスワードが現在のパスワードと一致しません。");
 				model.addAttribute("contents", "home/password :: confirm");
 				return "/main/homeLayout";
 			}

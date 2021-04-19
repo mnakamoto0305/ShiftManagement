@@ -21,25 +21,27 @@
 					<div class="col-sm-12">
 						<div class="card card-primary">
 							<div class="card-header">
-								<h3 class="card-title" th:text="|${#temporals.year(date)}年${#temporals.month(date)}月 ${area.name}|"></h3>
+								<h4 th:text="|${#temporals.year(date)}年${#temporals.month(date)}月 ${area.name}|"></h4>
 							</div>
 							<div th:if="${multiAttendances}">
 								<!-- シフトを作成するフォーム -->
 								<form th:action="@{/admin/shift_update}" th:method="post" th:object="${multiAttendances}" id="shift">
 									<div class="card-body">
 										<table class="table table-hover table-bordered table-striped text-center">
-											<!-- コース番号 -->
-											<tr th:object="${course}">
-												<th scope="col"></th>
-												<th scope="col" th:each="i : ${#numbers.sequence(1, __*{totalDrivers}__)}" th:text="${__${i}__ <= __${totalCourses}__ }? |${i}コース| : '代走'"></th>
-												<th>出勤者数</th>
-											</tr>
-											<!-- 担当ドライバー -->
-											<tr>
-												<th>担当ドライバー</th>
-												<th th:each="name : ${driverName}" th:text="${name.getLastName()}"></th>
-												<th></th>
-											</tr>
+											<thead>
+												<!-- コース番号 -->
+												<tr th:object="${course}">
+													<th scope="col"></th>
+													<th scope="col" th:each="i : ${#numbers.sequence(1, __*{totalDrivers}__)}" th:text="${__${i}__ <= __${totalCourses}__ }? |${i}コース| : '代走'"></th>
+													<th>出勤者数</th>
+												</tr>
+												<!-- 担当ドライバー -->
+												<tr>
+													<th>担当ドライバー</th>
+													<th th:each="name : ${driverName}" th:text="${name.getLastName()}"></th>
+													<th></th>
+												</tr>
+											</thead>
 											<!-- 日付と勤怠 -->
 											<tr th:each="date, stat : *{multiAttendances}">
 												<!-- 日付 -->
@@ -114,25 +116,27 @@
 					<div class="col-sm-12">
 						<div class="card card-primary">
 							<div class="card-header">
-								<h3 class="card-title" th:text="|${#temporals.year(date)}年${#temporals.month(date)}月 ${area.name}|"></h3>
+								<h4 th:text="|${#temporals.year(date)}年${#temporals.month(date)}月 ${area.name}|"></h4>
 							</div>
 							<div th:if="${multiAttendances}">
 								<!-- シフトを作成するフォーム -->
 								<form th:action="@{/admin/shift/modify}" th:method="post" th:object="${multiAttendances}" id="shift">
 									<div class="card-body">
 										<table class="table table-hover table-bordered table-striped text-center">
-											<!-- コース番号 -->
-											<tr th:object="${course}">
-												<th scope="col"></th>
-												<th scope="col" th:each="i : ${#numbers.sequence(1, __*{totalDrivers}__)}" th:text="${__${i}__ <= __${totalCourses}__ }? |${i}コース| : '代走'"></th>
-												<th>出勤者数</th>
-											</tr>
-											<!-- 担当ドライバー -->
-											<tr>
-												<th>担当ドライバー</th>
-												<th th:each="name : ${driverName}" th:text="${name.getLastName()}"></th>
-												<th></th>
-											</tr>
+											<thead>
+												<!-- コース番号 -->
+												<tr th:object="${course}">
+													<th scope="col"></th>
+													<th scope="col" th:each="i : ${#numbers.sequence(1, __*{totalDrivers}__)}" th:text="${__${i}__ <= __${totalCourses}__ }? |${i}コース| : '代走'"></th>
+													<th>出勤者数</th>
+												</tr>
+												<!-- 担当ドライバー -->
+												<tr>
+													<th>担当ドライバー</th>
+													<th th:each="name : ${driverName}" th:text="${name.getLastName()}"></th>
+													<th></th>
+												</tr>
+											</thead>
 											<!-- 日付と勤怠 -->
 											<tr th:each="date, stat : *{multiAttendances}">
 												<!-- 日付 -->

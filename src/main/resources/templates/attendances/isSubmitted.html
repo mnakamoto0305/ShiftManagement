@@ -17,26 +17,28 @@
 			<div class="container-fluid">
 				<div class="row">
 					<!-- left column -->
-					<div class="col-md-12">
+					<div class="col-md-6">
 						<div class="card card-primary">
 							<div class="card-header">
-								<h3 th:text="${areaName}"></h3>
+								<h4 th:text="${areaName}"></h4>
 							</div>
 							<div class="card-body">
 								<table class="table table-hover table-bordered text-center">
 									<thead class="thead-light">
 										<tr>
-											<th>コース番号</th>
-											<th>名前</th>
-											<th>提出有無</th>
-											<th></th>
+											<th style="width: 16%">コース番号</th>
+											<th style="width: 28%">名前</th>
+											<th style="width: 28%">提出有無</th>
+											<th style="width: 28%">編集</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr th:each="driver, stat : ${driverList}">
 											<td th:text="${__${stat.index + 1}__} > ${totalCourses} ? '代走' : ${stat.index + 1}"></td>
-											<td>[[|${driver.getLastName()} ${driver.getFirstName()}|]]</td>
-											<th:block th:with="isSubmitted = ${__${submittedList[stat.index]}_== 0}">
+											<td>
+												<a th:href="@{'/admin/detail/driver/' + ${driver.id}}">[[|${driver.getLastName()} ${driver.getFirstName()}|]]</a>
+											</td>
+											<th:block th:with="isSubmitted = ${__${submittedList[stat.index]}__ == 0}">
 												<td th:text="${isSubmitted} ? '未提出' : '提出済み'" th:styleappend="${isSubmitted} ? 'color:#FF0000;'"></td>
 											</th:block>
 											<td>

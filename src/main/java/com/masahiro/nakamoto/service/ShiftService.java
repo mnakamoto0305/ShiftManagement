@@ -201,7 +201,7 @@ public class ShiftService {
 	 * @param shiftForm
 	 * @return
 	 */
-	public ShiftResult findShift(ShiftForm shiftForm) {
+	public ShiftResult findShift(ShiftForm shiftForm) throws NullPointerException{
 		//フォームから受け取った日付をLocalDateに変換
 		String designatedDate = shiftForm.getYear() + "/" + shiftForm.getMonth();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");

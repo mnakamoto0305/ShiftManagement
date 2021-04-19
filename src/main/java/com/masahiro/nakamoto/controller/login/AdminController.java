@@ -75,6 +75,7 @@ public class AdminController {
 				model.addAttribute("contents", "home/password :: change");
 				return "/main/adminLayout";
 			} else {
+				model.addAttribute("message", "入力されたパスワードが現在のパスワードと一致しません。");
 				model.addAttribute("contents", "home/password :: confirm");
 				return "/main/adminLayout";
 			}

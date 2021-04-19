@@ -21,31 +21,33 @@
           <div class="col-sm-12">
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">検索結果一覧</h3>
+                <h4>検索結果一覧</h4>
               </div>
               <!-- /.card-header -->
               <div class="card-body" th:if="${employeeList}">
                 <table class="table table-bordered text-center" id="table">
                   <thead class="thead-light">
                     <tr>
-                      <th style="width: 10%"></th>
-                      <th style="width: 10%">名字</th>
-                      <th style="width: 10%">名前</th>
-                      <th style="width: 10%">性別</th>
-                      <th style="width: 30%">メールアドレス</th>
-                      <th style="width: 20%">編集</th>
+                      <th style="width: 5%"></th>
+                      <th style="width: 15%">名前</th>
+                      <th style="width: 15%">性別</th>
+                      <th style="width: 15%">電話番号</th>
+                      <th style="width: 20%">メールアドレス</th>
+                      <th style="width: 15%">入社日</th>
+                      <th style="width: 15%">編集</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr th:each="employee, stat : ${employeeList}">
                       <td th:text="${stat.index} + 1"></td>
-                      <td th:text="${employee.lastName}"></td>
-                      <td th:text="${employee.firstName}"></td>
+                      <td>[[|${employee.lastName} ${employee.firstName}|]]</td>
                       <td th:if="${employee.sex == '1'}">男性</td>
                       <td th:if="${employee.sex == '2'}">女性</td>
                       <td th:if="${employee.sex == '9'}">その他</td>
                       <td th:if="${employee.sex == '0'}">不明</td>
+                      <td th:text="${employee.phoneNumber}"></td>
                       <td th:text="${employee.id}"></td>
+                      <td th:text="${employee.joinDate}"></td>
                       <td>
                         <a th:href="@{/admin/detail/employee/{id}(id=${employee.id})}" class="btn btn-primary">詳細</a>
                         <a th:href="@{/admin/update/employee/{id}(id=${employee.id})}" class="btn btn-warning">更新</a>

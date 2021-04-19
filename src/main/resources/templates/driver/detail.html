@@ -18,51 +18,51 @@
 			<div class="container-fluid">
 				<div class="row">
 					<!-- left column -->
-					<div class="col-sm-12">
+					<div class="col-sm-6">
 						<div class="card card-primary" th:object="${driver}">
 							<div class="card-header">
-								<h3 class="card-title">[[|*{lastName} *{firstName}|]]</h3>
+								<h4>[[|*{lastName} *{firstName}|]]</h4>
 							</div>
 							<!-- /.card-header -->
 							<div class="card-body">
 								<table class="table table-bordered text-center">
 									<tr>
-										<th>名前</th>
+										<th class="table-active">名前</th>
 										<td>[[|*{lastName} *{firstName}|]]</td>
 									</tr>
 									<tr>
-										<th>生年月日</th>
+										<th class="table-active">生年月日</th>
 										<td th:text="*{dateOfBirth}"></td>
 									</tr>
 									<tr>
-										<th>性別</th>
+										<th class="table-active">性別</th>
 										<td th:if="${driver.sex == '1'}">男性</td>
 										<td th:if="${driver.sex == '2'}">女性</td>
 										<td th:if="${driver.sex == '9'}">その他</td>
 										<td th:if="${driver.sex == '0'}">不明</td>
 									</tr>
 									<tr>
-										<th>メールアドレス</th>
+										<th class="table-active">メールアドレス</th>
 										<td th:text="*{id}"></td>
 									</tr>
 									<tr>
-										<th>電話番号</th>
+										<th class="table-active">電話番号</th>
 										<td th:text="*{phoneNumber}"></td>
 									</tr>
 									<tr>
-										<th>郵便番号</th>
+										<th class="table-active">郵便番号</th>
 										<td th:text="*{postalCode}"></td>
 									</tr>
 									<tr>
-										<th>住所</th>
+										<th class="table-active">住所</th>
 										<td th:text="*{address}"></td>
 									</tr>
 									<tr>
-										<th>入社日</th>
+										<th class="table-active">入社日</th>
 										<td th:text="*{joinDate}"></td>
 									</tr>
 									<tr>
-										<th>拠点</th>
+										<th class="table-active">拠点</th>
 										<td th:if="${driver.areaId == 1}">江東</td>
 										<td th:if="${driver.areaId == 2}">江戸川</td>
 										<td th:if="${driver.areaId == 3}">墨田</td>
@@ -70,7 +70,7 @@
 										<td th:if="${driver.areaId == 5}">港</td>
 									</tr>
 									<tr>
-										<th>担当コース</th>
+										<th class="table-active">担当コース</th>
 										<td th:if="${driver.courseId == 1}">1コース</td>
 										<td th:if="${driver.courseId == 2}">2コース</td>
 										<td th:if="${driver.courseId == 3}">3コース</td>
@@ -83,15 +83,15 @@
 										<td th:if="${driver.courseId == 10}">10コース</td>
 									</tr>
 									<tr>
-										<th>単価</th>
+										<th class="table-active">単価</th>
 										<td th:text="|${dailyWages}円|"></td>
 									</tr>
 									<tr>
-										<th>経費</th>
+										<th class="table-active">経費</th>
 										<td th:text="|${monthlyExpenses}円|"></td>
 									</tr>
 									<tr>
-										<th>権限</th>
+										<th class="table-active">権限</th>
 										<td th:text="*{role}"></td>
 									</tr>
 								</table>
