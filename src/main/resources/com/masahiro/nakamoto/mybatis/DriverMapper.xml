@@ -5,14 +5,178 @@
 
 <!-- マッピング定義 -->
 <resultMap type="com.masahiro.nakamoto.domain.Driver" id="driver">
+  <id column="id" property="id" />
   <result column="last_name" property="lastName" />
   <result column="first_name" property="firstName" />
+  <result column="position_id" property="positionId" />
+  <result column="sex" property="sex" />
+  <result column="date_of_birth" property="dateOfBirth" />
+  <result column="phone_number" property="phoneNumber" />
+  <result column="postal_code" property="postalCode" />
+  <result column="address" property="address" />
+  <result column="join_date" property="joinDate" />
+  <result column="password" property="password" />
+  <result column="pass_update_date" property="passUpdateDate" />
+  <result column="role" property="role" />
+  <result column="area_id" property="areaId" />
   <result column="course" property="courseId" />
+  <result column="daily_wages" property="dailyWages" />
+  <result column="monthly_expenses" property="monthlyExpenses" />
+</resultMap>
+
+<resultMap type="com.masahiro.nakamoto.domain.form.InfomationForm" id="infomationForm">
+  <id column="id" property="id" />
+  <result column="phone_number" property="phoneNumber" />
+  <result column="postal_code" property="postalCode" />
+  <result column="address" property="address" />
 </resultMap>
 
 
   <!-- ドライバー情報を取得 -->
   <select id="findDriverInfo" resultMap="driver">
+    SELECT
+    *
+    FROM
+    drivers
+    INNER JOIN
+    users
+    ON
+    drivers.id = users.id
+    WHERE
+    drivers.id = #{id}
+  </select>
+
+  <!-- 指定した拠点のドライバー情報を取得する -->
+  <select id="findAreaDriver" resultMap="driver">
+    SELECT
+    *
+    FROM
+    drivers
+    INNER JOIN
+    users
+    ON
+    drivers.id = users.id
+    WHERE
+    area_id = #{areaId}
+    ORDER BY
+    course
+  </select>
+
+  <!-- 指定した拠点ID・コースIDのドライバー情報を取得する -->
+  <select id="findCourseDriver" resultMap="driver">
+    SELECT
+    *
+    FROM
+    drivers
+    INNER JOIN
+    users
+    ON
+    drivers.id = users.id
+    WHERE
+    area_id = #{areaId} AND course = #{courseId}
+  </select>
+
+  <!-- ドライバー情報を全件検索 -->
+  <select id="findAll" resultMap="driver">
+    SELECT
+    *
+    FROM
+    drivers
+    INNER JOIN
+    users
+    ON
+    drivers.id = users.id
+  </select>
+
+  <!-- フォームからドライバー情報を検索 -->
+  <select id="findFromForm" resultMap="driver">
+    SELECT
+    *
+    FROM
+    drivers
+    INNER JOIN
+    users
+    ON
+    drivers.id = users.id
+    WHERE
+    CONCAT(last_name, ' ', first_name) LIKE '%${searchWord}%'
+    OR
+    drivers.id LIKE '%${searchWord}%'
+  </select>
+
+  <!-- 指定した拠点・コースのドライバー情報を取得 -->
+  <select id="isRegistered" resultMap="driver">
+    SELECT
+    *
+    FROM
+    drivers
+    WHERE
+    area_id = #{areaId} AND course = #{courseId}
+  </select>
+
+  <!-- ドライバー情報を登録 -->
+  <insert id="createDriver">
+    INSERT INTO drivers
+    VALUES (
+      #{id},
+      #{positionId},
+      #{lastName},
+      #{firstName},
+      #{sex},
+      #{dateOfBirth},
+      #{postalCode},
+      #{address},
+      #{phoneNumber},
+      #{joinDate},
+      #{areaId},
+      #{courseId},
+      #{dailyWages},
+      #{monthlyExpenses}
+    )
+  </insert>
+
+  <!-- ドライバー情報を更新 -->
+  <update id="updateDriver">
+    UPDATE
+      drivers
+    SET
+      id = #{id},
+      last_name = #{lastName},
+      first_name = #{firstName},
+      sex = #{sex},
+      date_of_birth = #{dateOfBirth},
+      postal_code = #{postalCode},
+      address = #{address},
+      phone_number = #{phoneNumber},
+      join_date = #{joinDate},
+      area_id = #{areaId},
+      course = #{courseId},
+      daily_wages = #{dailyWages},
+      monthly_expenses = #{monthlyExpenses}
+    WHERE
+      id = #{previousId}
+  </update>
+
+  <!-- 社員情報を削除 -->
+  <delete id="deleteDriver">
+    DELETE FROM drivers WHERE id = #{id}
+  </delete>
+
+  <!-- 個人ページから登録情報を更新 -->
+  <update id="updateInfomation">
+    UPDATE
+      drivers
+    SET
+      id = #{id},
+      postal_code = #{postalCode},
+      address = #{address},
+      phone_number = #{phoneNumber}
+    WHERE
+      id = #{previousId}
+  </update>
+
+  <!-- 更新用の情報を取得 -->
+  <select id="getInfomationForm" resultMap="infomationForm">
     SELECT
     *
     FROM

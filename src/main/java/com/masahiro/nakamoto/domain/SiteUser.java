@@ -1,13 +1,15 @@
 package com.masahiro.nakamoto.domain;
 
 import java.util.Collection;
-import java.util.Date;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Data;
 
+/**
+ * ログインユーザーの情報を表現するオブジェクト
+ */
 @Data
 public class SiteUser implements UserDetails {
 
@@ -25,28 +27,11 @@ public class SiteUser implements UserDetails {
 	/**
 	 * パスワード更新日付
 	 */
-	private Date passUpdateDate;
+	private String passUpdateDate;
 
 	/**
-	 * ログイン失敗回数
+	 * 権限
 	 */
-	private int loginMissTimes;
-
-	/**
-	 * ロック有無
-	 */
-	private boolean unlock;
-
-	/**
-	 * 利用可否
-	 */
-	private boolean enabled;
-
-	/**
-	 * ユーザー有効期限
-	 */
-	private Date userDueDate;
-
 	private String role;
 
 	/**
@@ -74,34 +59,48 @@ public class SiteUser implements UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO 自動生成されたメソッド・スタブ
-		if(this.userDueDate.after(new Date())) {
-			return true;
-		} else {
-			return false;
-		}
+		return false;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
 		// TODO 自動生成されたメソッド・スタブ
-		return this.unlock;
+		return false;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
 		// TODO 自動生成されたメソッド・スタブ
-		if(this.passUpdateDate.after(new Date())) {
-			return true;
-		} else {
-			return false;
-		}
+		return false;
 	}
 
 	@Override
 	public boolean isEnabled() {
 		// TODO 自動生成されたメソッド・スタブ
-		return this.enabled;
+		return false;
+	}
+
+	/**
+	 * 引数なしコンストラクタ
+	 */
+	public SiteUser() {
+		super();
+	}
+
+	/**
+	 * コンストラクタ
+	 *
+	 * @param id
+	 * @param password
+	 * @param passUpdateDate
+	 * @param role
+	 */
+	public SiteUser(String id, String password, String passUpdateDate, String role) {
+		super();
+		this.id = id;
+		this.password = password;
+		this.passUpdateDate = passUpdateDate;
+		this.role = role;
 	}
 
 }

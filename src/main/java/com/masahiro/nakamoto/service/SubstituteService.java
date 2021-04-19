@@ -7,11 +7,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.masahiro.nakamoto.domain.Course;
-import com.masahiro.nakamoto.domain.Substitute;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
+import com.masahiro.nakamoto.domain.shift.Substitute;
 import com.masahiro.nakamoto.mybatis.ShiftMapper;
 
 /**
@@ -33,19 +32,19 @@ public class SubstituteService {
 	 * @param course
 	 * @return
 	 */
-	@Transactional
 	public List<Substitute> findHolidayDriver(ShiftForm shiftForm, Course course) {
 		//フォームから受け取った日付をLocalDateに変換
 		String designatedDate = shiftForm.getYear() + "/" + shiftForm.getMonth();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		LocalDate date = LocalDate.parse(designatedDate + "/01", formatter);
+
 		//月初と月末の指定
 		LocalDate first = date.withDayOfMonth(1);
 		LocalDate last = date.withDayOfMonth(1).plusMonths(1).minusDays(1);
 
 		List<Substitute> substituteList = new ArrayList<>();
 
-
+		//リストに情報を格納
 		while (!first.equals(last.plusDays(1))) {
 			shiftForm.setDate(first);
 			Substitute substitute = new Substitute();
@@ -64,22 +63,26 @@ public class SubstituteService {
 	 * @param course
 	 * @return
 	 */
-	@Transactional
 	public List<List<Integer>> findSubstituteShift(ShiftForm shiftForm, Course course) {
 		//フォームから受け取った日付をLocalDateに変換
 		String designatedDate = shiftForm.getYear() + "/" + shiftForm.getMonth();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		LocalDate date = LocalDate.parse(designatedDate + "/01", formatter);
+
 		//月初と月末の指定
 		LocalDate first = date.withDayOfMonth(1);
 		LocalDate last = date.withDayOfMonth(1).plusMonths(1).minusDays(1);
+
 		//拠点のコース情報をセット
 		int totalCourses = course.getTotalCourses();
 		int totalDrivers = course.getTotalDrivers();
+
 		//走るコース情報をセットしたリスト
 		List<List<Integer>> substituteList = new ArrayList<>();
+
 		//代走ドライバーの勤怠リスト
 		List<List<Integer>> booleanLists = new ArrayList<>();
+
 		//休みが発生しているコース番号のリスト
 		List<List<Substitute>> sl = new ArrayList<>();
 
@@ -98,7 +101,6 @@ public class SubstituteService {
 		int a = 0;
 		for (List<Integer> booleanList : booleanLists) {
 			int b = 0;
-			//System.out.println(booleanList);
 			List<Integer> substitute = new ArrayList<>();
 			int count = 0;
 			for (int i = totalCourses + 1; i < totalDrivers + 1; i++) {

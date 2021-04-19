@@ -1,61 +1,84 @@
 <div th:fragment="index">
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 th:text="${today}"></h1>
-          </div>
-        </div>
-      </div>
-      <!-- /.container-fluid -->
-    </section>
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 th:text="${today}"></h1>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <!-- left column -->
-          <div class="col-12" th:object="${driver}">
-           <p>[[|*{lastName} *{firstName}さん お疲れさまです！|]]</p>
-          </div>
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<!-- left column -->
+					<div class="col-sm-6" th:object="${todayShift}">
+						<div>
+							<div class="card card-primary">
+								<div class="card-header">
+									<h4>今日の勤務情報</h4>
+								</div>
+								<div class="card-body" th:object="${driver}">
 
-          <div class="col-6" th:object="${todayShift}">
-            <th:block th:with="todayAttendance = (*{isAttendance} == true ? '出勤日' : '休み')">
-              <p>[[|今日は${todayAttendance}です。|]]</p>
-            </th:block>
-            <div th:if= "*{isAttendance}">
-	            <div class="card">
-	              <div class="card-header">
-	                <h3 class="card-title">今日の勤務情報</h3>
-	              </div>
-	              <div class="card-body">
-	                <table class="table table-bordered">
-	                  <thead>
-	                    <tr>
-	                      <th class="text-center">拠点</th>
-	                      <th class="text-center">担当コース</th>
-	                    </tr>
-	                  </thead>
-	                  <tbody>
-	                    <tr>
-	                      <td class="text-center">[[*{areaName}]]</td>
-	                      <td class="text-center">[[|*{courseId}コース|]]</td>
-	                    </tr>
-	                 </tbody>
-	               </table>
-	              </div>
-	            </div>
-            </div>
-          </div>
-          <!--/.col (left) -->
+									<div th:object="${driver}">
+										<h5>[[|*{lastName} *{firstName}さん お疲れさまです！|]]</h5>
+									</div>
 
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-  </div>
+									<div th:object="${todayShift}">
+										<div>
+											<th:block th:with="todayAttendance = (*{isAttendance} == true ? '出勤日' : 'お休み')">
+												<h5>[[|今日は${todayAttendance}です。|]]</h5>
+											</th:block>
+										</div>
+
+										<table class="table table-bordered mt-4" th:object="${todayShift}" th:if="${todayShift.isAttendance}">
+											<thead>
+												<tr class="table-active">
+													<th class="text-center" style="width: 50%">拠点</th>
+													<th class="text-center" style="width: 50%">担当コース</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="text-center">[[*{areaName}]]</td>
+													<td class="text-center">[[|*{courseId}コース|]]</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-6">
+						<div th:if="!${isSubmitHoliday}">
+							<div class="card card-danger">
+								<div class="card-header">
+									<h4>連絡事項</h4>
+								</div>
+								<div class="card-body">
+									<p class="lead">
+										来月の休み希望日が<u>まだ登録されていません</u>。
+									</p>
+									<p class="lead">
+										<mark>20日までの登録</mark>
+										をお願いします。
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</section>
+		<!-- /.content -->
+
+	</div>
 </div>

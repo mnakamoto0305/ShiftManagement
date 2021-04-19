@@ -8,13 +8,13 @@ import org.apache.ibatis.annotations.Param;
 
 import com.masahiro.nakamoto.domain.Course;
 import com.masahiro.nakamoto.domain.Driver;
-import com.masahiro.nakamoto.domain.attendance.Attendance;
+import com.masahiro.nakamoto.domain.holiday.Attendance;
 import com.masahiro.nakamoto.domain.shift.ShiftForm;
 import com.masahiro.nakamoto.domain.shift.Today;
 
 /**
- * @author nakamotomasahiro
- *
+ * シフト情報に関するリポジトリ
+ * シフトの作成や更新・検索を行う
  */
 @Mapper
 public interface ShiftMapper {
@@ -125,5 +125,12 @@ public interface ShiftMapper {
 	 * @return
 	 */
 	public List<Integer> findHolidayDriver(@Param("shiftForm") ShiftForm shiftForm, @Param("course") Course course);
+
+	/**
+	 * ドライバーのIDを変更
+	 *
+	 * @param previousId
+	 */
+	public void updateId(@Param("previousId") String previousId, @Param("id") String id);
 
 }

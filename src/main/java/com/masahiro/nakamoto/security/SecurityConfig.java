@@ -1,4 +1,5 @@
 package com.masahiro.nakamoto.security;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,30 +20,34 @@ import com.masahiro.nakamoto.util.Role;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private DatabaseUserDetailsService userDetailsService;
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService)
-			.passwordEncoder(passwordEncoder());
+				.passwordEncoder(passwordEncoder());
 	}
+
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/webjars/**","/css/**");
+		web.ignoring().antMatchers("/webjars/**", "/css/**");
 	}
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-			.authorizeRequests()
+				.authorizeRequests()
 				.antMatchers("/webjars/**").permitAll()
 				.antMatchers("/css/**").permitAll()
 				.antMatchers("/assets/**").permitAll()
 				.antMatchers("/js/**").permitAll()
 				.antMatchers("/login").permitAll()
+				.antMatchers("/user/**").hasRole(Role.USER.name())
 				.antMatchers("/admin/**").hasRole(Role.ADMIN.name())
 				.anyRequest().authenticated();
 
 		//ログイン処理
 		http
-			.formLogin()
+				.formLogin()
 				.loginProcessingUrl("/login")
 				.loginPage("/login")
 				.failureUrl("/login")
@@ -52,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		//ログアウト処理
 		http
-			.logout()
+				.logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 				.logoutUrl("/logout")
 				.logoutSuccessUrl("/login");

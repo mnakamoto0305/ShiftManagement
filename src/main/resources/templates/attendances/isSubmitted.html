@@ -1,0 +1,64 @@
+<div th:fragment="isSubmitted">
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1>休み希望提出確認</h1>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<!-- left column -->
+					<div class="col-md-6">
+						<div class="card card-primary">
+							<div class="card-header">
+								<h4 th:text="${areaName}"></h4>
+							</div>
+							<div class="card-body">
+								<table class="table table-hover table-bordered text-center">
+									<thead class="thead-light">
+										<tr>
+											<th style="width: 16%">コース番号</th>
+											<th style="width: 28%">名前</th>
+											<th style="width: 28%">提出有無</th>
+											<th style="width: 28%">編集</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="driver, stat : ${driverList}">
+											<td th:text="${__${stat.index + 1}__} > ${totalCourses} ? '代走' : ${stat.index + 1}"></td>
+											<td>
+												<a th:href="@{'/admin/detail/driver/' + ${driver.id}}">[[|${driver.getLastName()} ${driver.getFirstName()}|]]</a>
+											</td>
+											<th:block th:with="isSubmitted = ${__${submittedList[stat.index]}__ == 0}">
+												<td th:text="${isSubmitted} ? '未提出' : '提出済み'" th:styleappend="${isSubmitted} ? 'color:#FF0000;'"></td>
+											</th:block>
+											<td>
+												<th:block th:if="!${submittedList[stat.index]}">
+													<a th:href="@{'/admin/register/holiday/' + ${areaId} + '/' + ${stat.index + 1}}" class="btn btn-primary">登録する</a>
+												</th:block>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!--/.col (left) -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<!-- /.content -->
+
+	</div>
+</div>

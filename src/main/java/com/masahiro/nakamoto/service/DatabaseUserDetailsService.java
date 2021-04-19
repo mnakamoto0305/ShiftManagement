@@ -16,6 +16,9 @@ import org.springframework.util.StringUtils;
 import com.masahiro.nakamoto.domain.SiteUser;
 import com.masahiro.nakamoto.mybatis.UserMapper;
 
+/**
+ * ログインのユーザー認証に関する処理を行うサービス
+ */
 @Service
 public class DatabaseUserDetailsService implements UserDetailsService {
 

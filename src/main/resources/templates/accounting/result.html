@@ -1,0 +1,68 @@
+<div th:fragment="result">
+
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1>支払額確認</h1>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<!-- left column -->
+					<div class="col-sm-12">
+						<div class="card card-primary">
+							<div class="card-header">
+								<h4 >[[|${year}年${month}月 ${areaName}|]]</h4>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body">
+								<table class="table table-hover table-bordered text-center" id="table">
+									<thead class="thead-light">
+										<tr>
+											<th style="width: 5%"></th>
+											<th style="width: 21%">名前</th>
+											<th style="width: 21%">単価</th>
+											<th style="width: 21%">経費</th>
+											<th style="width: 11%">出勤日数</th>
+											<th style="width: 21%">支払額</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="driver, stat : ${driverList}">
+											<td th:text="${stat.index} + 1"></td>
+											<td>
+												<a th:href="@{'/admin/detail/driver/' + ${driver.id}}">[[|${driver.lastName} ${driver.firstName}|]]</a>
+											</td>
+											<td>[[|${accountingList[__${stat.index}__].getDailyWages}円|]]</td>
+											<td>[[|${accountingList[__${stat.index}__].getMonthlyExpenses}円|]]</td>
+											<td>[[|${workingDaysList[__${stat.index}__]}日|]]</td>
+											<td>[[|${accountingList[__${stat.index}__].getProfit}円|]]</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- /.card-body -->
+							<div class="card-footer">
+								<button type="button" id="export-btn" class="btn btn-success float-left">Excel出力</button>
+							</div>
+						</div>
+					</div>
+					<!--/.col (left) -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<!-- /.content -->
+	</div>
+
+</div>

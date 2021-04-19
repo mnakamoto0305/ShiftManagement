@@ -1,48 +1,57 @@
 <div th:fragment="shift_index">
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>シフト検索</h1>
-          </div>
-        </div>
-      </div>
-      <!-- /.container-fluid -->
-    </section>
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1>シフト作成</h1>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+		</section>
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <!-- left column -->
-          <div th:object="${shiftForm}">
-	          <form th:action="@{/admin/shift_make}" method="post"
-	            id="findShift">
-	            <div class="form-group">
-	              <p th:text="${message}" class="text-danger"></p>
-	              <label>作成したい拠点を選択してください。</label>
-	              <select name="area" th:field="*{area}">
-	                <option value="1">江東</option>
-	                <option value="2">江戸川</option>
-	                <option value="3">墨田</option>
-	                <option value="4">中央</option>
-	                <option value="5">港</option>
-	              </select>
-	            </div>
-	            <div class="card-footer">
-	              <button type="submit" class="btn btn-primary" form="findShift">確認</button>
-	            </div>
-	          </form>
-          </div>
-          <!--/.col (left) -->
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<!-- left column -->
+					<div class="col-md-6">
+						<!-- general form elements -->
+						<div class="card card-primary">
+							<div class="card-header">
+								<h3 class="card-title">今回作成するシフトの拠点名を選択してください。</h3>
+							</div>
+							<div th:object="${shiftForm}">
+								<form th:action="@{/admin/shift_make}" method="post" id="findShift">
+									<div class="card-body">
+										<div class="form-group">
+											<label>拠点名</label>
+											<select name="area" th:field="*{area}" class="form-control">
+												<option value="1">江東</option>
+												<option value="2">江戸川</option>
+												<option value="3">墨田</option>
+												<option value="4">中央</option>
+												<option value="5">港</option>
+											</select>
+											<p th:text="${message}" class="text-danger"></p>
+										</div>
+									</div>
+									<div class="card-footer">
+										<button type="submit" class="btn btn-primary float-right" form="findShift">確認</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<!--/.col (left) -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</section>
+		<!-- /.content -->
 
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
-  </div>
+	</div>
 </div>

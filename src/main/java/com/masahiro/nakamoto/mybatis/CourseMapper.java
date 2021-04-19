@@ -1,7 +1,10 @@
- package com.masahiro.nakamoto.mybatis;
+package com.masahiro.nakamoto.mybatis;
 
 import org.apache.ibatis.annotations.Mapper;
 
+/**
+ * コース情報に関するリポジトリ
+ */
 @Mapper
 public interface CourseMapper {
 
@@ -12,5 +15,13 @@ public interface CourseMapper {
 	 * @return
 	 */
 	public int findCourseId(String id);
+
+	/**
+	 * 指定した拠点のコース数を取得する
+	 *
+	 * @param areaId
+	 * @return
+	 */
+	public int findTotalCourses(int areaId);
 
 }
