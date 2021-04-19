@@ -27,7 +27,7 @@
 								<form th:action="@{/admin/shift_make}" method="post" id="findShift">
 									<div class="card-body">
 										<div class="form-group">
-											<p th:text="${message}" class="text-danger"></p>
+											<label>拠点名</label>
 											<select name="area" th:field="*{area}" class="form-control">
 												<option value="1">江東</option>
 												<option value="2">江戸川</option>
@@ -35,6 +35,7 @@
 												<option value="4">中央</option>
 												<option value="5">港</option>
 											</select>
+											<p th:text="${message}" class="text-danger"></p>
 										</div>
 									</div>
 									<div class="card-footer">
