@@ -2,8 +2,7 @@ package com.masahiro.nakamoto.domain.form;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import com.masahiro.nakamoto.Valid.group.ValidGroup1;
 import com.masahiro.nakamoto.Valid.group.ValidGroup2;
@@ -23,7 +22,7 @@ public class PassChangeConfirmForm {
 	 * パスワード
 	 */
 	@NotBlank(groups = ValidGroup1.class)
-	@Length(min = 8, max = 100, groups = ValidGroup2.class)
+	@Size(min = 8, max = 100, groups = ValidGroup2.class)
 	@Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class)
 	private String password;
 
@@ -31,7 +30,7 @@ public class PassChangeConfirmForm {
 	 * パスワード(確認用)
 	 */
 	@NotBlank(groups = ValidGroup1.class)
-	@Length(min = 8, max = 100, groups = ValidGroup2.class)
+	@Size(min = 8, max = 100, groups = ValidGroup2.class)
 	@Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class)
 	private String passwordConfirm;
 
@@ -54,8 +53,8 @@ public class PassChangeConfirmForm {
 	 * @param passwordConfirm
 	 */
 	public PassChangeConfirmForm(
-			@NotBlank(groups = ValidGroup1.class) @Length(min = 8, max = 100, groups = ValidGroup2.class) @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class) String password,
-			@NotBlank(groups = ValidGroup1.class) @Length(min = 8, max = 100, groups = ValidGroup2.class) @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class) String passwordConfirm) {
+			@NotBlank(groups = ValidGroup1.class) @Size(min = 8, max = 100, groups = ValidGroup2.class) @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class) String password,
+			@NotBlank(groups = ValidGroup1.class) @Size(min = 8, max = 100, groups = ValidGroup2.class) @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class) String passwordConfirm) {
 		super();
 		this.password = password;
 		this.passwordConfirm = passwordConfirm;

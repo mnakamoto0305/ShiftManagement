@@ -2,8 +2,7 @@ package com.masahiro.nakamoto.domain.form;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import com.masahiro.nakamoto.Valid.group.ValidGroup1;
 import com.masahiro.nakamoto.Valid.group.ValidGroup2;
@@ -21,7 +20,7 @@ public class PassChangeForm {
 	 * パスワード
 	 */
 	@NotBlank(groups = ValidGroup1.class)
-	@Length(min = 8, max = 100, groups = ValidGroup2.class)
+	@Size(min = 8, max = 100, groups = ValidGroup2.class)
 	@Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class)
 	private String password;
 

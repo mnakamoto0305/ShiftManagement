@@ -6,7 +6,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.Length;
 import org.springframework.stereotype.Component;
 
 import com.masahiro.nakamoto.Valid.group.ValidGroup1;
@@ -105,7 +104,7 @@ public class Employee {
 	 * パスワード
 	 */
 	@NotBlank(groups = ValidGroup1.class)
-	@Length(min=8,max=100, groups = ValidGroup2.class)
+	@Size(min=8,max=100, groups = ValidGroup2.class)
 	@Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class)
 	private String password;
 
@@ -113,7 +112,7 @@ public class Employee {
 	 * パスワード再入力
 	 */
 	@NotBlank(groups = ValidGroup1.class)
-	@Length(min=8,max=100, groups = ValidGroup2.class)
+	@Size(min=8,max=100, groups = ValidGroup2.class)
 	@Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class)
 	private String passwordConfirm;
 

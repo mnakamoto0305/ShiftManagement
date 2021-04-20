@@ -6,7 +6,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.Length;
 import org.springframework.stereotype.Component;
 
 import com.masahiro.nakamoto.Valid.group.ValidGroup1;
@@ -105,7 +104,7 @@ public class Driver {
 	 * パスワード
 	 */
 	@NotBlank(groups = ValidGroup1.class)
-	@Length(min=8,max=100, groups = ValidGroup2.class)
+	@Size(min=8,max=100, groups = ValidGroup2.class)
 	@Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class)
 	private String password;
 
@@ -113,7 +112,7 @@ public class Driver {
 	 * パスワード再入力
 	 */
 	@NotBlank(groups = ValidGroup1.class)
-	@Length(min=8,max=100, groups = ValidGroup2.class)
+	@Size(min=8,max=100, groups = ValidGroup2.class)
 	@Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class)
 	private String passwordConfirm;
 
@@ -194,7 +193,7 @@ public class Driver {
 			@NotBlank(groups = ValidGroup1.class) @Pattern(regexp = "^[0-9]{7}$", groups = ValidGroup2.class) String postalCode,
 			@NotBlank(groups = ValidGroup1.class) @Size(max = 100, groups = ValidGroup2.class) String address,
 			@NotBlank(groups = ValidGroup1.class) @Pattern(regexp = "^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$", groups = ValidGroup2.class) String joinDate,
-			@NotBlank(groups = ValidGroup1.class) @Length(min = 8, max = 100, groups = ValidGroup2.class) @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class) String password,
+			@NotBlank(groups = ValidGroup1.class) @Size(min = 8, max = 100, groups = ValidGroup2.class) @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class) String password,
 			String passUpdateDate, @NotBlank(groups = ValidGroup1.class) String role,
 			@NotNull(groups = ValidGroup1.class) Integer areaId, @NotNull(groups = ValidGroup1.class) Integer courseId,
 			@NotNull(groups = ValidGroup1.class) @Min(value = 0, groups = ValidGroup2.class) Integer dailyWages,
@@ -252,8 +251,8 @@ public class Driver {
 			@NotNull(groups = ValidGroup1.class) @Pattern(regexp = "^[0-9]{7}$", groups = ValidGroup2.class) String postalCode,
 			@NotBlank(groups = ValidGroup1.class) @Size(max = 100, groups = ValidGroup2.class) String address,
 			@NotBlank(groups = ValidGroup1.class) @Pattern(regexp = "^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$", groups = ValidGroup2.class) String joinDate,
-			@NotBlank(groups = ValidGroup1.class) @Length(min = 8, max = 100, groups = ValidGroup2.class) @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class) String password,
-			@NotBlank(groups = ValidGroup1.class) @Length(min = 8, max = 100, groups = ValidGroup2.class) @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class) String passwordConfirm,
+			@NotBlank(groups = ValidGroup1.class) @Size(min = 8, max = 100, groups = ValidGroup2.class) @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class) String password,
+			@NotBlank(groups = ValidGroup1.class) @Size(min = 8, max = 100, groups = ValidGroup2.class) @Pattern(regexp = "^[a-zA-Z0-9]+$", groups = ValidGroup3.class) String passwordConfirm,
 			String passUpdateDate, @NotBlank(groups = ValidGroup1.class) String role,
 			@NotNull(groups = ValidGroup1.class) Integer areaId, @NotNull(groups = ValidGroup1.class) Integer courseId,
 			@NotNull(groups = ValidGroup1.class) @Min(value = 0, groups = ValidGroup2.class) Integer dailyWages,
