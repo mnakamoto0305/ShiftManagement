@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS areas(
 );
 
 CREATE TABLE IF NOT EXISTS attendances(
-          "DATE"	DATE	NOT NULL
+          date	DATE	NOT NULL
          ,is_attendance	TINYINT(1)	 NOT NULL
          ,id	VARCHAR(255)	NOT NULL
 );

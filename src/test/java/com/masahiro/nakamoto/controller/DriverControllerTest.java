@@ -47,22 +47,22 @@ class DriverControllerTest {
 	private AccountingService accountingService;
 
 	@Test
-	@WithMockUser
-	public void ドライバー検索ページのリクエスト結果が正常となりViewとしてadminLayoutが返る事() throws Exception {
-		sut.perform(get("/search/driver"))
+	@WithMockUser(roles="ADMIN")
+	public void ドライバー検索ページのリクエスト結果が正常となりViewとしてadminadminLayoutが返る事() throws Exception {
+		sut.perform(get("/admin/search/driver"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("main/adminLayout"))
 		 	.andExpect(model().attribute("contents", "driver/form :: form"));
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void 検索フォームを空欄で送信するとfindAllメソッドが呼ばれて結果画面が返る事() throws Exception {
 		// SetUp
 		DriverForm driverForm = new DriverForm();
 		driverForm.setSearchWord(null);
 		// Verify
-		sut.perform(post("/search/driver/result").flashAttr("driverForm", driverForm))
+		sut.perform(post("/admin/search/driver/result").flashAttr("driverForm", driverForm))
 			.andExpect(status().isOk())
 			.andExpect(view().name("main/adminLayout"))
 			.andExpect(model().attribute("contents", "driver/result :: result"));
@@ -71,13 +71,13 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void 検索フォームに入力して検索するとfindFromFormメソッドが呼ばれて結果画面が返る事() throws Exception {
 		// SetUp
 		DriverForm driverForm = new DriverForm();
 		driverForm.setSearchWord("佐藤");
 		// Verify
-		sut.perform(post("/search/driver/result").flashAttr("driverForm", driverForm))
+		sut.perform(post("/admin/search/driver/result").flashAttr("driverForm", driverForm))
 			.andExpect(status().isOk())
 			.andExpect(view().name("main/adminLayout"))
 			.andExpect(model().attribute("contents", "driver/result :: result"));
@@ -86,13 +86,13 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void 検索フォームで拠点を選択するとfindAreaDriverメソッドが呼ばれて結果画面が返る事() throws Exception {
 		// SetUp
 		DriverForm driverForm = new DriverForm();
 		driverForm.setAreaId(1);
 		// Verify
-		sut.perform(post("/search/driver/result/area").flashAttr("driverForm", driverForm))
+		sut.perform(post("/admin/search/driver/result/area").flashAttr("driverForm", driverForm))
 			.andExpect(status().isOk())
 			.andExpect(view().name("main/adminLayout"))
 			.andExpect(model().attribute("contents", "driver/result :: result"));
@@ -101,37 +101,37 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
-	public void ドライバー登録ページのリクエスト結果が正常となりViewとしてadminLayoutが返る事() throws Exception {
-		sut.perform(get("/create/driver"))
+	@WithMockUser(roles="ADMIN")
+	public void ドライバー登録ページのリクエスト結果が正常となりViewとしてadminadminLayoutが返る事() throws Exception {
+		sut.perform(get("/admin/create/driver"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("main/adminLayout"))
 		 	.andExpect(model().attribute("contents", "driver/create :: createForm"));
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void 新規登録ページで登録処理を行うとサービスで処理されて登録ページにリダイレクトする事() throws Exception {
 		// SetUp
 		Driver driver = new Driver("edogawa3@sample.com", "edogawa3@sample.com", "山本", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "password", "password","2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000);
 		String password = driver.getPassword();
 		// Verify
-		sut.perform(post("/create/driver").flashAttr("driver", driver))
+		sut.perform(post("/admin/create/driver").flashAttr("driver", driver))
 			.andExpect(status().isFound())
-			.andExpect(redirectedUrl("/create/driver"));
+			.andExpect(redirectedUrl("/admin/create/driver"));
 
 		verify(passwordEncoder, times(1)).encode(password);
 		verify(driverService, times(1)).createDriver(driver);
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void 指定したコース番号が存在しない場合に例外を検出して画面にエラーメッセージを表示させる事() throws Exception {
 		// SetUp
 		Driver driver = new Driver("edogawa3@sample.com", "edogawa3@sample.com", "山本", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "password", "password","2021-04-12 12:29:41", "USER", 1, 8, 20000, 30000);
 		doThrow(new IllegalCourseException()).when(driverService).isCorrectCourse(driver);
 		// Verify
-		sut.perform(post("/create/driver").flashAttr("driver", driver))
+		sut.perform(post("/admin/create/driver").flashAttr("driver", driver))
 		.andExpect(status().isOk())
 		.andExpect(view().name("main/adminLayout"))
 		.andExpect(model().attribute("illegalCourse", "この拠点には指定したコース番号が存在しません。"))
@@ -141,13 +141,13 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void 指定したコースにドライバーが登録されている場合に例外を検出して画面にエラーメッセージを表示させる事() throws Exception {
 		// SetUp
 		Driver driver = new Driver("edogawa3@sample.com", "edogawa3@sample.com", "山本", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "password", "password","2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000);
 		doThrow(new AlreadyRegisteredException()).when(driverService).isRegistered(driver);
 		// Verify
-		sut.perform(post("/create/driver").flashAttr("driver", driver))
+		sut.perform(post("/admin/create/driver").flashAttr("driver", driver))
 		.andExpect(status().isOk())
 		.andExpect(view().name("main/adminLayout"))
 		.andExpect(model().attribute("registered", "指定したコースは既に他のドライバーが登録されています。"))
@@ -157,12 +157,12 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void ドライバー登録ページでメールアドレスをblankにすると例外情報が入った状態で画面が返る事() throws Exception {
 		// SetUp
 		Driver driver = new Driver("", "edogawa3@sample.com", "山本", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "password", "password","2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000);
 		// Verify
-		sut.perform(post("/create/driver").flashAttr("driver", driver))
+		sut.perform(post("/admin/create/driver").flashAttr("driver", driver))
 		.andExpect(status().isOk())
 		.andExpect(model().hasErrors())
 		.andExpect(model().attribute("driver", driver))
@@ -171,12 +171,12 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void パスワードとパスワード確認用が一致しないと例外情報が入った状態で画面が返る事() throws Exception {
 		// SetUp
 		Driver driver = new Driver("edogawa3@sample.com", "edogawa3@sample.com", "山本", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "password", "passwordpassword","2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000);
 		// Verify
-		sut.perform(post("/create/driver").flashAttr("driver", driver))
+		sut.perform(post("/admin/create/driver").flashAttr("driver", driver))
 		.andExpect(status().isOk())
 		.andExpect(model().hasErrors())
 		.andExpect(model().attribute("driver", driver))
@@ -185,12 +185,12 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void メールアドレスとメールアドレス確認用が一致しないと例外情報が入った状態で画面が返る事() throws Exception {
 		// SetUp
 		Driver driver = new Driver("edogawa@sample.com", "edogawa3@sample.com", "山本", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "password", "password","2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000);
 		// Verify
-		sut.perform(post("/create/driver").flashAttr("driver", driver))
+		sut.perform(post("/admin/create/driver").flashAttr("driver", driver))
 		.andExpect(status().isOk())
 		.andExpect(model().hasErrors())
 		.andExpect(model().attribute("driver", driver))
@@ -199,12 +199,12 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void 生年月日をハイフンつなぎで入力しないと例外情報が入った状態で画面が返る事() throws Exception {
 		// SetUp
 		Driver driver = new Driver("edogawa3@sample.com", "edogawa3@sample.com", "山本", "太郎", 2, "1", "1990/01/01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "password", "password","2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000);
 		// Verify
-		sut.perform(post("/create/driver").flashAttr("driver", driver))
+		sut.perform(post("/admin/create/driver").flashAttr("driver", driver))
 		.andExpect(status().isOk())
 		.andExpect(model().hasErrors())
 		.andExpect(model().attribute("driver", driver))
@@ -213,12 +213,12 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void 電話番号が10桁か11桁でない場合に例外情報が入った状態で画面が返る事() throws Exception {
 		// SetUp
 		Driver driver = new Driver("edogawa3@sample.com", "edogawa3@sample.com", "山本", "太郎", 2, "1", "1990-01-01", "012345678", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "password", "password","2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000);
 		// Verify
-		sut.perform(post("/create/driver").flashAttr("driver", driver))
+		sut.perform(post("/admin/create/driver").flashAttr("driver", driver))
 		.andExpect(status().isOk())
 		.andExpect(model().hasErrors())
 		.andExpect(model().attribute("driver", driver))
@@ -227,12 +227,12 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void 郵便番号が7桁でない場合に例外情報が入った状態で画面が返る事() throws Exception {
 		// SetUp
 		Driver driver = new Driver("edogawa3@sample.com", "edogawa3@sample.com", "山本", "太郎", 2, "1", "1990-01-01", "08000000000", "10000045", "東京都千代田区大手町1-1-1", "2020-01-01", "password", "password","2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000);
 		// Verify
-		sut.perform(post("/create/driver").flashAttr("driver", driver))
+		sut.perform(post("/admin/create/driver").flashAttr("driver", driver))
 		.andExpect(status().isOk())
 		.andExpect(model().hasErrors())
 		.andExpect(model().attribute("driver", driver))
@@ -240,12 +240,12 @@ class DriverControllerTest {
 		.andExpect(view().name("main/adminLayout"));
 	}
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void 入社日がハイフンつなぎで入力しないと例外情報が入った状態で画面が返る事() throws Exception {
 		// SetUp
 		Driver driver = new Driver("edogawa3@sample.com", "edogawa3@sample.com", "山本", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020/01/01", "password", "password","2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000);
 		// Verify
-		sut.perform(post("/create/driver").flashAttr("driver", driver))
+		sut.perform(post("/admin/create/driver").flashAttr("driver", driver))
 		.andExpect(status().isOk())
 		.andExpect(model().hasErrors())
 		.andExpect(model().attribute("driver", driver))
@@ -254,12 +254,12 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void パスワードが8文字未満の場合に例外情報が入った状態で画面が返る事() throws Exception {
 		// SetUp
 		Driver driver = new Driver("edogawa3@sample.com", "edogawa3@sample.com", "山本", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "passwor", "password","2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000);
 		// Verify
-		sut.perform(post("/create/driver").flashAttr("driver", driver))
+		sut.perform(post("/admin/create/driver").flashAttr("driver", driver))
 		.andExpect(status().isOk())
 		.andExpect(model().hasErrors())
 		.andExpect(model().attribute("driver", driver))
@@ -268,12 +268,12 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void パスワードに半角英数字以外を使うと例外情報が入った状態で画面が返る事() throws Exception {
 		// SetUp
 		Driver driver = new Driver("edogawa3@sample.com", "edogawa3@sample.com", "山本", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "password", "password!","2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000);
 		// Verify
-		sut.perform(post("/create/driver").flashAttr("driver", driver))
+		sut.perform(post("/admin/create/driver").flashAttr("driver", driver))
 		.andExpect(status().isOk())
 		.andExpect(model().hasErrors())
 		.andExpect(model().attribute("driver", driver))
@@ -282,12 +282,12 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void 単価に負の値を入力すると例外情報が入った状態で画面が返る事() throws Exception {
 		// SetUp
 		Driver driver = new Driver("edogawa3@sample.com", "edogawa3@sample.com", "山本", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "password", "password","2021-04-12 12:29:41", "USER", 1, 1, -20000, 30000);
 		// Verify
-		sut.perform(post("/create/driver").flashAttr("driver", driver))
+		sut.perform(post("/admin/create/driver").flashAttr("driver", driver))
 		.andExpect(status().isOk())
 		.andExpect(model().hasErrors())
 		.andExpect(model().attribute("driver", driver))
@@ -296,12 +296,12 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void 経費に負の値を入力すると例外情報が入った状態で画面が返る事() throws Exception {
 		// SetUp
 		Driver driver = new Driver("edogawa3@sample.com", "edogawa3@sample.com", "山本", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "password", "password","2021-04-12 12:29:41", "USER", 1, 1, 20000, -30000);
 		// Verify
-		sut.perform(post("/create/driver").flashAttr("driver", driver))
+		sut.perform(post("/admin/create/driver").flashAttr("driver", driver))
 		.andExpect(status().isOk())
 		.andExpect(model().hasErrors())
 		.andExpect(model().attribute("driver", driver))
@@ -310,7 +310,7 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void  ドライバー詳細ページのリクエスト結果が正常となり検索サービスの結果を返す事() throws Exception {
 		//SetUp
 		when(driverService.findDriverInfo("koto@sample.com")).thenReturn(new Driver("koto@sample.com", "山本", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "$2a$10$zjHq1xmqY3/cgKSpK7dywOSYFsthdmUrBhOZ8YjzTyrJxSqfEBJYG", "2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000));
@@ -320,7 +320,7 @@ class DriverControllerTest {
 		when(accountingService.commaOf1000(driver.getMonthlyExpenses())).thenReturn("30,000");
 		String monthlyExpenses = accountingService.commaOf1000(driver.getMonthlyExpenses());
 		//Verify
-		sut.perform(get("/detail/driver/{id}", "koto@sample.com"))
+		sut.perform(get("/admin/detail/driver/{id}", "koto@sample.com"))
 			.andExpect(status().isOk())
 			.andExpect(model().attribute("driver", driver))
 			.andExpect(model().attribute("dailyWages", dailyWages))
@@ -334,13 +334,13 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void ドライバー情報を取得して更新画面を返す事() throws Exception {
 		//SetUp
 		when(driverService.findDriverInfo("koto@sample.com")).thenReturn(new Driver("koto@sample.com", "山本", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "$2a$10$zjHq1xmqY3/cgKSpK7dywOSYFsthdmUrBhOZ8YjzTyrJxSqfEBJYG", "2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000));
 		Driver driver = driverService.findDriverInfo("koto@sample.com");
 		//Verify
-		sut.perform(get("/update/driver/{id}", "koto@sample.com"))
+		sut.perform(get("/admin/update/driver/{id}", "koto@sample.com"))
 			.andExpect(status().isOk())
 			.andExpect(request().sessionAttribute("previousId", is("koto@sample.com")))
 			.andExpect(model().attribute("driver", driver))
@@ -353,27 +353,27 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void 更新情報を受け取ってドライバー情報を更新しドライバー検索画面へリダイレクトする事() throws Exception {
 		//SetUp
 		Driver driver = new Driver("koto2@sample.com", "koto2@sample.com", "佐藤", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "password", "password", "2021-04-12 12:29:41", "USER", 1, 2, 20000, 30000);
 		MockHttpSession session = new MockHttpSession();
 		session.setAttribute("previousId", "koto@sample.com");
 		//Verify
-		sut.perform(post("/update/driver/{id}", "koto2@sample.com").flashAttr("driver", driver))
+		sut.perform(post("/admin/update/driver/{id}", "koto2@sample.com").flashAttr("driver", driver))
 			.andExpect(status().isFound())
-			.andExpect(redirectedUrl("/search/driver"));
+			.andExpect(redirectedUrl("/admin/search/driver"));
 
 		verify(driverService, times(1)).updateDriver(driver);
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void 更新情報にエラーがあると例外情報が入った状態で画面が返る事() throws Exception {
 		// SetUp
 		Driver driver = new Driver("koto2@sample.com", "koto@sample.com", "佐藤", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "password", "password", "2021-04-12 12:29:41", "USER", 1, 2, 20000, 30000);
 		// Verify
-		sut.perform(post("/update/driver/{id}", "koto2@sample.com").flashAttr("driver", driver))
+		sut.perform(post("/admin/update/driver/{id}", "koto2@sample.com").flashAttr("driver", driver))
 		.andExpect(status().isOk())
 		.andExpect(model().hasErrors())
 		.andExpect(model().attribute("driver", driver))
@@ -382,13 +382,13 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void ドライバー情報の削除前に更新画面が返る事() throws Exception {
 		//SetUp
 		when(driverService.findDriverInfo("koto@sample.com")).thenReturn(new Driver("koto@sample.com", "山本", "太郎", 2, "1", "1990-01-01", "08000000000", "1000004", "東京都千代田区大手町1-1-1", "2020-01-01", "$2a$10$zjHq1xmqY3/cgKSpK7dywOSYFsthdmUrBhOZ8YjzTyrJxSqfEBJYG", "2021-04-12 12:29:41", "USER", 1, 1, 20000, 30000));
 		Driver driver = driverService.findDriverInfo("koto@sample.com");
 		//Verify
-		sut.perform(get("/delete/driver/{id}", "koto@sample.com"))
+		sut.perform(get("/admin/delete/driver/{id}", "koto@sample.com"))
 			.andExpect(status().isOk())
 			.andExpect(model().attribute("driver", driver))
 			.andExpect(model().attribute("contents", "driver/delete :: delete"))
@@ -398,24 +398,24 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void 指定したIDのドライバー情報が削除されてドライバー検索画面にリダイレクトする事() throws Exception {
 		//Verify
-		sut.perform(post("/delete/driver/{id}", "koto@sample.com"))
+		sut.perform(post("/admin/delete/driver/{id}", "koto@sample.com"))
 			.andExpect(status().isFound())
-			.andExpect(redirectedUrl("/search/driver"));
+			.andExpect(redirectedUrl("/admin/search/driver"));
 
 		verify(driverService, times(1)).deleteDriver("koto@sample.com");
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void パスワード初期化フォームのリクエスト結果が正常となりフォームが表示される事() throws Exception {
 		//SetUp
 		PassChangeConfirmForm form = new PassChangeConfirmForm();
 		form.setId("koto@sample.com");
 		//Veryfy
-		sut.perform(get("/initialize/password/{id}", "koto@sample.com"))
+		sut.perform(get("/admin/initialize/password/{id}", "koto@sample.com"))
 			.andExpect(status().isOk())
 			.andExpect(model().attribute("passChangeConfirmForm", form))
 			.andExpect(model().attribute("id", "koto@sample.com"))
@@ -424,13 +424,13 @@ class DriverControllerTest {
 	}
 
 	@Test
-	@WithMockUser
+	@WithMockUser(roles="ADMIN")
 	public void フォームの結果を受け取ってパスワードを初期化してホーム画面へリダイレクトする事() throws Exception {
 		//SetUp
 		PassChangeConfirmForm passChangeConfirmForm =  new PassChangeConfirmForm("password", "password");
 		String password = passChangeConfirmForm.getPassword();
 		//Verify
-		sut.perform(post("/initialize/password/{id}", "koto@sample.com").flashAttr("passChangeConfirmForm", passChangeConfirmForm))
+		sut.perform(post("/admin/initialize/password/{id}", "koto@sample.com").flashAttr("passChangeConfirmForm", passChangeConfirmForm))
 			.andExpect(status().isFound())
 			.andExpect(redirectedUrl("/"));
 

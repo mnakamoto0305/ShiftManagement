@@ -122,7 +122,7 @@ public class DriverController {
 			//ドライバー情報を登録
 			driverService.createDriver(driver);
 
-			return "redirect:/create/driver";
+			return "redirect:/admin/create/driver";
 		} else {
 			model.addAttribute("contents", "driver/create :: createForm");
 			return "main/adminLayout";
@@ -181,7 +181,7 @@ public class DriverController {
 			//ドライバー情報を更新
 			driverService.updateDriver(driver);
 
-			return "redirect:/search/driver";
+			return "redirect:/admin/search/driver";
 		} else {
 			model.addAttribute("contents", "driver/update :: update");
 			return "main/adminLayout";
@@ -207,7 +207,7 @@ public class DriverController {
 	@PostMapping("/admin/delete/driver/{id}")
 	public String postDeleteDriver(Model model, @PathVariable String id) {
 		driverService.deleteDriver(id);
-		return "redirect:/search/driver";
+		return "redirect:/admin/search/driver";
 	}
 
 	/**

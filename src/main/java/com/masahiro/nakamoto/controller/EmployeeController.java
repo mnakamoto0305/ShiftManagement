@@ -85,7 +85,7 @@ public class EmployeeController {
 			//社員情報を登録
 			employeeService.createEmployee(employee);
 
-			return "redirect:/create/employee";
+			return "redirect:/admin/create/employee";
 		} else {
 			model.addAttribute("contents", "employee/create :: createForm");
 			return "main/adminLayout";
@@ -143,7 +143,7 @@ public class EmployeeController {
 			//社員情報を更新
 			employeeService.updateEmployee(employee);
 
-			return "redirect:/search/employee";
+			return "redirect:/admin/search/employee";
 		} else {
 			model.addAttribute("contents", "employee/update :: update");
 			return "main/adminLayout";
@@ -169,7 +169,7 @@ public class EmployeeController {
 	@PostMapping("/admin/delete/employee/{id}")
 	public String postDeleteEmployee(Model model, @PathVariable String id) {
 		employeeService.deleteEmployee(id);
-		return "redirect:/search/employee";
+		return "redirect:/admin/search/employee";
 	}
 
 }
