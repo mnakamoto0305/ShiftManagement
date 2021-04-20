@@ -1,5 +1,5 @@
 
-CREATE TABLE IF NOT EXISTS drivers　(
+CREATE TABLE IF NOT EXISTS drivers(
           id	VARCHAR	(255)	NOT NULL	PRIMARY KEY
          ,position_id		INT  NOT NULL
          ,last_name		VARCHAR	(50)	NOT NULL
