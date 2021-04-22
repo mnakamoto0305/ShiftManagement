@@ -173,7 +173,7 @@ public class HolidayController {
 			holidayService.registerHoliday(registerHolidayForm, new Attendance(), user.getUsername());
 			return "attendances/attendances";
 		} else {
-			return "attendances/attendances";
+			return "attendances/updateHoliday";
 		}
 	}
 
@@ -219,7 +219,8 @@ public class HolidayController {
 	 * 管理者が休み希望を代理登録
 	 */
 	@PostMapping("/admin/register/proxy_holiday")
-	public String postProxyRegister(@ModelAttribute RegisterHolidayForm registerHolidayForm) {
+	public String postProxyRegister(@ModelAttribute @Validated RegisterHolidayForm registerHolidayForm, BindingResult bindingResult) {
+		if (!bindingResult.hasErrors()) {
 		//拠点・コースIDを取得
 		int areaId = (int) session.getAttribute("areaId");
 		int courseId = (int) session.getAttribute("courseId");
@@ -232,6 +233,9 @@ public class HolidayController {
 		session.removeAttribute("courseId");
 
 		return "redirect:/admin";
+		} else {
+			return "attendances/proxyRegister";
+		}
 	}
 
 }

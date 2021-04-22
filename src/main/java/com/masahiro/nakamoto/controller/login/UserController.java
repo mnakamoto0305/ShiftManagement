@@ -90,6 +90,8 @@ public class UserController {
 		UserDetails user = (UserDetails) auth.getPrincipal();
 		String id = user.getUsername();
 
+		System.out.println(user.getAuthorities());
+
 		//役職を取得
 		int position = positionService.findPosition(id);
 
