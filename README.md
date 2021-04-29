@@ -25,6 +25,7 @@ http://shift-management.net
 そこで各ドライバーの休み希望の集約→シフト作成→シフト確認といった一連の流れを、webブラウザ上で行えるようにしたのがこちらのアプリケーションになります。
 
 下記のQiita記事にてより詳細にご説明しておりますので、よろしければご参照ください。
+https://qiita.com/masahiro_nakamoto/private/c68a426c1028d25fc55b
 
 ## 使い方
 
